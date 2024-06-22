@@ -9,7 +9,10 @@ export const Users: CollectionConfig = {
   },
   access: {
     admin: ({ req }) => {
-      return req?.user?.role && req?.user?.role === 'admin'
+      if (req?.user?.role === 'admin') {
+        return true
+      }
+      return false
     },
   },
   auth: {
