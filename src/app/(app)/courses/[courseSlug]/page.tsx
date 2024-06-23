@@ -33,7 +33,7 @@ export default async function Page({ params }: { params: any }) {
         <section>
           <h2 className="text-2xl font-bold mb-4">Lessons</h2>
           <ul>
-            {lessons?.map((lesson) => (
+            {lessons?.map((lesson: any) => (
               <Link href={`/courses/${courseSlug}/lessons/${lesson?.slug}`}>
                 <li
                   key={lesson?.id}

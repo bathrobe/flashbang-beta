@@ -13,13 +13,5 @@ export default async function Home() {
     depth: 1,
   })
   const { docs: courses } = coursesData
-  return user ? (
-    <div className="flex mt-16 items-center justify-center flex-col gap-4">
-      {courses.map((course) => (
-        <CourseCard key={course.id} course={course} />
-      ))}
-    </div>
-  ) : (
-    <div>Please login</div>
-  )
+  return user ? <>user screen</> : <div>Please login</div>
 }
