@@ -12,6 +12,7 @@ export interface Config {
     media: Media;
     courses: Course;
     sources: Source;
+    lessons: Lesson;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -71,6 +72,7 @@ export interface Course {
   description?: string | null;
   cloudinaryUrl?: string | null;
   sources?: (number | Source)[] | null;
+  lessons?: (number | Lesson)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -86,6 +88,20 @@ export interface Source {
   description?: string | null;
   author?: string | null;
   cloudinaryUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lessons".
+ */
+export interface Lesson {
+  id: number;
+  title: string;
+  slug?: string | null;
+  description?: string | null;
+  cloudinaryUrl?: string | null;
+  number?: number | null;
   updatedAt: string;
   createdAt: string;
 }

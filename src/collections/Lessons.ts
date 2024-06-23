@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
-export const Courses: CollectionConfig = {
-  slug: 'courses',
+export const Lessons: CollectionConfig = {
+  slug: 'lessons',
   admin: {
     useAsTitle: 'title',
   },
@@ -25,16 +25,8 @@ export const Courses: CollectionConfig = {
       label: 'Cloudinary URL',
     },
     {
-      name: 'sources',
-      type: 'relationship',
-      relationTo: 'sources',
-      hasMany: true,
-    },
-    {
-      name: 'lessons',
-      type: 'relationship',
-      relationTo: 'lessons',
-      hasMany: true,
+      name: 'number',
+      type: 'number',
     },
   ],
 }
