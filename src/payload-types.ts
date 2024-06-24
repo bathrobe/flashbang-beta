@@ -28,7 +28,12 @@ export interface Config {
  */
 export interface User {
   id: number;
+  name?: string | null;
   role?: ('admin' | 'user') | null;
+  enrolledCourses?: (number | Course)[] | null;
+  completedCourses?: (number | Course)[] | null;
+  enrolledLessons?: (number | Lesson)[] | null;
+  completedLessons?: (number | Lesson)[] | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -41,25 +46,6 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -102,8 +88,37 @@ export interface Lesson {
   description?: string | null;
   cloudinaryUrl?: string | null;
   number?: number | null;
+  course?: (number | null) | Course;
+  scenes?:
+    | {
+        cloudinaryUrl?: string | null;
+        dialogue?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'scene';
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

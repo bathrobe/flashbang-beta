@@ -28,5 +28,33 @@ export const Lessons: CollectionConfig = {
       name: 'number',
       type: 'number',
     },
+    {
+      name: 'course',
+      type: 'relationship',
+      relationTo: 'courses',
+      hasMany: false,
+    },
+    {
+      name: 'scenes',
+      type: 'blocks',
+      label: 'Scenes',
+      minRows: 1,
+      maxRows: 50,
+      blocks: [
+        {
+          slug: 'scene',
+          fields: [
+            {
+              name: 'cloudinaryUrl',
+              type: 'text',
+            },
+            {
+              name: 'dialogue',
+              type: 'textarea',
+            },
+          ],
+        },
+      ],
+    },
   ],
 }

@@ -1,4 +1,6 @@
 import type { CollectionConfig } from 'payload'
+import { UserCourses } from './blocks/UserCourses'
+import { UserLessons } from './blocks/UserLessons'
 
 const rootUrl = process.env.PROJECT_URL
 
@@ -33,13 +35,26 @@ export const Users: CollectionConfig = {
   },
   fields: [
     {
+      name: 'name',
+      type: 'text',
+    },
+    {
       name: 'role',
       type: 'select',
       options: [
         { label: 'Admin', value: 'admin' },
         { label: 'User', value: 'user' },
       ],
-      // required: true,
+    },
+    {
+      name: 'userCourses',
+      type: 'blocks',
+      blocks: [UserCourses],
+    },
+    {
+      name: 'userLessons',
+      type: 'blocks',
+      blocks: [UserLessons],
     },
   ],
 }
