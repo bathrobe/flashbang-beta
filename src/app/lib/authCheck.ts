@@ -10,9 +10,6 @@ const authCheck = async () => {
   })
 
   const { user } = await payload.auth({ headers })
-  if (!user) {
-    redirect('/auth/login')
-  }
   return user
 }
 

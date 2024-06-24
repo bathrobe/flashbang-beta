@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 const CourseCard = ({ course }: { course: any }) => (
   <Link href={`/courses/${course.slug}`}>
-    <div className="bg-white rounded-lg border border-gray-300 shadow-sm p-4 w-80 h-96 flex flex-col transition-all duration-300 hover:shadow-md">
+    <div className="bg-white rounded-lg border border-gray-300 shadow-sm py-4 px-8 w-80 flex flex-col mx-12 transition-all duration-300 hover:shadow-xl">
       <ImageSection url={course.cloudinaryUrl} title={course.title} />
       <InfoSection course={course} />
     </div>
