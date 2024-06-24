@@ -34,7 +34,7 @@ export default async function Page({ params }: { params: any }) {
           <h2 className="text-2xl font-bold mb-4">Lessons</h2>
           <ul>
             {lessons?.map((lesson: any) => (
-              <Link href={`/courses/${courseSlug}/lessons/${lesson?.slug}`}>
+              <Link href={`/courses/${courseSlug}/lessons/${lesson?.slug}/scenes`}>
                 <li
                   key={lesson?.id}
                   className="flex items-center mb-4 bg-white rounded-lg shadow-md p-4"

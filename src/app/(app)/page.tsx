@@ -12,9 +12,18 @@ export default async function Home() {
     collection: 'courses',
     depth: 1,
   })
-  const { docs: courses } = coursesData
+  let { docs: courses } = coursesData
+  // @ts-ignore
+  const { userCourses } = user
+  // .some checks if at least one element in the array satisfies the given condition
+  const hasCompletedCourses = userCourses?.some((course: any) => course.completed === true)
 
-  console.log(user)
+  if (!hasCompletedCourses) {
+    courses = courses.filter((course: any) => course.slug === 'orientation')
+  } else {
+    courses = courses.filter((course: any) => course.slug !== 'orientation')
+  }
+
   return user ? (
     <div className="flex mt-16 items-center justify-center flex-col gap-4">
       {courses.map((course) => (

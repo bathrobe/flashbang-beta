@@ -30,10 +30,42 @@ export interface User {
   id: number;
   name?: string | null;
   role?: ('admin' | 'user') | null;
-  enrolledCourses?: (number | Course)[] | null;
-  completedCourses?: (number | Course)[] | null;
-  enrolledLessons?: (number | Lesson)[] | null;
-  completedLessons?: (number | Lesson)[] | null;
+  userCourses?:
+    | {
+        course: number | Course;
+        completed?: boolean | null;
+        userCourseData?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'userCourses';
+      }[]
+    | null;
+  userLessons?:
+    | {
+        lesson: number | Lesson;
+        completed?: boolean | null;
+        userLessonData?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'userLessons';
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
