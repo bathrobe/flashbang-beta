@@ -30,41 +30,14 @@ export interface User {
   id: number;
   name?: string | null;
   role?: ('admin' | 'user') | null;
-  userCourses?:
+  userData?:
     | {
-        course: number | Course;
-        completed?: boolean | null;
-        userCourseData?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'userCourses';
-      }[]
-    | null;
-  userLessons?:
-    | {
-        lesson: number | Lesson;
-        completed?: boolean | null;
-        userLessonData?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'userLessons';
-      }[]
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
     | null;
   updatedAt: string;
   createdAt: string;
@@ -78,6 +51,25 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -122,35 +114,50 @@ export interface Lesson {
   number?: number | null;
   course?: (number | null) | Course;
   scenes?:
-    | {
-        cloudinaryUrl?: string | null;
-        dialogue?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'scene';
-      }[]
+    | (
+        | {
+            sceneText?: string | null;
+            cloudinaryUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'noInteraction';
+          }
+        | {
+            sceneText?: string | null;
+            cloudinaryUrl?: string | null;
+            question?: string | null;
+            answerChoices?:
+              | {
+                  answerText?: string | null;
+                  answerMessage?: string | null;
+                  isCorrect?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mcKnowledgeCheck';
+          }
+        | {
+            sceneText?: string | null;
+            cloudinaryUrl?: string | null;
+            question?: string | null;
+            answerChoices?:
+              | {
+                  answerText?: string | null;
+                  answerMessage?: string | null;
+                  decisionSlug?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mcDecisionPoint';
+          }
+      )[]
     | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

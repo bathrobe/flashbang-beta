@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { Lock } from 'lucide-react'
 
 const CourseCard = ({ course }: { course: any }) => (
   <Link href={`/courses/${course.slug}`}>
@@ -23,9 +24,12 @@ const ImageSection = ({ url, title }: { url: string; title: string }) => (
 )
 
 const InfoSection = ({ course }: { course: any }) => (
-  <div className="flex-grow flex flex-col">
+  <div className="flex-grow flex items-between justify-between flex-col mb-2">
     <h2 className="text-lg font-semibold mb-2 line-clamp-2">{course.title}</h2>
-    <p className="text-sm text-gray-600 flex-grow overflow-hidden">{course.description}</p>
+    <p className="text-sm text-gray-600 flex-grow ">{course.description}</p>
+    {/* <div className="flex items-center gap-2 mt-4">
+      <Lock size={16} />
+    </div> */}
   </div>
 )
 

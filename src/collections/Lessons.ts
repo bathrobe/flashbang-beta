@@ -1,4 +1,7 @@
 import type { CollectionConfig } from 'payload'
+import { MCKnowledgeCheck } from './blocks/scenes/MCKnowledgeCheck'
+import { MCDecisionPoint } from './blocks/scenes/MCDecisionPoint'
+import { NoInteraction } from './blocks/scenes/NoInteraction'
 
 export const Lessons: CollectionConfig = {
   slug: 'lessons',
@@ -40,21 +43,7 @@ export const Lessons: CollectionConfig = {
       label: 'Scenes',
       minRows: 1,
       maxRows: 50,
-      blocks: [
-        {
-          slug: 'scene',
-          fields: [
-            {
-              name: 'cloudinaryUrl',
-              type: 'text',
-            },
-            {
-              name: 'dialogue',
-              type: 'textarea',
-            },
-          ],
-        },
-      ],
+      blocks: [NoInteraction, MCKnowledgeCheck, MCDecisionPoint],
     },
   ],
 }

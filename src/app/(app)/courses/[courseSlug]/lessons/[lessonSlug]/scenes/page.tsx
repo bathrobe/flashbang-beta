@@ -1,15 +1,17 @@
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
-import SceneContainer from '@/app/components/SceneContainer'
 import authCheck from '@/app/lib/authCheck'
+import SceneWrapper from '@/app/components/scenes/SceneWrapper'
+import SceneRouter from '@/app/components/scenes/SceneRouter'
+import SceneContextProvider from '@/app/contexts/SceneContext'
 
 export const dynamic = 'force-dynamic'
 
-export default async function Scenes({ params }: { params: any }) {
+export default async function ScenesPage({ params }: { params: any }) {
   const user = await authCheck()
+  // @ts-ignore
   const { userLessons } = user
-  const { lessonSlug } = params
-  console.log(userLessons)
+  const { courseSlug, lessonSlug } = params
   const hasEnrolledInLesson = userLessons?.some((lesson: any) => lesson.lesson.slug === lessonSlug)
 
   if (!hasEnrolledInLesson) {
@@ -32,7 +34,11 @@ export default async function Scenes({ params }: { params: any }) {
 
   return (
     <div>
-      <SceneContainer scenes={scenes} />
+      <SceneContextProvider courseSlug={courseSlug} lessonSlug={lessonSlug} scenes={scenes || []}>
+        <SceneWrapper>
+          <SceneRouter />
+        </SceneWrapper>
+      </SceneContextProvider>
     </div>
   )
 }
