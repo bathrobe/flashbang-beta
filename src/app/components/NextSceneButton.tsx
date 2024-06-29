@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useSceneContext } from '@/app/contexts/SceneContext'
-import { completeLesson } from '../lib/lessonActions/completeLesson'
+import { completeLesson } from '../lib/lessonActions/enrollmentActions'
 
 const CompleteLessonButton: React.FC<{ courseSlug: string; lessonSlug: string }> = ({
   lessonSlug,

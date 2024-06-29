@@ -12,7 +12,7 @@ export async function selectOrientationClass(decisionSlug: string) {
       collection: 'users',
       id: user.id,
       data: {
-        userData: {
+        userProfile: {
           orientationClass: decisionSlug,
         },
       },

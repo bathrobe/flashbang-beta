@@ -21,7 +21,7 @@ export default async function Page({ params }: { params: any }) {
   })
 
   const user = await authCheck()
-  const userLessons = user?.userData?.userLessons
+  user?.userData?.userLessons
   const { docs: course } = courseData
   const { title, description, lessons } = course[0]
   return (

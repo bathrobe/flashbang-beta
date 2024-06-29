@@ -12,7 +12,7 @@ export async function enrollInLesson(lessonSlug: string) {
     throw new Error('User not found')
   }
 
-  let lessonData = await payload.find({
+  const lessonData = await payload.find({
     collection: 'lessons',
     where: {
       slug: {
@@ -20,18 +20,31 @@ export async function enrollInLesson(lessonSlug: string) {
       },
     },
   })
-  const { docs } = lessonData
-  const lesson = docs[0]
+  const lesson = lessonData.docs[0]
 
-  console.log('this is the lesson', lesson)
+  if (!lesson) {
+    throw new Error('Lesson not found')
+  }
 
-  await payload.update({
+  const result = await payload.update({
     collection: 'users',
     id: user.id,
     data: {
-      userData: { userLessons: [...user.userData.userLessons, { lesson: lesson.id }] },
+      userData: {
+        userLessons: [
+          ...(user.userData?.userLessons || []),
+          {
+            lesson: {
+              id: lesson.id,
+              relationTo: 'lessons',
+            },
+            isCompleted: false,
+          },
+        ],
+      },
     },
   })
+  console.log('Enrollment result:', result)
 }
 export async function completeLesson(lessonSlug: string) {
   const payload = await getPayloadHMR({ config: configPromise })
@@ -40,6 +53,7 @@ export async function completeLesson(lessonSlug: string) {
   if (!user?.id) {
     throw new Error('User not found')
   }
+
   const lessonData = await payload.find({
     collection: 'lessons',
     where: {
@@ -49,23 +63,36 @@ export async function completeLesson(lessonSlug: string) {
     },
   })
 
-  // const lessonId = lessonData?.docs[0].id
+  const lesson = lessonData.docs[0]
 
-  // const { docs: lessons } = lessonData
-  // const lesson = lessons[0]
-  // console.log('this is the lesson', lesson)
+  if (!lesson) {
+    throw new Error('Lesson not found')
+  }
 
-  // //   console.log(user)
-  // await payload.update({
-  //   collection: 'users',
-  //   id: user.id,
-  //   data: {
-  //     //@ts-ignore
-  //     userLessons:
-  //       user?.userLessons?.map((userLesson) =>
-  //         //@ts-ignore
-  //         userLesson.lesson.id === lessonId ? { ...userLesson, completed: true } : userLesson,
-  //       ) ?? [],
-  //   },
-  // })
+  const updatedUserLessons =
+    user.userData?.userLessons?.map((userLesson: any) =>
+      userLesson.lesson.id === lesson.id
+        ? {
+            ...userLesson,
+            isCompleted: true,
+            lesson: {
+              id: lesson.id,
+              relationTo: 'lessons',
+            },
+          }
+        : userLesson,
+    ) || []
+
+  console.log('WE ARE FINISHING COMPLETELESSON')
+  const result = await payload.update({
+    collection: 'users',
+    id: user.id,
+    data: {
+      userData: {
+        ...user.userData,
+        userLessons: updatedUserLessons,
+      },
+    },
+  })
+  console.log('Lesson completion result:', result)
 }

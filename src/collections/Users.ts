@@ -1,6 +1,4 @@
 import type { CollectionConfig } from 'payload'
-import { UserCourses } from './blocks/userProfile/UserCourses'
-import { UserLessons } from './blocks/userProfile/UserLessons'
 
 const rootUrl = process.env.PROJECT_URL
 
@@ -47,8 +45,52 @@ export const Users: CollectionConfig = {
       ],
     },
     {
-      name: 'userData',
+      name: 'userProfile',
       type: 'json',
+    },
+    {
+      name: 'userData',
+      type: 'group',
+      fields: [
+        {
+          name: 'userLessons',
+          type: 'array',
+          fields: [
+            {
+              name: 'lesson',
+              type: 'relationship',
+              relationTo: 'lessons',
+            },
+            {
+              name: 'isCompleted',
+              type: 'checkbox',
+            },
+            {
+              name: 'data',
+              type: 'json',
+            },
+          ],
+        },
+        {
+          name: 'userCourses',
+          type: 'array',
+          fields: [
+            {
+              name: 'course',
+              type: 'relationship',
+              relationTo: 'courses',
+            },
+            {
+              name: 'isCompleted',
+              type: 'checkbox',
+            },
+            {
+              name: 'data',
+              type: 'json',
+            },
+          ],
+        },
+      ],
     },
   ],
 }

@@ -30,7 +30,7 @@ export interface User {
   id: number;
   name?: string | null;
   role?: ('admin' | 'user') | null;
-  userData?:
+  userProfile?:
     | {
         [k: string]: unknown;
       }
@@ -39,6 +39,40 @@ export interface User {
     | number
     | boolean
     | null;
+  userData?: {
+    userLessons?:
+      | {
+          lesson?: (number | null) | Lesson;
+          isCompleted?: boolean | null;
+          data?:
+            | {
+                [k: string]: unknown;
+              }
+            | unknown[]
+            | string
+            | number
+            | boolean
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+    userCourses?:
+      | {
+          course?: (number | null) | Course;
+          isCompleted?: boolean | null;
+          data?:
+            | {
+                [k: string]: unknown;
+              }
+            | unknown[]
+            | string
+            | number
+            | boolean
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -51,55 +85,6 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "courses".
- */
-export interface Course {
-  id: number;
-  title: string;
-  slug?: string | null;
-  description?: string | null;
-  cloudinaryUrl?: string | null;
-  sources?: (number | Source)[] | null;
-  lessons?: (number | Lesson)[] | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sources".
- */
-export interface Source {
-  id: number;
-  title: string;
-  slug?: string | null;
-  url?: string | null;
-  description?: string | null;
-  author?: string | null;
-  cloudinaryUrl?: string | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -158,6 +143,55 @@ export interface Lesson {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export interface Course {
+  id: number;
+  title: string;
+  slug?: string | null;
+  description?: string | null;
+  cloudinaryUrl?: string | null;
+  sources?: (number | Source)[] | null;
+  lessons?: (number | Lesson)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sources".
+ */
+export interface Source {
+  id: number;
+  title: string;
+  slug?: string | null;
+  url?: string | null;
+  description?: string | null;
+  author?: string | null;
+  cloudinaryUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
