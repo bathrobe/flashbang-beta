@@ -24,10 +24,10 @@ export default async function Page({ params }: { params: any }) {
   const { title, description, lessons } = course[0]
 
   const user = await authCheck()
-  let userLessons = []
+  let userLessons: any[] = []
   if (user) {
     const { userData } = user
-    userLessons = userData?.userLessons
+    userLessons = userData?.userLessons ?? []
   }
   const isLessonCompleted = (lessonId: string) => {
     const userLesson = userLessons.find((ul: any) => ul.lesson.id === lessonId)

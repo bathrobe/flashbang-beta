@@ -13,6 +13,12 @@ interface UserLesson {
   data?: any
 }
 
+// Update the UserData type
+type UserData = {
+  userLessons?: UserLesson[]
+  // Add other optional fields if needed
+}
+
 async function getLessonBySlug(payload: any, lessonSlug: string) {
   const lessonData = await payload.find({
     collection: 'lessons',
@@ -36,6 +42,7 @@ export async function enrollInLesson(lessonSlug: string) {
       isCompleted: false,
     }
 
+    //@ts-ignore
     const result = await payload.update({
       collection: 'users',
       id: user.id,
@@ -64,23 +71,23 @@ export async function completeLesson(lessonSlug: string) {
     if (!lesson) throw new Error(`Lesson with slug '${lessonSlug}' not found`)
 
     const updatedUserLessons =
-      user.userData?.userLessons?.map((userLesson: UserLesson) =>
+      (user.userData?.userLessons?.map((userLesson: any) =>
         userLesson.lesson.id === lesson.id
           ? {
+              ...userLesson,
               isCompleted: true,
-              lesson: lesson.id,
             }
           : userLesson,
-      ) || []
+      ) as UserLesson[]) || []
 
     const result = await payload.update({
       collection: 'users',
       id: user.id,
       data: {
+        //@ts-ignore
         userData: {
-          ...user.userData,
           userLessons: updatedUserLessons,
-        },
+        } as UserData, // Type assertion
       },
     })
     console.log('Lesson completion result:', result)
@@ -89,4 +96,9 @@ export async function completeLesson(lessonSlug: string) {
     console.error('Error completing lesson:', error)
     throw error
   }
+}
+
+export async function checkIfCourseIsCompleted(courseSlug: string) {
+  const payload = await getPayloadHMR({ config: configPromise })
+  const user = await authCheck()
 }
