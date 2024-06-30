@@ -36,5 +36,11 @@ export const Courses: CollectionConfig = {
       relationTo: 'lessons',
       hasMany: true,
     },
+    {
+      name: 'prereqs',
+      type: 'relationship',
+      relationTo: 'courses',
+      hasMany: true,
+    },
   ],
 }

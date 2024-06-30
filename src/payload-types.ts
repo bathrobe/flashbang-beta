@@ -156,6 +156,7 @@ export interface Course {
   cloudinaryUrl?: string | null;
   sources?: (number | Source)[] | null;
   lessons?: (number | Lesson)[] | null;
+  prereqs?: (number | Course)[] | null;
   updatedAt: string;
   createdAt: string;
 }
