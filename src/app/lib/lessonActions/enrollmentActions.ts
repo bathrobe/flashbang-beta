@@ -71,10 +71,10 @@ export async function completeLesson(lessonSlug: string) {
     if (!lesson) throw new Error(`Lesson with slug '${lessonSlug}' not found`)
 
     const updatedUserLessons =
-      (user.userData?.userLessons?.map((userLesson: any) =>
+      (user?.userData?.userLessons?.map((userLesson: any) =>
         userLesson.lesson.id === lesson.id
           ? {
-              ...userLesson,
+              lesson: userLesson.lesson.id,
               isCompleted: true,
             }
           : userLesson,
