@@ -40,8 +40,11 @@ const MCDecisionPoint: React.FC<{ scene: any }> = ({ scene }) => {
           />
         </div>
         <div className="w-1/2 pl-2 overflow-y-auto flex flex-col">
-          <p>{scene.sceneText}</p>
-          <p className="mt-4 font-bold">{scene.question}</p>
+          <div
+            dangerouslySetInnerHTML={{ __html: scene.sceneExposition_html }}
+            className="[&>ul]:list-disc [&>ul]:list-inside"
+          />
+          <p className="mt-4 ">{scene.question}</p>
           {scene.answerChoices.map((ac: any, index: number) => (
             <AnswerButton
               key={index}
