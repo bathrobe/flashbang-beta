@@ -13,10 +13,9 @@ export default async function ScenesPage({ params }: { params: any }) {
   const { courseSlug, lessonSlug } = params
   const user = await authCheck()
 
-  let userLessons = []
-  if (user) {
-    const { userData } = user
-    userLessons = userData?.userLessons
+  let userLessons: any[] = []
+  if (user && user.userData?.userLessons) {
+    userLessons = user.userData.userLessons
   }
 
   const payload = await getPayloadHMR({
