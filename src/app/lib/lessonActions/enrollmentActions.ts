@@ -38,7 +38,7 @@ export async function enrollInLesson(lessonSlug: string) {
     if (!lesson) throw new Error(`Lesson with slug '${lessonSlug}' not found`)
 
     const newUserLesson: UserLesson = {
-      lesson: { id: lesson.id, relationTo: 'lessons' },
+      lesson: lesson.id,
       isCompleted: false,
     }
 
