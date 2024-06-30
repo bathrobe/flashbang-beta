@@ -20,10 +20,19 @@ export default async function Page({ params }: { params: any }) {
     },
   })
 
-  const user = await authCheck()
-  user?.userData?.userLessons
   const { docs: course } = courseData
   const { title, description, lessons } = course[0]
+
+  const user = await authCheck()
+  let userLessons = []
+  if (user) {
+    const { userData } = user
+    userLessons = userData?.userLessons
+  }
+  const isLessonCompleted = (lessonId: string) => {
+    const userLesson = userLessons.find((ul: any) => ul.lesson.id === lessonId)
+    return userLesson?.isCompleted || false
+  }
   return (
     <div>
       <div className="max-w-4xl mx-auto p-8">
@@ -36,7 +45,7 @@ export default async function Page({ params }: { params: any }) {
           <ul>
             {lessons?.map((lesson: any) => (
               <Link key={lesson?.id} href={`/courses/${courseSlug}/lessons/${lesson?.slug}/scenes`}>
-                <li className="flex items-center justify-between mb-4 bg-white rounded-lg shadow-md p-4">
+                <li className="flex items-center justify-between mb-4 bg-white rounded-lg shadow-md p-4 relative">
                   <div className="flex items-center">
                     <span className="text-2xl font-bold text-gray-500 mr-6">{lesson?.number}</span>
                     <div>
@@ -44,6 +53,11 @@ export default async function Page({ params }: { params: any }) {
                       <p className="text-gray-600">{lesson?.description}</p>
                     </div>
                   </div>
+                  {isLessonCompleted(lesson?.id) && (
+                    <div className="absolute top-0 right-0 bottom-0 w-16 flex items-center justify-center bg-green-100 rounded-r-lg">
+                      <span className="text-green-500 text-3xl">✓</span>
+                    </div>
+                  )}
                 </li>
               </Link>
             ))}

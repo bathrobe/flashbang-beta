@@ -10,9 +10,9 @@ const CompleteLessonButton: React.FC<{ courseSlug: string; lessonSlug: string }>
 }) => {
   const router = useRouter()
 
-  const handleCompleteLesson = () => {
+  const handleCompleteLesson = async () => {
     // todo: mark the lesson done in user profile
-    completeLesson(lessonSlug)
+    await completeLesson(lessonSlug)
     router.push(`/courses/${courseSlug}`)
   }
 

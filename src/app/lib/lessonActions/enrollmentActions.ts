@@ -4,95 +4,89 @@ import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 import authCheck from '@/app/lib/authCheck'
 
-export async function enrollInLesson(lessonSlug: string) {
-  const payload = await getPayloadHMR({ config: configPromise })
-  const user = await authCheck()
-
-  if (!user?.id) {
-    throw new Error('User not found')
+interface UserLesson {
+  lesson: {
+    id: string | number
+    relationTo: 'lessons'
   }
-
-  const lessonData = await payload.find({
-    collection: 'lessons',
-    where: {
-      slug: {
-        equals: lessonSlug,
-      },
-    },
-  })
-  const lesson = lessonData.docs[0]
-
-  if (!lesson) {
-    throw new Error('Lesson not found')
-  }
-
-  const result = await payload.update({
-    collection: 'users',
-    id: user.id,
-    data: {
-      userData: {
-        userLessons: [
-          ...(user.userData?.userLessons || []),
-          {
-            lesson: {
-              id: lesson.id,
-              relationTo: 'lessons',
-            },
-            isCompleted: false,
-          },
-        ],
-      },
-    },
-  })
-  console.log('Enrollment result:', result)
+  isCompleted: boolean
+  data?: any
 }
-export async function completeLesson(lessonSlug: string) {
-  const payload = await getPayloadHMR({ config: configPromise })
-  const user = await authCheck()
 
-  if (!user?.id) {
-    throw new Error('User not found')
-  }
-
+async function getLessonBySlug(payload: any, lessonSlug: string) {
   const lessonData = await payload.find({
     collection: 'lessons',
-    where: {
-      slug: {
-        equals: lessonSlug,
-      },
-    },
+    where: { slug: { equals: lessonSlug } },
   })
+  return lessonData.docs[0]
+}
 
-  const lesson = lessonData.docs[0]
+export async function enrollInLesson(lessonSlug: string) {
+  try {
+    const payload = await getPayloadHMR({ config: configPromise })
+    const user = await authCheck()
 
-  if (!lesson) {
-    throw new Error('Lesson not found')
+    if (!user?.id) throw new Error('User not authenticated')
+
+    const lesson = await getLessonBySlug(payload, lessonSlug)
+    if (!lesson) throw new Error(`Lesson with slug '${lessonSlug}' not found`)
+
+    const newUserLesson: UserLesson = {
+      lesson: { id: lesson.id, relationTo: 'lessons' },
+      isCompleted: false,
+    }
+
+    const result = await payload.update({
+      collection: 'users',
+      id: user.id,
+      data: {
+        userData: {
+          userLessons: [...(user.userData?.userLessons || []), newUserLesson],
+        },
+      },
+    })
+    console.log('Enrollment result:', result)
+    return result
+  } catch (error) {
+    console.error('Error enrolling in lesson:', error)
+    throw error
   }
+}
 
-  const updatedUserLessons =
-    user.userData?.userLessons?.map((userLesson: any) =>
-      userLesson.lesson.id === lesson.id
-        ? {
-            ...userLesson,
-            isCompleted: true,
-            lesson: {
-              id: lesson.id,
-              relationTo: 'lessons',
-            },
-          }
-        : userLesson,
-    ) || []
+export async function completeLesson(lessonSlug: string) {
+  try {
+    const payload = await getPayloadHMR({ config: configPromise })
+    const user = await authCheck()
 
-  console.log('WE ARE FINISHING COMPLETELESSON')
-  const result = await payload.update({
-    collection: 'users',
-    id: user.id,
-    data: {
-      userData: {
-        ...user.userData,
-        userLessons: updatedUserLessons,
+    if (!user?.id) throw new Error('User not authenticated')
+
+    const lesson = await getLessonBySlug(payload, lessonSlug)
+    if (!lesson) throw new Error(`Lesson with slug '${lessonSlug}' not found`)
+
+    const updatedUserLessons =
+      user.userData?.userLessons?.map((userLesson: UserLesson) =>
+        userLesson.lesson.id === lesson.id
+          ? {
+              isCompleted: true,
+              lesson: lesson.id,
+            }
+          : userLesson,
+      ) || []
+
+    const result = await payload.update({
+      collection: 'users',
+      id: user.id,
+      data: {
+        userData: {
+          ...user.userData,
+          userLessons: updatedUserLessons,
+        },
       },
-    },
-  })
-  console.log('Lesson completion result:', result)
+    })
+    console.log('Lesson completion result:', result)
+    return result
+  } catch (error) {
+    console.error('Error completing lesson:', error)
+    throw error
+  }
 }

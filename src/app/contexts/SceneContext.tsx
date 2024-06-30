@@ -9,6 +9,7 @@ type SceneContextProviderProps = {
   scenes: Scene[]
   lessonSlug: string
   courseSlug: string
+  userLesson: any
 }
 
 const SceneContext = createContext<{
@@ -17,6 +18,7 @@ const SceneContext = createContext<{
   scenes: Scene[]
   courseSlug: string
   lessonSlug: string
+  userLesson: any
 } | null>(null)
 
 export default function SceneContextProvider({
@@ -24,6 +26,7 @@ export default function SceneContextProvider({
   scenes,
   courseSlug,
   lessonSlug,
+  userLesson,
 }: SceneContextProviderProps) {
   const [currentScene, setCurrentScene] = useState(0)
 
@@ -35,6 +38,7 @@ export default function SceneContextProvider({
         scenes,
         courseSlug,
         lessonSlug,
+        userLesson,
       }}
     >
       {children}
