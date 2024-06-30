@@ -2,7 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Lock } from 'lucide-react'
 import { areAllCourseLessonsDone } from '@/app/lib/courseAccess'
-
+import { redirect } from 'next/navigation'
+import authCheck from '@/app/lib/authCheck'
 const CourseCard = async ({ course }: { course: any }) => {
   const isCourseDone = await areAllCourseLessonsDone(course.slug)
   // Check if all prerequisites are completed

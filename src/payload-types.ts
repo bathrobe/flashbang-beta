@@ -101,7 +101,6 @@ export interface Lesson {
   scenes?:
     | (
         | {
-            sceneText?: string | null;
             sceneExposition?: {
               root: {
                 type: string;
@@ -124,7 +123,6 @@ export interface Lesson {
             blockType: 'noInteraction';
           }
         | {
-            sceneText?: string | null;
             sceneExposition?: {
               root: {
                 type: string;
@@ -156,7 +154,6 @@ export interface Lesson {
             blockType: 'mcKnowledgeCheck';
           }
         | {
-            sceneText?: string | null;
             sceneExposition?: {
               root: {
                 type: string;

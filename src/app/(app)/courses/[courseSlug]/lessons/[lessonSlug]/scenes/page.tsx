@@ -5,10 +5,19 @@ import SceneRouter from '@/app/components/scenes/SceneRouter'
 import SceneContextProvider from '@/app/contexts/SceneContext'
 import authCheck from '@/app/lib/authCheck'
 import { enrollInLesson } from '@/app/lib/lessonActions/enrollmentActions'
+import { redirect } from 'next/navigation'
+
+const checkAuth = async () => {
+  const user = await authCheck()
+  if (!user) {
+    redirect('/auth/login')
+  }
+}
 
 export const dynamic = 'force-dynamic'
 
 export default async function ScenesPage({ params }: { params: any }) {
+  await checkAuth()
   // @ts-ignore
   const { courseSlug, lessonSlug } = params
   const user = await authCheck()
