@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { MCKnowledgeCheck } from './blocks/scenes/MCKnowledgeCheck'
 import { MCDecisionPoint } from './blocks/scenes/MCDecisionPoint'
 import { NoInteraction } from './blocks/scenes/NoInteraction'
+import { AtomAssignment } from './blocks/scenes/AtomAssignment'
 
 export const Lessons: CollectionConfig = {
   slug: 'lessons',
@@ -43,7 +44,7 @@ export const Lessons: CollectionConfig = {
       label: 'Scenes',
       minRows: 1,
       maxRows: 50,
-      blocks: [NoInteraction, MCKnowledgeCheck, MCDecisionPoint],
+      blocks: [NoInteraction, MCKnowledgeCheck, MCDecisionPoint, AtomAssignment],
     },
   ],
 }

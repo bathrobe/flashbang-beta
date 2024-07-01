@@ -13,6 +13,7 @@ export interface Config {
     courses: Course;
     sources: Source;
     lessons: Lesson;
+    atoms: Atom;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -184,6 +185,28 @@ export interface Lesson {
             blockName?: string | null;
             blockType: 'mcDecisionPoint';
           }
+        | {
+            sceneExposition?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            sceneExposition_html?: string | null;
+            atom?: (number | null) | Atom;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'atomAssignment';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -217,6 +240,39 @@ export interface Source {
   description?: string | null;
   author?: string | null;
   cloudinaryUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "atoms".
+ */
+export interface Atom {
+  id: number;
+  title: string;
+  subtitle?: string | null;
+  summary?: string | null;
+  detailsText?: string | null;
+  details?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  details_html?: string | null;
+  sourceQuote?: string | null;
+  prereqs?: (number | Atom)[] | null;
+  lesson?: (number | null) | Lesson;
+  number?: number | null;
   updatedAt: string;
   createdAt: string;
 }

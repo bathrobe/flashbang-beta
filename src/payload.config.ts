@@ -12,6 +12,7 @@ import { Media } from './collections/Media'
 import { Courses } from './collections/Courses'
 import { Sources } from './collections/Sources'
 import { Lessons } from './collections/Lessons'
+import { Atoms } from './collections/Atoms'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,7 +21,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
   },
-  collections: [Users, Media, Courses, Sources, Lessons],
+  collections: [Users, Media, Courses, Sources, Lessons, Atoms],
   editor: lexicalEditor(),
   // email: resendAdapter({
   //   defaultFromAddress: process.env.EMAIL_ADDRESS || '',
