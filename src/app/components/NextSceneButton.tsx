@@ -11,7 +11,6 @@ const CompleteLessonButton: React.FC<{ courseSlug: string; lessonSlug: string }>
   const router = useRouter()
 
   const handleCompleteLesson = async () => {
-    // todo: mark the lesson done in user profile
     await completeLesson(lessonSlug)
     router.push(`/courses/${courseSlug}`)
   }
@@ -26,12 +25,18 @@ const CompleteLessonButton: React.FC<{ courseSlug: string; lessonSlug: string }>
   )
 }
 
-const NextSceneButton: React.FC = () => {
+const NextSceneButton: React.FC<{
+  isAnswered: boolean
+  setIsAnswered: (isAnswered: boolean) => void
+}> = ({ isAnswered, setIsAnswered }) => {
   const { currentScene, setCurrentScene, scenes, courseSlug, lessonSlug } = useSceneContext()
   const lessonLength = scenes.length
   const isLastScene = currentScene === lessonLength - 1
 
   const handleNextScene = () => {
+    if (isAnswered) {
+      setIsAnswered(false)
+    }
     setCurrentScene(currentScene + 1)
   }
 

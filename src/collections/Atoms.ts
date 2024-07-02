@@ -25,12 +25,6 @@ const Atoms: CollectionConfig = {
     },
 
     {
-      name: 'detailsText',
-      label: '2-3 Bullet Summary in text',
-      type: 'textarea',
-    },
-
-    {
       name: 'details',
       label: '2-3 Bullet Summary',
       type: 'richText',
@@ -44,12 +38,12 @@ const Atoms: CollectionConfig = {
       name: 'sourceQuote',
       type: 'textarea',
     },
-    // {
-    //   name: 'flashcards',
-    //   type: 'relationship',
-    //   relationTo: 'flashcards',
-    //   hasMany: true,
-    // },
+    {
+      name: 'flashcards',
+      type: 'relationship',
+      relationTo: 'flashcards',
+      hasMany: true,
+    },
     {
       name: 'prereqs',
       label: 'Prerequisites',

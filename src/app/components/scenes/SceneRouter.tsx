@@ -2,6 +2,7 @@
 import NoInteraction from './NoInteraction'
 import MCKnowledgeCheck from './MCKnowledgeCheck'
 import MCDecisionPoint from './MCDecisionPoint'
+import AtomAssignment from './AtomAssignment'
 import { useSceneContext } from '@/app/contexts/SceneContext'
 
 export default function SceneRouter() {
@@ -14,5 +15,7 @@ export default function SceneRouter() {
     return <MCKnowledgeCheck scene={scene} />
   } else if (scene.blockType === 'mcDecisionPoint') {
     return <MCDecisionPoint scene={scene} />
+  } else if (scene.blockType === 'atomAssignment') {
+    return <AtomAssignment scene={scene} />
   }
 }

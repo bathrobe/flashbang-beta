@@ -14,6 +14,7 @@ export interface Config {
     sources: Source;
     lessons: Lesson;
     atoms: Atom;
+    flashcards: Flashcard;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -252,7 +253,6 @@ export interface Atom {
   title: string;
   subtitle?: string | null;
   summary?: string | null;
-  detailsText?: string | null;
   details?: {
     root: {
       type: string;
@@ -270,9 +270,22 @@ export interface Atom {
   } | null;
   details_html?: string | null;
   sourceQuote?: string | null;
+  flashcards?: (number | Flashcard)[] | null;
   prereqs?: (number | Atom)[] | null;
   lesson?: (number | null) | Lesson;
   number?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "flashcards".
+ */
+export interface Flashcard {
+  id: number;
+  title?: string | null;
+  question?: string | null;
+  answer?: string | null;
   updatedAt: string;
   createdAt: string;
 }
