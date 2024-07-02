@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
+import { useSceneContext } from '@/app/contexts/SceneContext'
 import NextSceneButton from '@/app/components/NextSceneButton'
 
 const AnswerButton: React.FC<{
@@ -7,10 +8,10 @@ const AnswerButton: React.FC<{
   isCorrect: boolean
   onAnswer: (isCorrect: boolean) => void
 }> = ({ answerMessage, answerText, isCorrect, onAnswer }) => {
-  const handleClick = useCallback(() => {
+  const handleClick = () => {
     alert(answerMessage)
     onAnswer(isCorrect)
-  }, [answerMessage, isCorrect, onAnswer])
+  }
 
   return (
     <button className="bg-blue-500 text-white px-4 py-2 rounded mt-4" onClick={handleClick}>
@@ -20,13 +21,13 @@ const AnswerButton: React.FC<{
 }
 
 const MCKnowledgeCheck: React.FC<{ scene: any }> = ({ scene }) => {
-  const [isAnswered, setIsAnswered] = useState(false)
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false)
+  const { isCurrentQuestionAnswered, setIsCurrentQuestionAnswered } = useSceneContext()
 
-  const handleAnswer = useCallback((isCorrect: boolean) => {
-    setIsAnswered(true)
+  const handleAnswer = (isCorrect: boolean) => {
     setIsCorrectAnswer(isCorrect)
-  }, [])
+    setIsCurrentQuestionAnswered(true)
+  }
 
   return (
     <>
@@ -55,9 +56,7 @@ const MCKnowledgeCheck: React.FC<{ scene: any }> = ({ scene }) => {
           ))}
         </div>
       </div>
-      {isAnswered && isCorrectAnswer && (
-        <NextSceneButton isAnswered={isAnswered} setIsAnswered={setIsAnswered} />
-      )}
+      {isCurrentQuestionAnswered && isCorrectAnswer && <NextSceneButton />}
     </>
   )
 }

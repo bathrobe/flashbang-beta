@@ -14,6 +14,7 @@ import { Sources } from './collections/Sources'
 import { Lessons } from './collections/Lessons'
 import { Atoms } from './collections/Atoms'
 import { Flashcards } from './collections/Flashcards'
+import { UserFlashcards } from './collections/UserFlashcards'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -22,7 +23,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
   },
-  collections: [Users, Media, Courses, Sources, Lessons, Atoms, Flashcards],
+  collections: [Users, Media, Courses, Sources, Lessons, Atoms, Flashcards, UserFlashcards],
   editor: lexicalEditor(),
   // email: resendAdapter({
   //   defaultFromAddress: process.env.EMAIL_ADDRESS || '',

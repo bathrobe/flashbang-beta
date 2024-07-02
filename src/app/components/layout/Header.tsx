@@ -15,6 +15,9 @@ export default async function Header() {
       <nav>
         {user ? (
           <div className="flex items-center space-x-2 text-sm">
+            <span className="border-r border-gray-900 pr-4 mr-2">
+              <Link href="/inbox">Inbox</Link>
+            </span>
             <span>{user.email}</span>
             <Logout />
           </div>

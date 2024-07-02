@@ -1,13 +1,8 @@
 'use client'
-import { useSceneContext } from '@/app/contexts/SceneContext'
 import AtomCard from '@/app/components/AtomCard'
 import NextSceneButton from '@/app/components/NextSceneButton'
-import { useState } from 'react'
 
 const AtomAssignment: React.FC<{ scene: any }> = ({ scene }) => {
-  const [isReviewed, setIsReviewed] = useState(false)
-  const { currentScene } = useSceneContext()
-
   return (
     <>
       <div className="flex flex-grow p-4">
@@ -19,7 +14,7 @@ const AtomAssignment: React.FC<{ scene: any }> = ({ scene }) => {
           />
         </div>
       </div>
-      <NextSceneButton isAnswered={isReviewed} setIsAnswered={setIsReviewed} />
+      <NextSceneButton />
     </>
   )
 }

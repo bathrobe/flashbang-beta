@@ -2,6 +2,7 @@ import authCheck from '../lib/authCheck'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 import CourseCard from '../components/CourseCard'
+import Link from 'next/link'
 
 export default async function Home() {
   const user = await authCheck()
@@ -13,7 +14,6 @@ export default async function Home() {
     depth: 1,
   })
   let { docs: courses } = coursesData
-  // @ts-ignore
 
   return user ? (
     <div className="flex mt-16 items-center px-8 justify-center gap-4">
@@ -22,6 +22,6 @@ export default async function Home() {
       ))}
     </div>
   ) : (
-    <div>Please login</div>
+    <Link href="/auth/login">Please login</Link>
   )
 }

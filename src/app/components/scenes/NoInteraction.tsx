@@ -17,7 +17,7 @@ const NoInteraction: React.FC<{ scene: any }> = ({ scene }) => {
           <div dangerouslySetInnerHTML={{ __html: scene.sceneExposition_html }} />
         </div>
       </div>
-      <NextSceneButton isAnswered={false} setIsAnswered={() => {}} />
+      <NextSceneButton />
     </>
   )
 }

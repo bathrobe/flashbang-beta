@@ -19,6 +19,8 @@ const SceneContext = createContext<{
   courseSlug: string
   lessonSlug: string
   userLesson: any
+  isCurrentQuestionAnswered: boolean
+  setIsCurrentQuestionAnswered: React.Dispatch<React.SetStateAction<boolean>>
 } | null>(null)
 
 export default function SceneContextProvider({
@@ -29,6 +31,7 @@ export default function SceneContextProvider({
   userLesson,
 }: SceneContextProviderProps) {
   const [currentScene, setCurrentScene] = useState(0)
+  const [isCurrentQuestionAnswered, setIsCurrentQuestionAnswered] = useState(false)
 
   return (
     <SceneContext.Provider
@@ -39,6 +42,8 @@ export default function SceneContextProvider({
         courseSlug,
         lessonSlug,
         userLesson,
+        isCurrentQuestionAnswered,
+        setIsCurrentQuestionAnswered,
       }}
     >
       {children}

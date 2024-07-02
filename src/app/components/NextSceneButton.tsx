@@ -25,17 +25,22 @@ const CompleteLessonButton: React.FC<{ courseSlug: string; lessonSlug: string }>
   )
 }
 
-const NextSceneButton: React.FC<{
-  isAnswered: boolean
-  setIsAnswered: (isAnswered: boolean) => void
-}> = ({ isAnswered, setIsAnswered }) => {
-  const { currentScene, setCurrentScene, scenes, courseSlug, lessonSlug } = useSceneContext()
+const NextSceneButton: React.FC<{}> = () => {
+  const {
+    currentScene,
+    setCurrentScene,
+    scenes,
+    courseSlug,
+    lessonSlug,
+    isCurrentQuestionAnswered,
+    setIsCurrentQuestionAnswered,
+  } = useSceneContext()
   const lessonLength = scenes.length
   const isLastScene = currentScene === lessonLength - 1
 
   const handleNextScene = () => {
-    if (isAnswered) {
-      setIsAnswered(false)
+    if (isCurrentQuestionAnswered) {
+      setIsCurrentQuestionAnswered(false)
     }
     setCurrentScene(currentScene + 1)
   }

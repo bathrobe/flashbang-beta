@@ -56,7 +56,7 @@ const MCDecisionPoint: React.FC<{ scene: any }> = ({ scene }) => {
           ))}
         </div>
       </div>
-      {isAnswered && <NextSceneButton isAnswered={isAnswered} setIsAnswered={setIsAnswered} />}
+      <NextSceneButton />
     </>
   )
 }

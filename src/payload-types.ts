@@ -15,6 +15,7 @@ export interface Config {
     lessons: Lesson;
     atoms: Atom;
     flashcards: Flashcard;
+    'user-flashcards': UserFlashcard;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -307,6 +308,26 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "user-flashcards".
+ */
+export interface UserFlashcard {
+  id: number;
+  flashcard?: (number | null) | Flashcard;
+  user?: (number | null) | User;
+  fsrs?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

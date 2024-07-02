@@ -29,7 +29,7 @@ const CourseCard = async ({ course }: { course: any }) => {
     <>
       {prereqsCompleted ? (
         <Link href={`/courses/${course.slug}`}>
-          <div className="bg-white rounded-lg border border-gray-300 shadow-sm py-4 px-8 w-80 flex flex-col mx-12 transition-all duration-300 hover:shadow-xl relative">
+          <div className="bg-white rounded-lg border border-gray-300 shadow-sm py-4 px-8 w-80 flex flex-col transition-all duration-300 hover:shadow-xl relative">
             <ImageSection url={course.cloudinaryUrl} title={course.title} />
             <InfoSection course={course} />
             {isCourseDone && (
