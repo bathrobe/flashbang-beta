@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import authCheck from '@/app/lib/authCheck'
 import Logout from 'src/app/components/auth/Logout'
+import InboxNoties from './InboxNoties'
 
 export default async function Header() {
   const user = await authCheck()
@@ -16,7 +17,10 @@ export default async function Header() {
         {user ? (
           <div className="flex items-center space-x-2 text-sm">
             <span className="border-r border-gray-900 pr-4 mr-2">
-              <Link href="/inbox">Inbox</Link>
+              <Link href="/inbox">
+                Inbox
+                <InboxNoties />
+              </Link>
             </span>
             <span>{user.email}</span>
             <Logout />

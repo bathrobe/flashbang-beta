@@ -10,10 +10,6 @@ const AnswerButton: React.FC<{
   decisionSlug: string
   setIsAnswered: (isAnswered: boolean) => void
 }> = ({ answerMessage, answerText, decisionSlug, setIsAnswered }) => {
-  const { currentScene, scenes, setCurrentScene } = useSceneContext()
-
-  const lessonLength = scenes.length
-
   const handleClick = () => {
     alert(answerMessage)
     selectOrientationClass(decisionSlug)
@@ -28,7 +24,7 @@ const AnswerButton: React.FC<{
 }
 
 const MCDecisionPoint: React.FC<{ scene: any }> = ({ scene }) => {
-  const [isAnswered, setIsAnswered] = useState(false)
+  const { isCurrentQuestionAnswered, setIsCurrentQuestionAnswered } = useSceneContext()
   return (
     <>
       <div className="flex flex-grow p-4">
@@ -51,12 +47,12 @@ const MCDecisionPoint: React.FC<{ scene: any }> = ({ scene }) => {
               answerMessage={ac.answerMessage}
               answerText={ac.answerText}
               decisionSlug={ac.decisionSlug}
-              setIsAnswered={setIsAnswered}
+              setIsAnswered={setIsCurrentQuestionAnswered}
             />
           ))}
         </div>
       </div>
-      <NextSceneButton />
+      {isCurrentQuestionAnswered && <NextSceneButton />}
     </>
   )
 }

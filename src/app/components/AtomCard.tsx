@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Atom, Flashcard } from '../../payload-types'
+import { AtomAssignButton } from './AtomAssignButton'
 
 type TabType = 'summary' | 'details' | 'quote' | 'flashcards'
 
-const AtomCard: React.FC<{ atom: Atom }> = ({ atom }) => {
+const AtomCard: React.FC<{ atom: Atom; disabled: boolean }> = ({ atom, disabled }) => {
   const [activeTab, setActiveTab] = useState<TabType>('summary')
 
   const tabs: { type: TabType; label: string }[] = [
@@ -63,12 +64,7 @@ const AtomCard: React.FC<{ atom: Atom }> = ({ atom }) => {
         <div className="mt-4">{renderTabContent()}</div>
       </div>
       <div className="flex justify-center p-4">
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-          onClick={() => alert('This is just mocked up right now')}
-        >
-          Add to Deck
-        </button>
+        <AtomAssignButton atom={atom} disabled={disabled} />
       </div>
     </div>
   )

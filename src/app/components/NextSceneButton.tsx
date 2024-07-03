@@ -39,9 +39,7 @@ const NextSceneButton: React.FC<{}> = () => {
   const isLastScene = currentScene === lessonLength - 1
 
   const handleNextScene = () => {
-    if (isCurrentQuestionAnswered) {
-      setIsCurrentQuestionAnswered(false)
-    }
+    setIsCurrentQuestionAnswered(false)
     setCurrentScene(currentScene + 1)
   }
 

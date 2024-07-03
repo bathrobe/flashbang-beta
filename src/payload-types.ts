@@ -16,6 +16,7 @@ export interface Config {
     atoms: Atom;
     flashcards: Flashcard;
     'user-flashcards': UserFlashcard;
+    'user-atoms': UserAtom;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -326,6 +327,17 @@ export interface UserFlashcard {
     | number
     | boolean
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "user-atoms".
+ */
+export interface UserAtom {
+  id: number;
+  atom?: (number | null) | Atom;
+  user?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
 }
