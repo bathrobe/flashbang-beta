@@ -5,28 +5,18 @@ import { answerCard } from '@/app/lib/flashcards/flashcardActions'
 import { Rating } from 'ts-fsrs'
 import { useFlashcardContext } from '@/app/contexts/FlashcardContext'
 
-export default function AnswerButtons({
-  handleInputChange,
-  currentCardIndex,
-  result,
-  setCompletion,
-  setResult,
-  input,
-}: {
-  handleInputChange: any
-  currentCardIndex: any
-  result: any
-  setCompletion: any
-  setResult: any
-  setCurrentCardIndex: any
-  input: any
-}) {
+const AnswerButtons: any = ({ setCompletion, result, input, setResult }: any) => {
   const router = useRouter()
-  const { dueCards, setDueCards } = useFlashcardContext()
+  const {
+    dueCards,
+    setDueCards,
+    reviewedCards,
+    setReviewedCards,
+    currentCardIndex,
+    setCurrentCardIndex,
+  } = useFlashcardContext()
   const ratings: string[] = ['Again', 'Hard', 'Good', 'Easy']
   const buttonColors = ['bg-red-800', 'bg-yellow-800', 'bg-green-800', 'bg-blue-800']
-
-  console.log('Result in AnswerButtons:', result) // Add this log
 
   if (result === null || result === undefined) {
     return null
@@ -50,9 +40,10 @@ export default function AnswerButtons({
               input,
               Rating[rating as keyof typeof Rating],
             )
+            setCurrentCardIndex(currentCardIndex + 1)
             setDueCards(dueCards.filter((card: any) => card.id !== dueCards[currentCardIndex].id))
+            setReviewedCards([...reviewedCards, dueCards[currentCardIndex]])
             setCompletion('')
-            handleInputChange({ target: { value: '' } })
             setResult(null)
             router.refresh()
           }}
@@ -64,3 +55,5 @@ export default function AnswerButtons({
 
   return <div style={{ display: 'flex', justifyContent: 'center' }}>{answerButtonArray}</div>
 }
+
+export default AnswerButtons

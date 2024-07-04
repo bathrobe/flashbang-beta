@@ -6,15 +6,16 @@ import { useAtomContext } from '@/app/contexts/AtomContext'
 
 export const AtomAssignButton = ({ atom }: { atom: any }) => {
   const { setDueCards } = useFlashcardContext()
-  const { userAtoms } = useAtomContext()
+  const { userAtoms, setUserAtoms } = useAtomContext()
   console.log(userAtoms)
-  const disabled = userAtoms.some((userAtom: any) => userAtom.atom.id === atom.id)
+  const disabled = userAtoms.some((userAtom: any) => userAtom?.atom?.id === atom?.id)
 
   const router = useRouter()
   return (
     <button
       onClick={async () => {
         const newCards = await assignAtom(atom.id)
+        setUserAtoms([...userAtoms, atom])
         router.refresh()
         setDueCards((prevCards: any[]) => [...prevCards, ...newCards])
       }}

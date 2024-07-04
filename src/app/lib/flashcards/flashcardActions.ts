@@ -9,29 +9,35 @@ const srs = fsrs(generatorParameters({ enable_fuzz: true, maximum_interval: 365 
 
 export async function answerCard(userFlashcard: any, input: any, rating: any) {
   'use server'
-  const { fsrs } = userFlashcard
-  const user = await authCheck()
-  // @ts-ignore
-  const schedulingResult = srs.repeat(fsrs.current, fsrs.current.due)[rating]
-  console.log(schedulingResult)
-  schedulingResult.log['userAnswerText'] = input
-  const payload = await getPayloadHMR({ config: configPromise })
+  try {
+    const { fsrs } = userFlashcard
+    const user = await authCheck()
+    // @ts-ignore
+    const schedulingResult = srs.repeat(fsrs.current, fsrs.current.due)[rating]
+    console.log('schedulingResult')
+    console.log(schedulingResult)
+    schedulingResult.log['userAnswerText'] = input
+    const payload = await getPayloadHMR({ config: configPromise })
 
-  if (!user) {
-    redirect('/auth/login')
-  }
+    if (!user) {
+      redirect('/auth/login')
+    }
 
-  await payload.update({
-    collection: 'user-flashcards',
-    id: userFlashcard.id,
-    data: {
-      // @ts-ignore
-      fsrs: {
-        current: schedulingResult.card,
-        logs: [schedulingResult.log, ...fsrs.logs],
+    await payload.update({
+      collection: 'user-flashcards',
+      id: userFlashcard.id,
+      data: {
+        // @ts-ignore
+        fsrs: {
+          current: schedulingResult.card,
+          logs: [schedulingResult.log, ...fsrs.logs],
+        },
       },
-    },
-  })
+    })
+  } catch (error) {
+    console.error('Error in answerCard:', error)
+    throw error // Re-throw to allow caller to handle or for global error handling
+  }
 }
 export async function assignAtom(atomId: any) {
   const payload = await getPayloadHMR({ config: configPromise })

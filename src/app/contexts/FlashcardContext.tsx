@@ -2,24 +2,37 @@
 
 import { createContext, useContext, useState } from 'react'
 
-type FlashcardContextProviderProps = {
-  children: React.ReactNode
-  initialDueCards: any[]
+type FlashcardContextType = {
+  dueCards: any[]
+  setDueCards: React.Dispatch<React.SetStateAction<any[]>>
+  reviewedCards: any[]
+  setReviewedCards: React.Dispatch<React.SetStateAction<any[]>>
+  currentCardIndex: number
+  setCurrentCardIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
-const FlashcardContext = createContext<any>(null)
+const FlashcardContext = createContext<FlashcardContextType | null>(null)
 
 export default function FlashcardContextProvider({
   children,
   initialDueCards,
-}: FlashcardContextProviderProps) {
+}: {
+  children: React.ReactNode
+  initialDueCards: any[]
+}) {
   const [dueCards, setDueCards] = useState<any[]>(initialDueCards)
+  const [reviewedCards, setReviewedCards] = useState<any[]>([])
+  const [currentCardIndex, setCurrentCardIndex] = useState<number>(0)
 
   return (
     <FlashcardContext.Provider
       value={{
         dueCards,
         setDueCards,
+        reviewedCards,
+        setReviewedCards,
+        currentCardIndex,
+        setCurrentCardIndex,
       }}
     >
       {children}

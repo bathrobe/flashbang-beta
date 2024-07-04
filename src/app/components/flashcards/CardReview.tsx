@@ -4,7 +4,7 @@ import { useCompletion } from 'ai/react'
 import { useState } from 'react'
 import AnswerButtons from '@/app/components/flashcards/AnswerButtons'
 
-export default function CardReview({ card, currentCardIndex, setCurrentCardIndex }: any) {
+export default function CardReview({ card }: { card: any }) {
   const [result, setResult] = useState<any>(null)
   const [isGrading, setIsGrading] = useState(false)
   const { completion, setCompletion, input, handleInputChange, handleSubmit, error, isLoading } =
@@ -17,8 +17,8 @@ export default function CardReview({ card, currentCardIndex, setCurrentCardIndex
           body: JSON.stringify({
             feedback: completion,
             userAnswer: input,
-            question: card.flashcard.question,
-            answer: card.flashcard.answer,
+            question: card?.flashcard?.question,
+            answer: card?.flashcard?.answer,
           }),
         })
 
@@ -27,15 +27,15 @@ export default function CardReview({ card, currentCardIndex, setCurrentCardIndex
         setIsGrading(false)
       },
       body: {
-        question: card.flashcard.question,
-        answer: card.flashcard.answer,
+        question: card?.flashcard?.question,
+        answer: card?.flashcard?.answer,
       },
     })
 
   return (
     <div className="flex flex-col items-center w-full">
       <div className="my-4 text-center">
-        <h2 className="text-xl font-semibold mb-4">{card.flashcard.question}</h2>
+        <h2 className="text-xl font-semibold mb-4">{card?.flashcard?.question}</h2>
       </div>
       <form onSubmit={handleSubmit} className="w-full max-w-md">
         <input
@@ -46,18 +46,14 @@ export default function CardReview({ card, currentCardIndex, setCurrentCardIndex
         />
       </form>
       {error && <div className="w-full p-4 text-center bg-red-500 text-white">{error.message}</div>}
-      {(isLoading || isGrading) && (
-        <div className="w-full p-4 text-center text-blue-500">Grading...</div>
-      )}
+      {isLoading && <div className="w-full p-4 text-center text-blue-500">Loading...</div>}
+      {isGrading && <div className="w-full p-4 text-center text-blue-500">Grading...</div>}
       <div className="w-full p-4 text-center max-w-[65ch] break-words mb-4">{completion}</div>
       <AnswerButtons
         setCompletion={setCompletion}
-        setCurrentCardIndex={setCurrentCardIndex}
         result={result}
         input={input}
         setResult={setResult}
-        currentCardIndex={currentCardIndex}
-        handleInputChange={handleInputChange}
       />
     </div>
   )

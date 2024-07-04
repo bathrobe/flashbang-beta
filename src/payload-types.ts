@@ -287,7 +287,6 @@ export interface Flashcard {
   title?: string | null;
   question?: string | null;
   answer?: string | null;
-  relatedAtom?: (number | null) | Atom;
   updatedAt: string;
   createdAt: string;
 }
