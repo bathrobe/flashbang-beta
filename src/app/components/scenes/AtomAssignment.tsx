@@ -1,13 +1,20 @@
 'use client'
+import { useState } from 'react'
 import AtomCard from '@/app/components/AtomCard'
 import NextSceneButton from '@/app/components/NextSceneButton'
 
 const AtomAssignment: React.FC<{ scene: any }> = ({ scene }) => {
+  const [atomIsAssigned, setIsAtomAssigned] = useState(false)
+
+  const handleAssign = () => setIsAtomAssigned(true)
+
   return (
     <>
       <div className="flex flex-grow p-4">
         <div className="w-1/2 pr-2">
-          {scene.atom && <AtomCard disabled={false} atom={scene.atom} />}
+          {scene.atom && (
+            <AtomCard atom={scene.atom} isAtomAssigned={atomIsAssigned} onAssign={handleAssign} />
+          )}
         </div>
         <div className="w-1/2 pl-2 overflow-y-auto">
           <div
@@ -16,7 +23,7 @@ const AtomAssignment: React.FC<{ scene: any }> = ({ scene }) => {
           />
         </div>
       </div>
-      <NextSceneButton />
+      {atomIsAssigned ? <NextSceneButton /> : null}
     </>
   )
 }

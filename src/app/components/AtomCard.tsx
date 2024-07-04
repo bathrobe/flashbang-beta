@@ -5,7 +5,11 @@ import { AtomAssignButton } from './AtomAssignButton'
 
 type TabType = 'summary' | 'details' | 'quote' | 'flashcards'
 
-const AtomCard: React.FC<{ atom: Atom; disabled: boolean }> = ({ atom, disabled }) => {
+const AtomCard: React.FC<{ atom: Atom; onAssign: any; isAtomAssigned: boolean }> = ({
+  atom,
+  onAssign,
+  isAtomAssigned,
+}) => {
   const [activeTab, setActiveTab] = useState<TabType>('summary')
 
   const tabs: { type: TabType; label: string }[] = [
@@ -65,7 +69,7 @@ const AtomCard: React.FC<{ atom: Atom; disabled: boolean }> = ({ atom, disabled 
         <div className="mt-4">{renderTabContent()}</div>
       </div>
       <div className="flex justify-center p-4">
-        <AtomAssignButton atom={atom} />
+        <AtomAssignButton atom={atom} onAssign={onAssign} isAtomAssigned={isAtomAssigned} />
       </div>
     </div>
   )

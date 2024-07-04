@@ -4,11 +4,21 @@ import { useRouter } from 'next/navigation'
 import { useFlashcardContext } from '@/app/contexts/FlashcardContext'
 import { useAtomContext } from '@/app/contexts/AtomContext'
 
-export const AtomAssignButton = ({ atom }: { atom: any }) => {
+export const AtomAssignButton = ({
+  atom,
+  isAtomAssigned,
+  onAssign,
+}: {
+  atom: any
+  isAtomAssigned: boolean
+  onAssign: () => void
+}) => {
   const { setDueCards } = useFlashcardContext()
   const { userAtoms, setUserAtoms } = useAtomContext()
-  console.log(userAtoms)
-  const disabled = userAtoms.some((userAtom: any) => userAtom?.id === atom?.id)
+  let disabled = false
+  if (isAtomAssigned || userAtoms.some((userAtom: any) => userAtom?.id === atom?.id)) {
+    disabled = true
+  }
 
   const router = useRouter()
   return (
@@ -16,6 +26,7 @@ export const AtomAssignButton = ({ atom }: { atom: any }) => {
       onClick={async () => {
         const newCards = await assignAtom(atom.id)
         setUserAtoms([...userAtoms, atom])
+        onAssign()
         router.refresh()
         setDueCards((prevCards: any[]) => [...prevCards, ...newCards])
       }}
