@@ -21,6 +21,12 @@ export default async function Header() {
                 Inbox
                 <InboxNoties />
               </Link>
+              <Link className="ml-4" href="/atoms">
+                Atoms
+              </Link>
+              <Link className="ml-4" href="/">
+                Courses
+              </Link>
             </span>
             <span>{user.email}</span>
             <Logout />

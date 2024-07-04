@@ -5,32 +5,42 @@ import { useState } from 'react'
 import AnswerButtons from '@/app/components/flashcards/AnswerButtons'
 
 export default function CardReview({ card }: { card: any }) {
+  console.log('this is card in cardreview, the prop')
+  console.log(card)
   const [result, setResult] = useState<any>(null)
   const [isGrading, setIsGrading] = useState(false)
-  const { completion, setCompletion, input, handleInputChange, handleSubmit, error, isLoading } =
-    useCompletion({
-      api: '/api/feedback',
-      onFinish: async (prompt, completion) => {
-        setIsGrading(true)
-        const grade = await fetch('/api/grade', {
-          method: 'POST',
-          body: JSON.stringify({
-            feedback: completion,
-            userAnswer: input,
-            question: card?.flashcard?.question,
-            answer: card?.flashcard?.answer,
-          }),
-        })
+  const {
+    completion,
+    setCompletion,
+    input,
+    setInput,
+    handleInputChange,
+    handleSubmit,
+    error,
+    isLoading,
+  } = useCompletion({
+    api: '/api/feedback',
+    onFinish: async (prompt, completion) => {
+      setIsGrading(true)
+      const grade = await fetch('/api/grade', {
+        method: 'POST',
+        body: JSON.stringify({
+          feedback: completion,
+          userAnswer: input,
+          question: card?.flashcard?.question,
+          answer: card?.flashcard?.answer,
+        }),
+      })
 
-        const gradeResult = await grade.json()
-        setResult(gradeResult.grade)
-        setIsGrading(false)
-      },
-      body: {
-        question: card?.flashcard?.question,
-        answer: card?.flashcard?.answer,
-      },
-    })
+      const gradeResult = await grade.json()
+      setResult(gradeResult.grade)
+      setIsGrading(false)
+    },
+    body: {
+      question: card?.flashcard?.question,
+      answer: card?.flashcard?.answer,
+    },
+  })
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -53,6 +63,7 @@ export default function CardReview({ card }: { card: any }) {
         setCompletion={setCompletion}
         result={result}
         input={input}
+        setInput={setInput}
         setResult={setResult}
       />
     </div>
