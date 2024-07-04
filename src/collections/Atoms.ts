@@ -44,13 +44,7 @@ const Atoms: CollectionConfig = {
       relationTo: 'flashcards',
       hasMany: true,
     },
-    {
-      name: 'prereqs',
-      label: 'Prerequisites',
-      type: 'relationship',
-      relationTo: 'atoms',
-      hasMany: true,
-    },
+
     {
       type: 'row',
       fields: [

@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 import { Atom, Flashcard } from '../../payload-types'
 import { AtomAssignButton } from './AtomAssignButton'
@@ -64,7 +65,7 @@ const AtomCard: React.FC<{ atom: Atom; disabled: boolean }> = ({ atom, disabled 
         <div className="mt-4">{renderTabContent()}</div>
       </div>
       <div className="flex justify-center p-4">
-        <AtomAssignButton atom={atom} disabled={disabled} />
+        <AtomAssignButton atom={atom} />
       </div>
     </div>
   )

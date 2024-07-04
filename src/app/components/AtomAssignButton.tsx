@@ -2,9 +2,13 @@
 import { assignAtom } from '@/app/lib/flashcards/flashcardActions'
 import { useRouter } from 'next/navigation'
 import { useFlashcardContext } from '@/app/contexts/FlashcardContext'
+import { useAtomContext } from '@/app/contexts/AtomContext'
 
-export const AtomAssignButton = ({ atom, disabled }: { atom: any; disabled: boolean }) => {
+export const AtomAssignButton = ({ atom }: { atom: any }) => {
   const { setDueCards } = useFlashcardContext()
+  const { userAtoms } = useAtomContext()
+  console.log(userAtoms)
+  const disabled = userAtoms.some((userAtom: any) => userAtom.atom.id === atom.id)
 
   const router = useRouter()
   return (

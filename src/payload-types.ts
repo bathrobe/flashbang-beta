@@ -273,7 +273,6 @@ export interface Atom {
   details_html?: string | null;
   sourceQuote?: string | null;
   flashcards?: (number | Flashcard)[] | null;
-  prereqs?: (number | Atom)[] | null;
   lesson?: (number | null) | Lesson;
   number?: number | null;
   updatedAt: string;
@@ -288,6 +287,7 @@ export interface Flashcard {
   title?: string | null;
   question?: string | null;
   answer?: string | null;
+  relatedAtom?: (number | null) | Atom;
   updatedAt: string;
   createdAt: string;
 }
