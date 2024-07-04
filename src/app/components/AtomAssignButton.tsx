@@ -8,7 +8,7 @@ export const AtomAssignButton = ({ atom }: { atom: any }) => {
   const { setDueCards } = useFlashcardContext()
   const { userAtoms, setUserAtoms } = useAtomContext()
   console.log(userAtoms)
-  const disabled = userAtoms.some((userAtom: any) => userAtom?.atom?.id === atom?.id)
+  const disabled = userAtoms.some((userAtom: any) => userAtom?.id === atom?.id)
 
   const router = useRouter()
   return (
