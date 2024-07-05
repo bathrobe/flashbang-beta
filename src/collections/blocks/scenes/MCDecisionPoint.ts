@@ -32,8 +32,8 @@ export const MCDecisionPoint: any = {
           type: 'textarea',
         },
         {
-          name: 'decisionSlug',
-          type: 'text',
+          name: 'decisionData',
+          type: 'json',
         },
       ],
     },

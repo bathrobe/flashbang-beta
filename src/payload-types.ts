@@ -180,7 +180,15 @@ export interface Lesson {
               | {
                   answerText?: string | null;
                   answerMessage?: string | null;
-                  decisionSlug?: string | null;
+                  decisionData?:
+                    | {
+                        [k: string]: unknown;
+                      }
+                    | unknown[]
+                    | string
+                    | number
+                    | boolean
+                    | null;
                   id?: string | null;
                 }[]
               | null;

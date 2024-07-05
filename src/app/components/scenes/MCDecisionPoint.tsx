@@ -2,17 +2,19 @@
 import { useSceneContext } from '@/app/contexts/SceneContext'
 import { selectOrientationClass } from '@/app/lib/lessonActions/decisionActions'
 import NextSceneButton from '@/app/components/NextSceneButton'
-import { useState } from 'react'
+import { useUserContext } from '@/app/contexts/UserContext'
 
 const AnswerButton: React.FC<{
   answerMessage: string
   answerText: string
-  decisionSlug: string
+  decisionData: any
   setIsAnswered: (isAnswered: boolean) => void
-}> = ({ answerMessage, answerText, decisionSlug, setIsAnswered }) => {
+}> = ({ answerMessage, answerText, decisionData, setIsAnswered }) => {
+  const { setUserClass } = useUserContext()
   const handleClick = () => {
     alert(answerMessage)
-    selectOrientationClass(decisionSlug)
+    selectOrientationClass(decisionData)
+    setUserClass(decisionData.name)
     setIsAnswered(true)
   }
 
@@ -46,7 +48,7 @@ const MCDecisionPoint: React.FC<{ scene: any }> = ({ scene }) => {
               key={index}
               answerMessage={ac.answerMessage}
               answerText={ac.answerText}
-              decisionSlug={ac.decisionSlug}
+              decisionData={ac.decisionData}
               setIsAnswered={setIsCurrentQuestionAnswered}
             />
           ))}

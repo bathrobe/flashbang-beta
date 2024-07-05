@@ -5,6 +5,7 @@ import AtomContextProvider from '@/app/contexts/AtomContext'
 import { getDueCards } from '@/app/lib/flashcards/flashcardUtils'
 import authCheck from '@/app/lib/authCheck'
 import { getUserAtoms } from '@/app/lib/atomActions'
+import UserContextProvider from '@/app/contexts/UserContext'
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const user = await authCheck()
@@ -16,14 +17,17 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   if (user) {
     userAtoms = await getUserAtoms()
   }
+  console.log(user)
 
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen">
         <FlashcardContextProvider initialDueCards={dueCards}>
           <AtomContextProvider initialUserAtoms={userAtoms}>
-            <Header />
-            <main className="flex-grow">{children}</main>
+            <UserContextProvider initialUserClass={user?.userProfile?.orientationClass.name}>
+              <Header />
+              <main className="flex-grow">{children}</main>
+            </UserContextProvider>
           </AtomContextProvider>
         </FlashcardContextProvider>
       </body>
