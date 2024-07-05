@@ -5,10 +5,9 @@ import { useState } from 'react'
 import AnswerButtons from '@/app/components/flashcards/AnswerButtons'
 
 export default function CardReview({ card }: { card: any }) {
-  console.log('this is card in cardreview, the prop')
-  console.log(card)
   const [result, setResult] = useState<any>(null)
   const [isGrading, setIsGrading] = useState(false)
+  const [whenSeeCardAgain, setWhenSeeCardAgain] = useState(null)
   const {
     completion,
     setCompletion,

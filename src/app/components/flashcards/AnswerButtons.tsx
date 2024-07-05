@@ -27,7 +27,7 @@ const AnswerButtons: any = ({ setCompletion, result, input, setResult, setInput 
             buttonColors[colorIndex].split('-')[1]
           }-500`}
           onClick={async () => {
-            await answerCard(
+            const schedulingResult = await answerCard(
               dueCards[currentCardIndex],
               input,
               Rating[rating as keyof typeof Rating],

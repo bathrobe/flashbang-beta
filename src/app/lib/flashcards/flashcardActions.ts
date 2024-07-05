@@ -34,6 +34,7 @@ export async function answerCard(userFlashcard: any, input: any, rating: any) {
         },
       },
     })
+    return schedulingResult
   } catch (error) {
     console.error('Error in answerCard:', error)
     throw error // Re-throw to allow caller to handle or for global error handling

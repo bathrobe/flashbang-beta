@@ -14,7 +14,7 @@ export default async function Header() {
       <Link href="/" className="text-lg font-bold">
         Flashbang
       </Link>
-      <nav>
+      <nav className="">
         {user ? (
           <div className="flex items-center space-x-2 text-sm">
             <span className="border-r border-gray-900 pr-4 mr-2">
@@ -28,14 +28,29 @@ export default async function Header() {
               <Link className="ml-4" href="/">
                 Courses
               </Link>
+              <Link
+                className="ml-4"
+                href="https://flashbangapp.substack.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Subscribe
+              </Link>
             </span>
             <span>{user.email}</span>
             <Logout />
           </div>
         ) : (
-          <Link href="/auth/login" className="text-sm">
-            Login
-          </Link>
+          <div className="flex items-center space-x-2 text-sm">
+            <Link href="/auth/login">Login</Link>
+            <Link
+              href="https://flashbangapp.substack.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Subscribe
+            </Link>
+          </div>
         )}
         <div>{user ? <HUD /> : ''}</div>
       </nav>

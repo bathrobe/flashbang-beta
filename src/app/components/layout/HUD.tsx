@@ -15,18 +15,18 @@ export default function HUD() {
   const level = 1
 
   return (
-    <div className="border border-black p-2 mt-4">
+    <div className="p-2 mt-4">
       <div className="flex  items-center">
         <div className="flex items-center space-x-2">
           <Star className="w-5 h-5 text-yellow-400" />
-          <span className="font-bold">
+          <span className="">
             {userClass} - Level {level}
           </span>
         </div>
         {atomCount > 0 && (
           <div className="flex items-center ml-8">
             <Atom className="w-5 h-5 mr-1 text-blue-300" />
-            <span className="font-semibold">{atomCount}</span>
+            <span className="">{atomCount}</span>
           </div>
         )}
       </div>
