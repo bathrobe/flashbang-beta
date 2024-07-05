@@ -9,6 +9,7 @@ export default function SceneRouter() {
   const { currentScene, scenes } = useSceneContext()
   const scene = scenes[currentScene]
 
+  console.log(scene)
   if (scene.blockType === 'noInteraction') {
     return <NoInteraction scene={scene} />
   } else if (scene.blockType === 'mcKnowledgeCheck') {

@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, ReactNode } from 'react'
 
 type Scene = any // Define your scene type here
+type UserAtom = any // Define your user atom type here
 
 type SceneContextProviderProps = {
   children: ReactNode
@@ -10,6 +11,7 @@ type SceneContextProviderProps = {
   lessonSlug: string
   courseSlug: string
   userLesson: any
+  userAtomsData: UserAtom[]
 }
 
 const SceneContext = createContext<{
@@ -19,6 +21,7 @@ const SceneContext = createContext<{
   courseSlug: string
   lessonSlug: string
   userLesson: any
+  userAtomsData: UserAtom[]
   isCurrentQuestionAnswered: boolean
   setIsCurrentQuestionAnswered: React.Dispatch<React.SetStateAction<boolean>>
 } | null>(null)
@@ -29,6 +32,7 @@ export default function SceneContextProvider({
   courseSlug,
   lessonSlug,
   userLesson,
+  userAtomsData,
 }: SceneContextProviderProps) {
   const [currentScene, setCurrentScene] = useState(0)
   const [isCurrentQuestionAnswered, setIsCurrentQuestionAnswered] = useState(false)
@@ -42,6 +46,7 @@ export default function SceneContextProvider({
         courseSlug,
         lessonSlug,
         userLesson,
+        userAtomsData,
         isCurrentQuestionAnswered,
         setIsCurrentQuestionAnswered,
       }}

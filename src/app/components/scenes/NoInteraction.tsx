@@ -14,7 +14,10 @@ const NoInteraction: React.FC<{ scene: any }> = ({ scene }) => {
           />
         </div>
         <div className="w-1/2 pl-2 overflow-y-auto">
-          <div dangerouslySetInnerHTML={{ __html: scene.sceneExposition_html }} />
+          <div
+            dangerouslySetInnerHTML={{ __html: scene.sceneExposition_html }}
+            className="[&>ul]:list-disc [&>ul]:list-inside [&>a]:text-blue-500 [&>a]:underline"
+          />
         </div>
       </div>
       <NextSceneButton />

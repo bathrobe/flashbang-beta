@@ -48,6 +48,21 @@ export default async function ScenesPage({ params }: { params: any }) {
   const { docs: lesson } = lessonData
   const { scenes } = lesson[0]
 
+  const userAtoms = await payload.find({
+    collection: 'user-atoms',
+    where: {
+      user: {
+        equals: user?.id,
+      },
+      'atom.lesson.slug': {
+        equals: lessonSlug,
+      },
+    },
+    depth: 2,
+  })
+
+  const userAtomsData = userAtoms.docs
+
   return (
     <div>
       <SceneContextProvider
@@ -55,6 +70,7 @@ export default async function ScenesPage({ params }: { params: any }) {
         courseSlug={courseSlug}
         lessonSlug={lessonSlug}
         scenes={scenes || []}
+        userAtomsData={userAtomsData}
       >
         <SceneWrapper>
           <SceneRouter />
