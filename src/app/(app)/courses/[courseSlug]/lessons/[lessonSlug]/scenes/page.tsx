@@ -42,7 +42,8 @@ export default async function ScenesPage({ params }: { params: any }) {
 
   const userLesson = userLessons.find((lesson: any) => lesson.lesson.slug === lessonSlug)
   if (!userLesson) {
-    await enrollInLesson(lessonSlug)
+    // await enrollInLesson(lessonSlug)
+    console.log('enroll in lesson here, later')
   }
 
   const { docs: lesson } = lessonData

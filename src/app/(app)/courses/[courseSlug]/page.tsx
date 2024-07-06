@@ -11,15 +11,14 @@ const checkAuth = async () => {
     redirect('/auth/login')
   }
 }
-export const dynamic = 'force-dynamic'
 
+export const dynamic = 'force-dynamic'
 export default async function Page({ params }: { params: any }) {
   const { courseSlug } = params
 
   await checkAuth()
 
   const isCourseCompleted = await areAllCourseLessonsDone(courseSlug)
-  console.log('isCourseCompleted', isCourseCompleted)
   const payload = await getPayloadHMR({
     config: configPromise,
   })
@@ -45,6 +44,7 @@ export default async function Page({ params }: { params: any }) {
     const userLesson = userLessons.find((ul: any) => ul.lesson.id === lessonId)
     return userLesson?.isCompleted || false
   }
+  console.log(lessons)
   return (
     <div>
       <div className="max-w-4xl mx-auto p-8">

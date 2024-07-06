@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSceneContext } from '@/app/contexts/SceneContext'
 import NextSceneButton from '@/app/components/NextSceneButton'
+import ImageHolder from './ImageHolder'
 
 const AnswerButton: React.FC<{
   answerMessage: string
@@ -31,14 +32,8 @@ const MCKnowledgeCheck: React.FC<{ scene: any }> = ({ scene }) => {
 
   return (
     <>
-      <div className="flex flex-grow p-4">
-        <div className="w-1/2 pr-2">
-          <img
-            src={scene.cloudinaryUrl}
-            alt="Scene"
-            className="w-full h-full object-cover rounded-lg"
-          />
-        </div>
+      <div className="flex p-4">
+        <ImageHolder src={scene.cloudinaryUrl} />
         <div className="w-1/2 pl-2 overflow-y-auto flex flex-col">
           <div
             dangerouslySetInnerHTML={{ __html: scene.sceneExposition_html }}

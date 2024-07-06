@@ -15,7 +15,7 @@ export default function HUD() {
   const level = 1
 
   return (
-    <div className="p-2 mt-4">
+    <div className="p-2 ">
       <div className="flex  items-center">
         <div className="flex items-center space-x-2">
           <Star className="w-5 h-5 text-yellow-400" />

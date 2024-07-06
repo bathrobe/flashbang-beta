@@ -37,21 +37,43 @@ export async function enrollInLesson(lessonSlug: string) {
     const lesson = await getLessonBySlug(payload, lessonSlug)
     if (!lesson) throw new Error(`Lesson with slug '${lessonSlug}' not found`)
 
-    const newUserLesson: UserLesson = {
-      lesson: lesson.id,
-      isCompleted: false,
+    const existingLessonIndex = user.userData.userLessons.findIndex(
+      (ul: any) => ul.lesson.id === lesson.id,
+    )
+
+    let updatedUserLessons
+
+    if (existingLessonIndex !== -1) {
+      // Lesson already exists, update it
+      updatedUserLessons = [...user.userData.userLessons]
+      updatedUserLessons[existingLessonIndex] = {
+        ...updatedUserLessons[existingLessonIndex],
+        isCompleted: false,
+      }
+    } else {
+      // Add new lesson
+      updatedUserLessons = [
+        ...user.userData.userLessons,
+        {
+          lesson: {
+            id: lesson.id,
+            relationTo: 'lessons',
+          },
+          isCompleted: false,
+        },
+      ]
     }
 
-    //@ts-ignore
     const result = await payload.update({
       collection: 'users',
       id: user.id,
       data: {
         userData: {
-          userLessons: [...(user.userData?.userLessons || []), newUserLesson],
+          userLessons: updatedUserLessons,
         },
       },
     })
+
     console.log('Enrollment result:', result)
     return result
   } catch (error) {

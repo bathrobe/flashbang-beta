@@ -8,12 +8,15 @@ export default async function Header() {
   const user = await authCheck()
   return (
     <header
-      className="mt-2 flex justify-between p-2"
+      className="flex justify-between items-center p-2"
       style={{ height: 'var(--header-height, auto)' }}
     >
-      <Link href="/" className="text-lg font-bold">
-        Flashbang
-      </Link>
+      <div className="flex items-center">
+        <Link href="/" className="text-lg mr-4 font-bold border-r border-gray-900 pr-4">
+          Flashbang
+        </Link>
+        <div>{user ? <HUD /> : ''}</div>
+      </div>
       <nav className="">
         {user ? (
           <div className="flex items-center space-x-2 text-sm">
@@ -52,7 +55,6 @@ export default async function Header() {
             </Link>
           </div>
         )}
-        <div>{user ? <HUD /> : ''}</div>
       </nav>
     </header>
   )
