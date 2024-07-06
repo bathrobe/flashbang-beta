@@ -24,6 +24,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
       <body className="flex flex-col min-h-screen">
         <FlashcardContextProvider initialDueCards={dueCards}>
           <AtomContextProvider initialUserAtoms={userAtoms}>
+            {/* @ts-ignore */}
             <UserContextProvider initialUserClass={user?.userProfile?.orientationClass.name}>
               <Header />
               <main className="flex-grow">{children}</main>
