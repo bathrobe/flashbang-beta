@@ -43,6 +43,8 @@ export interface User {
     | number
     | boolean
     | null;
+  xp?: number | null;
+  level?: number | null;
   userData?: {
     userLessons?:
       | {
@@ -250,7 +252,7 @@ export interface Source {
   url?: string | null;
   description?: string | null;
   author?: string | null;
-  cloudinaryUrl?: string | null;
+  institution?: string | null;
   updatedAt: string;
   createdAt: string;
 }

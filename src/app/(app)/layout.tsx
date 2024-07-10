@@ -17,15 +17,20 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   if (user) {
     userAtoms = await getUserAtoms()
   }
-  console.log(user)
-
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen">
         <FlashcardContextProvider initialDueCards={dueCards}>
           <AtomContextProvider initialUserAtoms={userAtoms}>
             {/* @ts-ignore */}
-            <UserContextProvider initialUserClass={user?.userProfile?.orientationClass.name}>
+            <UserContextProvider
+              // @ts-ignore
+              initialUserClass={user?.userProfile?.orientationClass?.name}
+              // @ts-ignore
+              initialLevel={user?.level}
+              // @ts-ignore
+              initialXP={user?.xp}
+            >
               <Header />
               <main className="flex-grow">{children}</main>
             </UserContextProvider>

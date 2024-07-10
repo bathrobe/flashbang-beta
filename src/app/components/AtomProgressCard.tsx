@@ -3,18 +3,22 @@ import { Atom, UserFlashcard, Flashcard } from '../../payload-types'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 import dayjs from 'dayjs'
+import authCheck from '../lib/authCheck'
 
 const AtomProgressCard: React.FC<{ atom: Atom }> = async ({ atom }) => {
   const payload = await getPayloadHMR({
     config: configPromise,
   })
+  const user = await authCheck()
 
-  const atomFlashcards = atom.flashcards || []
   const userFlashcardsData = await payload.find({
     collection: 'user-flashcards',
     where: {
       flashcard: {
-        in: atomFlashcards.map((flashcard: any) => flashcard.id),
+        in: atom?.flashcards?.map((flashcard: any) => flashcard.id),
+      },
+      user: {
+        equals: user?.id,
       },
     },
     depth: 2,

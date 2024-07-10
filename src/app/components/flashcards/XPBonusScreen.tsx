@@ -1,13 +1,23 @@
 import React from 'react'
 import Link from 'next/link'
+import { calculateXP } from '@/app/lib/flashcards/xpCalculation'
 
 interface XPBonusScreenProps {
   reviewedCards: any[]
+  currentXP: number
+  currentLevel: number
 }
 
-const XPBonusScreen: React.FC<XPBonusScreenProps> = ({ reviewedCards }) => {
-  const xpGained = reviewedCards.length * 10 // Assuming 10 XP per reviewed card
-  const totalXP = xpGained // This is just an example, you might want to fetch total XP from somewhere else
+const XPBonusScreen: React.FC<XPBonusScreenProps> = ({
+  reviewedCards,
+  currentXP,
+  currentLevel,
+}) => {
+  // console.log(reviewedCards)
+  const xpGained = calculateXP(reviewedCards)
+  console.log(xpGained)
+  const newTotalXP = currentXP + xpGained
+  const newLevel = Math.floor(Math.sqrt(newTotalXP / 100)) + 1
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white text-black">
@@ -15,7 +25,11 @@ const XPBonusScreen: React.FC<XPBonusScreenProps> = ({ reviewedCards }) => {
         <h2 className="text-3xl mb-6 font-bold text-blue-600">XP Bonus!</h2>
         <p className="text-xl mb-4">You gained:</p>
         <p className="text-4xl text-green-500 mb-6 font-bold">{xpGained} XP</p>
-        <p className="text-lg mb-8">Total XP: {totalXP}</p>
+        <p className="text-lg mb-4">Total XP: {newTotalXP}</p>
+        <p className="text-lg mb-8">Level: {newLevel}</p>
+        {newLevel > currentLevel && (
+          <p className="text-2xl text-yellow-500 mb-6 font-bold">Level Up!</p>
+        )}
         <Link
           href="/atoms"
           className="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out transform hover:scale-105"

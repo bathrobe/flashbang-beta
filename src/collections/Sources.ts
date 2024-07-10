@@ -28,9 +28,9 @@ export const Sources: CollectionConfig = {
       type: 'text',
     },
     {
-      name: 'cloudinaryUrl',
+      name: 'institution',
       type: 'text',
-      label: 'Cloudinary URL',
+      label: 'Institution',
     },
   ],
 }

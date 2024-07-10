@@ -49,6 +49,16 @@ export const Users: CollectionConfig = {
       type: 'json',
     },
     {
+      name: 'xp',
+      type: 'number',
+      defaultValue: 0,
+    },
+    {
+      name: 'level',
+      type: 'number',
+      defaultValue: 1,
+    },
+    {
       name: 'userData',
       type: 'group',
       fields: [

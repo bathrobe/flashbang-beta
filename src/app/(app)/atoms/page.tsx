@@ -4,6 +4,8 @@ import AtomProgressCard from '@/app/components/AtomProgressCard'
 import authCheck from '@/app/lib/authCheck'
 import { redirect } from 'next/navigation'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AtomsPage() {
   const user = await authCheck()
   if (!user) {

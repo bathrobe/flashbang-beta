@@ -31,6 +31,9 @@ export default async function Header() {
               <Link className="ml-4" href="/">
                 Courses
               </Link>
+              <Link className="ml-4" href="/sources">
+                Sources
+              </Link>
               <Link
                 className="ml-4"
                 href="https://flashbangapp.substack.com"

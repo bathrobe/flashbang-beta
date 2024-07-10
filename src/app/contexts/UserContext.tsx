@@ -5,21 +5,40 @@ import { createContext, useContext, useState } from 'react'
 type UserContextProviderProps = {
   children: React.ReactNode
   initialUserClass: any
+  initialLevel: any
+  initialXP: any
 }
 
-const UserContext = createContext<any>(null)
+type UserContextType = {
+  userClass: any
+  setUserClass: React.Dispatch<React.SetStateAction<any>>
+  currentLevel: number
+  setCurrentLevel: React.Dispatch<React.SetStateAction<number>>
+  currentXP: number
+  setCurrentXP: React.Dispatch<React.SetStateAction<number>>
+}
+
+const UserContext = createContext<UserContextType | null>(null)
 
 export default function UserContextProvider({
   children,
   initialUserClass,
+  initialLevel,
+  initialXP,
 }: UserContextProviderProps) {
   const [userClass, setUserClass] = useState<any>(initialUserClass)
+  const [currentLevel, setCurrentLevel] = useState(initialLevel)
+  const [currentXP, setCurrentXP] = useState(initialXP)
 
   return (
     <UserContext.Provider
       value={{
         userClass,
         setUserClass,
+        currentLevel,
+        setCurrentLevel,
+        currentXP,
+        setCurrentXP,
       }}
     >
       {children}
