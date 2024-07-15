@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { calculateXP } from '@/app/lib/flashcards/xpCalculation'
+import { updateXP } from '@/app/lib/xpActions'
+import { useUserContext } from '@/app/contexts/UserContext'
 
 interface XPBonusScreenProps {
   reviewedCards: any[]
@@ -13,11 +15,19 @@ const XPBonusScreen: React.FC<XPBonusScreenProps> = ({
   currentXP,
   currentLevel,
 }) => {
-  // console.log(reviewedCards)
+  const { setCurrentXP, setCurrentLevel } = useUserContext()
   const xpGained = calculateXP(reviewedCards)
-  console.log(xpGained)
   const newTotalXP = currentXP + xpGained
   const newLevel = Math.floor(Math.sqrt(newTotalXP / 100)) + 1
+
+  useEffect(() => {
+    const updateUserXP = async () => {
+      await updateXP(newTotalXP)
+      setCurrentXP(newTotalXP)
+      setCurrentLevel(newLevel)
+    }
+    updateUserXP()
+  }, [])
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white text-black">

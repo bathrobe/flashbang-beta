@@ -14,9 +14,10 @@ export async function answerCard(userFlashcard: any, input: any, rating: any) {
     const user = await authCheck()
     // @ts-ignore
     const schedulingResult = srs.repeat(fsrs.current, fsrs.current.due)[rating]
-    console.log('schedulingResult')
-    console.log(schedulingResult)
     schedulingResult.log['userAnswerText'] = input
+    // define retrievability
+    // call func and store r var
+    // schedulingResult.retrievability = getRetrievability()
     const payload = await getPayloadHMR({ config: configPromise })
 
     if (!user) {

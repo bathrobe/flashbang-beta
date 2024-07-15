@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState } from 'react'
+import { useMemo } from 'react'
 
 type UserContextProviderProps = {
   children: React.ReactNode
@@ -30,20 +31,19 @@ export default function UserContextProvider({
   const [currentLevel, setCurrentLevel] = useState(initialLevel)
   const [currentXP, setCurrentXP] = useState(initialXP)
 
-  return (
-    <UserContext.Provider
-      value={{
-        userClass,
-        setUserClass,
-        currentLevel,
-        setCurrentLevel,
-        currentXP,
-        setCurrentXP,
-      }}
-    >
-      {children}
-    </UserContext.Provider>
+  const value = useMemo(
+    () => ({
+      userClass,
+      setUserClass,
+      currentLevel,
+      setCurrentLevel,
+      currentXP,
+      setCurrentXP,
+    }),
+    [userClass, currentLevel, currentXP],
   )
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
 
 export function useUserContext() {

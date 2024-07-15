@@ -4,6 +4,7 @@ import AtomCard from '@/app/components/AtomCard'
 import NextSceneButton from '@/app/components/NextSceneButton'
 import { useSceneContext } from '@/app/contexts/SceneContext'
 import { useAtomContext } from '@/app/contexts/AtomContext'
+import ContentHolder from '@/app/components/scenes/ContentHolder'
 
 const AtomAssignment: React.FC<{ scene: any }> = ({ scene }) => {
   const { userAtoms, setUserAtoms } = useAtomContext()
@@ -24,11 +25,8 @@ const AtomAssignment: React.FC<{ scene: any }> = ({ scene }) => {
             <AtomCard atom={scene.atom} isAtomAssigned={atomIsAssigned} onAssign={handleAssign} />
           )}
         </div>
-        <div className="w-1/2 pl-2 overflow-y-auto">
-          <div
-            dangerouslySetInnerHTML={{ __html: scene.sceneExposition_html }}
-            className="[&>ul]:list-disc [&>ul]:list-inside [&>a]:text-blue-500 [&>a]:underline"
-          />
+        <div className="w-1/2">
+          <ContentHolder content={scene.sceneExposition_html} />
         </div>
       </div>
       {atomIsAssigned ? <NextSceneButton /> : null}

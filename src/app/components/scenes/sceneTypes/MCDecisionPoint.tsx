@@ -3,6 +3,8 @@ import { useSceneContext } from '@/app/contexts/SceneContext'
 import { selectOrientationClass } from '@/app/lib/lessonActions/decisionActions'
 import NextSceneButton from '@/app/components/NextSceneButton'
 import { useUserContext } from '@/app/contexts/UserContext'
+import ContentHolder from '@/app/components/scenes/ContentHolder'
+import ImageHolder from '@/app/components/scenes/ImageHolder'
 
 const AnswerButton: React.FC<{
   answerMessage: string
@@ -30,19 +32,12 @@ const MCDecisionPoint: React.FC<{ scene: any }> = ({ scene }) => {
   return (
     <>
       <div className="flex flex-grow p-4">
-        <div className="w-1/2 pr-2">
-          <img
-            src={scene.cloudinaryUrl}
-            alt="Scene"
-            className="w-full h-full object-cover rounded-lg"
-          />
-        </div>
+        <ImageHolder src={scene.cloudinaryUrl} alt="Scene" />
         <div className="w-1/2 pl-2 overflow-y-auto flex flex-col">
-          <div
-            dangerouslySetInnerHTML={{ __html: scene.sceneExposition_html }}
-            className="[&>ul]:list-disc [&>ul]:list-inside"
-          />
-          <p className="mt-4 ">{scene.question}</p>
+          <ContentHolder content={scene.sceneExposition_html} />
+          <div className="my-8">
+            <ContentHolder content={scene.question} />
+          </div>
           {scene.answerChoices.map((ac: any, index: number) => (
             <AnswerButton
               key={index}

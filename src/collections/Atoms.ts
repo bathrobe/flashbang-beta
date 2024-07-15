@@ -39,6 +39,15 @@ const Atoms: CollectionConfig = {
       type: 'textarea',
     },
     {
+      name: 'sourceUrl',
+      type: 'text',
+    },
+    {
+      name: 'source',
+      type: 'relationship',
+      relationTo: 'sources',
+    },
+    {
       name: 'flashcards',
       type: 'relationship',
       relationTo: 'flashcards',

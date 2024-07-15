@@ -282,6 +282,8 @@ export interface Atom {
   } | null;
   details_html?: string | null;
   sourceQuote?: string | null;
+  sourceUrl?: string | null;
+  source?: (number | null) | Source;
   flashcards?: (number | Flashcard)[] | null;
   lesson?: (number | null) | Lesson;
   number?: number | null;
@@ -347,6 +349,8 @@ export interface UserAtom {
   id: number;
   atom?: (number | null) | Atom;
   user?: (number | null) | User;
+  level?: number | null;
+  xp?: number | null;
   updatedAt: string;
   createdAt: string;
 }

@@ -1,6 +1,6 @@
 // storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { LinkFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -16,7 +16,6 @@ import { Atoms } from './collections/Atoms'
 import { Flashcards } from './collections/Flashcards'
 import { UserFlashcards } from './collections/UserFlashcards'
 import { UserAtoms } from './collections/UserAtoms'
-
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -35,7 +34,41 @@ export default buildConfig({
     UserFlashcards,
     UserAtoms,
   ],
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      LinkFeature({
+        // Example showing how to customize the built-in fields
+        // of the Link feature
+        fields: [
+          {
+            name: 'rel',
+            label: 'Rel Attribute',
+            type: 'select',
+            hasMany: true,
+            options: ['noopener', 'noreferrer', 'nofollow'],
+            admin: {
+              description:
+                'The rel attribute defines the relationship between a linked resource and the current document. This is a custom link field.',
+            },
+          },
+          {
+            name: 'target',
+            label: 'Open in',
+            type: 'select',
+            defaultValue: '_blank',
+            options: [
+              { label: 'New Tab', value: '_blank' },
+              { label: 'Same Tab', value: '_self' },
+            ],
+            admin: {
+              description: 'Choose how the link should open.',
+            },
+          },
+        ],
+      }),
+    ],
+  }),
   // email: resendAdapter({
   //   defaultFromAddress: process.env.EMAIL_ADDRESS || '',
   //   defaultFromName: process.env.EMAIL_NAME || '',

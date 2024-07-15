@@ -4,15 +4,14 @@ import { useUserContext } from '@/app/contexts/UserContext'
 import { Atom, Star } from 'lucide-react'
 
 export default function HUD() {
+  console.log('HUD rendering')
   const { userAtoms } = useAtomContext()
-  const { userClass } = useUserContext()
+  const { userClass, currentLevel } = useUserContext()
   const atomCount = userAtoms?.length || 0
 
   if (atomCount === 0 && !userClass) {
     return null
   }
-
-  const level = 1
 
   return (
     <div className="p-2 ">
@@ -20,7 +19,7 @@ export default function HUD() {
         <div className="flex items-center space-x-2">
           <Star className="w-5 h-5 text-yellow-400" />
           <span className="">
-            {userClass} - Level {level}
+            {userClass} - Level {currentLevel}
           </span>
         </div>
         {atomCount > 0 && (

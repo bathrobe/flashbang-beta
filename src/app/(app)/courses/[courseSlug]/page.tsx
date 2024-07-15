@@ -44,7 +44,6 @@ export default async function Page({ params }: { params: any }) {
     const userLesson = userLessons.find((ul: any) => ul.lesson.id === lessonId)
     return userLesson?.isCompleted || false
   }
-  console.log(lessons)
   return (
     <div>
       <div className="max-w-4xl mx-auto p-8">

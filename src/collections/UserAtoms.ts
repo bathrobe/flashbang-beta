@@ -15,5 +15,20 @@ export const UserAtoms: CollectionConfig = {
       type: 'relationship',
       relationTo: 'users',
     },
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'level',
+          type: 'number',
+          defaultValue: 0,
+        },
+        {
+          name: 'xp',
+          type: 'number',
+          defaultValue: 0,
+        },
+      ],
+    },
   ],
 }
