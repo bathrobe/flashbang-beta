@@ -65,7 +65,11 @@ export default async function ScenesPage({ params }: { params: any }) {
 
   return (
     <div>
-      <SceneContextProvider
+      <div
+        className="prose prose-sm sm:prose lg:prose-lg xl:prose-xl mx-auto"
+        dangerouslySetInnerHTML={{ __html: lesson[0].exposition_html || '' }}
+      />
+      {/* <SceneContextProvider
         userLesson={userLesson}
         courseSlug={courseSlug}
         lessonSlug={lessonSlug}
@@ -75,7 +79,7 @@ export default async function ScenesPage({ params }: { params: any }) {
         <SceneWrapper>
           <SceneRouter />
         </SceneWrapper>
-      </SceneContextProvider>
+      </SceneContextProvider> */}
     </div>
   )
 }

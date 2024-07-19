@@ -104,6 +104,38 @@ export interface Lesson {
   cloudinaryUrl?: string | null;
   number?: number | null;
   course?: (number | null) | Course;
+  exposition?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  exposition_html?: string | null;
+  interactions?:
+    | {
+        question?: string | null;
+        answers?:
+          | {
+              answerText?: string | null;
+              isCorrect?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'multChoice';
+      }[]
+    | null;
+  atom?: (number | null) | Atom;
   scenes?:
     | (
         | {
