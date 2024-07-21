@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { calculateXP } from '@/app/lib/flashcards/xpCalculation'
-import { updateXP } from '@/app/lib/xpActions'
 import { useUserContext } from '@/app/contexts/UserContext'
 
 interface XPBonusScreenProps {
@@ -22,7 +21,6 @@ const XPBonusScreen: React.FC<XPBonusScreenProps> = ({
 
   useEffect(() => {
     const updateUserXP = async () => {
-      await updateXP(newTotalXP)
       setCurrentXP(newTotalXP)
       setCurrentLevel(newLevel)
     }
