@@ -34,13 +34,6 @@ export default async function Header() {
         ) : (
           <div className="flex items-center space-x-2 text-sm">
             <Link href="/auth/login">Login</Link>
-            <Link
-              href="https://flashbangapp.substack.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Subscribe
-            </Link>
           </div>
         )}
       </nav>

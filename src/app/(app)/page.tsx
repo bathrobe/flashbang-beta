@@ -1,4 +1,5 @@
 import { getUser } from '../lib/authHelpers'
+import LessonCard from '../components/lessons/LessonCard'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 import CourseCard from '../components/CourseCard'
@@ -15,11 +16,12 @@ export default async function Home() {
   })
   let { docs: courses } = coursesData
 
+  console.log(courses[0].lessons)
   return user ? (
     <div className="flex mt-16 items-center px-8 justify-center gap-4">
-      {courses.map((course) => (
-        <CourseCard key={course.id} course={course} />
-      ))}
+      {courses.map((course, idx) =>
+        course.lessons?.map((lesson) => <LessonCard key={idx} course={course} lesson={lesson} />),
+      )}
     </div>
   ) : (
     <Link href="/auth/login">Please login</Link>

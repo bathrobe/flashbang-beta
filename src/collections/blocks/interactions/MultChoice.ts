@@ -1,12 +1,17 @@
 import { Block } from 'payload'
+import { HTMLConverterFeature, lexicalEditor, lexicalHTML } from '@payloadcms/richtext-lexical'
 
 export const MultChoice: Block = {
   slug: 'multChoice',
   fields: [
     {
-      name: 'question',
-      type: 'text',
+      name: 'reviewQuestion',
+      type: 'richText',
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [...defaultFeatures, HTMLConverterFeature({})],
+      }),
     },
+    lexicalHTML('reviewQuestion', { name: 'reviewQuestion_html' }),
     {
       name: 'answers',
       type: 'array',
@@ -20,6 +25,14 @@ export const MultChoice: Block = {
           name: 'isCorrect',
           type: 'checkbox',
           defaultValue: false,
+        },
+        {
+          name: 'answerMessage',
+          type: 'text',
+          label: 'Answer Message',
+          admin: {
+            description: 'Message to display when this answer is selected',
+          },
         },
       ],
     },

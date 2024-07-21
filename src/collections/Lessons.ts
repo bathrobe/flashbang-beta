@@ -47,31 +47,13 @@ export const Lessons: CollectionConfig = {
           ],
         },
         {
-          label: 'Exposition',
+          label: 'Review',
           fields: [
             {
-              name: 'exposition',
+              name: 'review',
               type: 'blocks',
-              label: 'Exposition',
-              blocks: [
-                {
-                  slug: 'richText',
-                  fields: [
-                    {
-                      name: 'content',
-                      type: 'richText',
-                      editor: lexicalEditor({
-                        features: ({ defaultFeatures }) => [
-                          ...defaultFeatures,
-                          HTMLConverterFeature({}),
-                        ],
-                      }),
-                    },
-                    lexicalHTML('content', { name: 'content_html' }),
-                  ],
-                },
-                MultChoice,
-              ],
+              label: 'Review',
+              blocks: [MultChoice],
             },
           ],
         },
@@ -142,6 +124,11 @@ export const Lessons: CollectionConfig = {
                   name: 'source',
                   type: 'relationship',
                   relationTo: 'sources',
+                },
+                {
+                  name: 'specificSection',
+                  type: 'text',
+                  label: 'Specific Section of Source',
                 },
               ],
             },

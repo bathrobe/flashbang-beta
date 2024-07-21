@@ -103,43 +103,36 @@ export interface Lesson {
   course?: (number | null) | Course;
   number?: number | null;
   youTubeId?: string | null;
-  exposition?:
-    | (
-        | {
-            content?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
+  review?:
+    | {
+        reviewQuestion?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
               [k: string]: unknown;
-            } | null;
-            content_html?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'richText';
-          }
-        | {
-            question?: string | null;
-            answers?:
-              | {
-                  answerText?: string | null;
-                  isCorrect?: boolean | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'multChoice';
-          }
-      )[]
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        reviewQuestion_html?: string | null;
+        answers?:
+          | {
+              answerText?: string | null;
+              isCorrect?: boolean | null;
+              answerMessage?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'multChoice';
+      }[]
     | null;
   atom?: {
     shortSummary?: {
@@ -191,6 +184,7 @@ export interface Lesson {
     } | null;
     longSummary_html?: string | null;
     source?: (number | null) | Source;
+    specificSection?: string | null;
   };
   flashcards?: (number | Flashcard)[] | null;
   updatedAt: string;

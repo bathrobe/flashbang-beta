@@ -1,12 +1,18 @@
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
-import LessonVideo from '@/app/components/lessons/LessonVideo'
+import { authCheck } from '@/app/lib/authHelpers'
+import LessonContainer from '@/app/components/lessons/LessonContainer'
 
 export const dynamic = 'force-dynamic'
 
-const VideoPage = async ({ params }: { params: { lessonSlug: string } }) => {
+export default async function LessonPage({ params }: { params: any }) {
+  await authCheck()
+  // @ts-ignore
   const { lessonSlug } = params
-  const payload = await getPayloadHMR({ config: configPromise })
+
+  const payload = await getPayloadHMR({
+    config: configPromise,
+  })
 
   const lessonData = await payload.find({
     collection: 'lessons',
@@ -19,8 +25,9 @@ const VideoPage = async ({ params }: { params: { lessonSlug: string } }) => {
 
   const { docs: lessonDocs } = lessonData
   const lesson = lessonDocs[0]
-
-  return <LessonVideo lesson={lesson} />
+  return (
+    <div className="">
+      <LessonContainer lesson={lesson} />
+    </div>
+  )
 }
-
-export default VideoPage

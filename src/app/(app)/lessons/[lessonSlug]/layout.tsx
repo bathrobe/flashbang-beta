@@ -24,16 +24,15 @@ export default async function LessonLayout({
   const lesson = lessonData.docs[0]
 
   return (
-    <div className=" mx-auto">
-      {lesson.course && (
-        <h2 className="text-xl font-semibold mb-2 text-center text-gray-600">
-          {(lesson.course as any).title}
-        </h2>
-      )}
-      <h1 className="text-3xl font-bold mb-16 mt-4 text-center">
-        <span className="text-gray-500 text-2xl mr-2">Lesson {lesson.number}:</span>
-        {lesson.title}
-      </h1>
+    <div className="mx-auto max-w-4xl">
+      <div className="flex flex-col items-center ">
+        <div className="flex items-baseline space-x-4 mb-2">
+          {lesson.course && (
+            <h2 className="text-2xl font-semibold text-gray-700">{(lesson.course as any).title}</h2>
+          )}
+        </div>
+        <h3 className="text-3xl font-bold text-gray-900">{lesson.title}</h3>
+      </div>
       {children}
     </div>
   )
