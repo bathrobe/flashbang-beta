@@ -1,41 +1,22 @@
 import '@/globals.css'
 import Header from '@/app/components/layout/Header'
-import FlashcardContextProvider from '@/app/contexts/FlashcardContext'
-import AtomContextProvider from '@/app/contexts/AtomContext'
-import { getDueCards } from '@/app/lib/flashcards/flashcardUtils'
-import authCheck from '@/app/lib/authCheck'
-import { getUserAtoms } from '@/app/lib/atomActions'
+import Footer from '@/app/components/layout/Footer'
 import UserContextProvider from '@/app/contexts/UserContext'
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
-  const user = await authCheck()
-  let dueCards = []
-  if (user) {
-    dueCards = await getDueCards(user.id)
-  }
-  let userAtoms: any[] = []
-  if (user) {
-    userAtoms = await getUserAtoms()
-  }
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen">
-        <FlashcardContextProvider initialDueCards={dueCards}>
-          <AtomContextProvider initialUserAtoms={userAtoms}>
-            {/* @ts-ignore */}
-            <UserContextProvider
-              // @ts-ignore
-              initialUserClass={user?.userProfile?.orientationClass?.name}
-              // @ts-ignore
-              initialLevel={user?.level}
-              // @ts-ignore
-              initialXP={user?.xp}
-            >
-              <Header />
-              <main className="flex-grow">{children}</main>
-            </UserContextProvider>
-          </AtomContextProvider>
-        </FlashcardContextProvider>
+        <UserContextProvider
+          initialUserClass="1"
+          initialLevel={1}
+          initialXP={0}
+          initialDueCards={[]}
+        >
+          <Header />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </UserContextProvider>
       </body>
     </html>
   )

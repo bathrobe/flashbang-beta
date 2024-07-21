@@ -100,46 +100,12 @@ export interface Lesson {
   id: number;
   title: string;
   slug?: string | null;
-  description?: string | null;
-  cloudinaryUrl?: string | null;
-  number?: number | null;
   course?: (number | null) | Course;
-  exposition?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  exposition_html?: string | null;
-  interactions?:
-    | {
-        question?: string | null;
-        answers?:
-          | {
-              answerText?: string | null;
-              isCorrect?: boolean | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'multChoice';
-      }[]
-    | null;
-  atom?: (number | null) | Atom;
-  scenes?:
+  number?: number | null;
+  exposition?:
     | (
         | {
-            sceneExposition?: {
+            content?: {
               root: {
                 type: string;
                 children: {
@@ -154,106 +120,78 @@ export interface Lesson {
               };
               [k: string]: unknown;
             } | null;
-            sceneExposition_html?: string | null;
-            cloudinaryUrl?: string | null;
+            content_html?: string | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'noInteraction';
+            blockType: 'richText';
           }
         | {
-            sceneExposition?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            sceneExposition_html?: string | null;
-            cloudinaryUrl?: string | null;
             question?: string | null;
-            answerChoices?:
+            answers?:
               | {
                   answerText?: string | null;
-                  answerMessage?: string | null;
                   isCorrect?: boolean | null;
                   id?: string | null;
                 }[]
               | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'mcKnowledgeCheck';
-          }
-        | {
-            sceneExposition?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            sceneExposition_html?: string | null;
-            cloudinaryUrl?: string | null;
-            question?: string | null;
-            answerChoices?:
-              | {
-                  answerText?: string | null;
-                  answerMessage?: string | null;
-                  decisionData?:
-                    | {
-                        [k: string]: unknown;
-                      }
-                    | unknown[]
-                    | string
-                    | number
-                    | boolean
-                    | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'mcDecisionPoint';
-          }
-        | {
-            sceneExposition?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            sceneExposition_html?: string | null;
-            atom?: (number | null) | Atom;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'atomAssignment';
+            blockType: 'multChoice';
           }
       )[]
     | null;
+  atom?: {
+    shortSummary?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    shortSummary_html?: string | null;
+    mediumSummary?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    mediumSummary_html?: string | null;
+    longSummary?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    longSummary_html?: string | null;
+    source?: (number | null) | Source;
+  };
+  flashcards?: (number | Flashcard)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -290,40 +228,6 @@ export interface Source {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "atoms".
- */
-export interface Atom {
-  id: number;
-  title: string;
-  subtitle?: string | null;
-  summary?: string | null;
-  details?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  details_html?: string | null;
-  sourceQuote?: string | null;
-  sourceUrl?: string | null;
-  source?: (number | null) | Source;
-  flashcards?: (number | Flashcard)[] | null;
-  lesson?: (number | null) | Lesson;
-  number?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "flashcards".
  */
 export interface Flashcard {
@@ -355,6 +259,66 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "atoms".
+ */
+export interface Atom {
+  id: number;
+  shortSummary?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  shortSummary_html?: string | null;
+  mediumSummary?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  mediumSummary_html?: string | null;
+  longSummary?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  longSummary_html?: string | null;
+  source?: (number | null) | Source;
+  flashcards?: (number | Flashcard)[] | null;
+  number?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "user-flashcards".
  */
 export interface UserFlashcard {
@@ -379,7 +343,6 @@ export interface UserFlashcard {
  */
 export interface UserAtom {
   id: number;
-  atom?: (number | null) | Atom;
   user?: (number | null) | User;
   level?: number | null;
   xp?: number | null;

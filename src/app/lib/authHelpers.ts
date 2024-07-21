@@ -3,7 +3,7 @@ import configPromise from '@payload-config'
 import { headers as getHeaders } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-const authCheck = async () => {
+const getUser = async () => {
   const headers = getHeaders()
   const payload = await getPayloadHMR({
     config: configPromise,
@@ -13,4 +13,12 @@ const authCheck = async () => {
   return user
 }
 
-export default authCheck
+const authCheck = async () => {
+  const user = await getUser()
+  if (!user) {
+    redirect('/auth/login')
+  }
+  return user
+}
+
+export { getUser, authCheck }

@@ -1,13 +1,13 @@
 'use client'
 
-import { createContext, useContext, useState } from 'react'
-import { useMemo } from 'react'
+import { createContext, useContext, useState, useMemo } from 'react'
 
 type UserContextProviderProps = {
   children: React.ReactNode
   initialUserClass: any
   initialLevel: any
   initialXP: any
+  initialDueCards: any[]
 }
 
 type UserContextType = {
@@ -17,6 +17,12 @@ type UserContextType = {
   setCurrentLevel: React.Dispatch<React.SetStateAction<number>>
   currentXP: number
   setCurrentXP: React.Dispatch<React.SetStateAction<number>>
+  dueCards: any[]
+  setDueCards: React.Dispatch<React.SetStateAction<any[]>>
+  reviewedCards: any[]
+  setReviewedCards: React.Dispatch<React.SetStateAction<any[]>>
+  currentCardIndex: number
+  setCurrentCardIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
 const UserContext = createContext<UserContextType | null>(null)
@@ -26,10 +32,14 @@ export default function UserContextProvider({
   initialUserClass,
   initialLevel,
   initialXP,
+  initialDueCards,
 }: UserContextProviderProps) {
   const [userClass, setUserClass] = useState<any>(initialUserClass)
   const [currentLevel, setCurrentLevel] = useState(initialLevel)
   const [currentXP, setCurrentXP] = useState(initialXP)
+  const [dueCards, setDueCards] = useState<any[]>(initialDueCards)
+  const [reviewedCards, setReviewedCards] = useState<any[]>([])
+  const [currentCardIndex, setCurrentCardIndex] = useState<number>(0)
 
   const value = useMemo(
     () => ({
@@ -39,8 +49,14 @@ export default function UserContextProvider({
       setCurrentLevel,
       currentXP,
       setCurrentXP,
+      dueCards,
+      setDueCards,
+      reviewedCards,
+      setReviewedCards,
+      currentCardIndex,
+      setCurrentCardIndex,
     }),
-    [userClass, currentLevel, currentXP],
+    [userClass, currentLevel, currentXP, dueCards, reviewedCards, currentCardIndex],
   )
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>

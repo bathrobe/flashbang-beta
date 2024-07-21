@@ -7,40 +7,57 @@ const Atoms: CollectionConfig = {
   },
 
   labels: { plural: 'Atoms', singular: 'Atom' },
-  admin: { useAsTitle: 'title' },
+  admin: { useAsTitle: 'shortSummary_html' },
   fields: [
     {
-      name: 'title',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'subtitle',
-      type: 'text',
-    },
-    {
-      name: 'summary',
-      label: 'One Sentence Summary',
-      type: 'textarea',
-    },
-
-    {
-      name: 'details',
-      label: '2-3 Bullet Summary',
-      type: 'richText',
-      editor: lexicalEditor({
-        // @ts-ignore
-        features: ({ defaultFeatures }) => [...defaultFeatures, HTMLConverterFeature({})],
-      }),
-    },
-    lexicalHTML('details', { name: 'details_html' }),
-    {
-      name: 'sourceQuote',
-      type: 'textarea',
-    },
-    {
-      name: 'sourceUrl',
-      type: 'text',
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Short Summary',
+          fields: [
+            {
+              name: 'shortSummary',
+              label: 'Short Summary',
+              type: 'richText',
+              editor: lexicalEditor({
+                // @ts-ignore
+                features: ({ defaultFeatures }) => [...defaultFeatures, HTMLConverterFeature({})],
+              }),
+            },
+            lexicalHTML('shortSummary', { name: 'shortSummary_html' }),
+          ],
+        },
+        {
+          label: 'Medium Summary',
+          fields: [
+            {
+              name: 'mediumSummary',
+              label: 'Medium Summary',
+              type: 'richText',
+              editor: lexicalEditor({
+                // @ts-ignore
+                features: ({ defaultFeatures }) => [...defaultFeatures, HTMLConverterFeature({})],
+              }),
+            },
+            lexicalHTML('mediumSummary', { name: 'mediumSummary_html' }),
+          ],
+        },
+        {
+          label: 'Long Summary',
+          fields: [
+            {
+              name: 'longSummary',
+              label: 'Long Summary',
+              type: 'richText',
+              editor: lexicalEditor({
+                // @ts-ignore
+                features: ({ defaultFeatures }) => [...defaultFeatures, HTMLConverterFeature({})],
+              }),
+            },
+            lexicalHTML('longSummary', { name: 'longSummary_html' }),
+          ],
+        },
+      ],
     },
     {
       name: 'source',
@@ -57,11 +74,11 @@ const Atoms: CollectionConfig = {
     {
       type: 'row',
       fields: [
-        {
-          name: 'lesson',
-          type: 'relationship',
-          relationTo: 'lessons',
-        },
+        // {
+        //   name: 'lesson',
+        //   type: 'relationship',
+        //   relationTo: 'lessons',
+        // },
         {
           name: 'number',
           type: 'number',

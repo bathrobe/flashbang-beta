@@ -1,11 +1,11 @@
 'use server'
 
-import authCheck from './authCheck'
+import { getUser } from './authHelpers'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 
-export async function getUserAtoms() {
-  const user = await authCheck()
+export async function authHelpersAtoms() {
+  const user = await getUser()
   if (!user) throw new Error('User not authenticated')
 
   const payload = await getPayloadHMR({ config: configPromise })

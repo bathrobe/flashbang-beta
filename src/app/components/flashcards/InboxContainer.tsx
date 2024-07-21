@@ -1,13 +1,10 @@
 'use client'
-import { useFlashcardContext } from '@/app/contexts/FlashcardContext'
 import { useUserContext } from '@/app/contexts/UserContext'
 import CardReview from '@/app/components/flashcards/CardReview'
 import XPBonusScreen from '@/app/components/flashcards/XPBonusScreen'
 
 export default function CardReviewContainer() {
-  const { dueCards, reviewedCards, setReviewedCards, currentCardIndex, setCurrentCardIndex } =
-    useFlashcardContext()
-  const { currentLevel, currentXP } = useUserContext()
+  const { dueCards, reviewedCards, currentCardIndex, currentLevel, currentXP } = useUserContext()
 
   if (dueCards.length === 0 && reviewedCards.length === 0) {
     return <div>No due cards available.</div>

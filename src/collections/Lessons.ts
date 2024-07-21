@@ -1,9 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { HTMLConverterFeature, lexicalEditor, lexicalHTML } from '@payloadcms/richtext-lexical'
-import { MCKnowledgeCheck } from './blocks/scenes/MCKnowledgeCheck'
-import { MCDecisionPoint } from './blocks/scenes/MCDecisionPoint'
-import { NoInteraction } from './blocks/scenes/NoInteraction'
-import { AtomAssignment } from './blocks/scenes/AtomAssignment'
+
 import { MultChoice } from './blocks/interactions/MultChoice'
 
 export const Lessons: CollectionConfig = {
@@ -13,72 +10,145 @@ export const Lessons: CollectionConfig = {
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'slug',
-      type: 'text',
-    },
-    {
-      name: 'description',
-      type: 'textarea',
-    },
-    {
-      name: 'cloudinaryUrl',
-      type: 'text',
-      label: 'Cloudinary URL',
-    },
-    {
-      name: 'number',
-      type: 'number',
-    },
-    {
-      name: 'course',
-      type: 'relationship',
-      relationTo: 'courses',
-      hasMany: false,
-    },
-    {
-      name: 'exposition',
-      type: 'richText',
-      label: 'Exposition',
-      editor: lexicalEditor({
-        // @ts-ignore
-        features: ({ defaultFeatures }) => [...defaultFeatures, HTMLConverterFeature({})],
-      }),
-    },
-    lexicalHTML('exposition', { name: 'exposition_html' }),
-    {
-      name: 'interactions',
-      type: 'blocks',
-      label: 'Interactions',
-      minRows: 0,
-      maxRows: 50,
-      blocks: [
-        MultChoice,
-        // Import and add your interaction blocks here
-        // For example:
-        // MCInteraction,
-        // FillInTheBlankInteraction,
-        // DragAndDropInteraction,
+      type: 'row',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'slug',
+          type: 'text',
+        },
+        {
+          name: 'course',
+          type: 'relationship',
+          relationTo: 'courses',
+          hasMany: false,
+        },
+        {
+          name: 'number',
+          type: 'number',
+        },
       ],
     },
     {
-      name: 'atom',
-      type: 'relationship',
-      relationTo: 'atoms',
-      hasMany: false,
-    },
-
-    {
-      name: 'scenes',
-      type: 'blocks',
-      label: 'Scenes',
-      minRows: 1,
-      maxRows: 50,
-      blocks: [NoInteraction, MCKnowledgeCheck, MCDecisionPoint, AtomAssignment],
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Exposition',
+          fields: [
+            {
+              name: 'exposition',
+              type: 'blocks',
+              label: 'Exposition',
+              blocks: [
+                {
+                  slug: 'richText',
+                  fields: [
+                    {
+                      name: 'content',
+                      type: 'richText',
+                      editor: lexicalEditor({
+                        features: ({ defaultFeatures }) => [
+                          ...defaultFeatures,
+                          HTMLConverterFeature({}),
+                        ],
+                      }),
+                    },
+                    lexicalHTML('content', { name: 'content_html' }),
+                  ],
+                },
+                MultChoice,
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Atom',
+          fields: [
+            {
+              name: 'atom',
+              type: 'group',
+              fields: [
+                {
+                  type: 'tabs',
+                  tabs: [
+                    {
+                      label: 'Short Summary',
+                      fields: [
+                        {
+                          name: 'shortSummary',
+                          label: 'Short Summary',
+                          type: 'richText',
+                          editor: lexicalEditor({
+                            features: ({ defaultFeatures }) => [
+                              ...defaultFeatures,
+                              HTMLConverterFeature({}),
+                            ],
+                          }),
+                        },
+                        lexicalHTML('shortSummary', { name: 'shortSummary_html' }),
+                      ],
+                    },
+                    {
+                      label: 'Medium Summary',
+                      fields: [
+                        {
+                          name: 'mediumSummary',
+                          label: 'Medium Summary',
+                          type: 'richText',
+                          editor: lexicalEditor({
+                            features: ({ defaultFeatures }) => [
+                              ...defaultFeatures,
+                              HTMLConverterFeature({}),
+                            ],
+                          }),
+                        },
+                        lexicalHTML('mediumSummary', { name: 'mediumSummary_html' }),
+                      ],
+                    },
+                    {
+                      label: 'Long Summary',
+                      fields: [
+                        {
+                          name: 'longSummary',
+                          label: 'Long Summary',
+                          type: 'richText',
+                          editor: lexicalEditor({
+                            features: ({ defaultFeatures }) => [
+                              ...defaultFeatures,
+                              HTMLConverterFeature({}),
+                            ],
+                          }),
+                        },
+                        lexicalHTML('longSummary', { name: 'longSummary_html' }),
+                      ],
+                    },
+                  ],
+                },
+                {
+                  name: 'source',
+                  type: 'relationship',
+                  relationTo: 'sources',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Flashcards',
+          fields: [
+            {
+              name: 'flashcards',
+              type: 'relationship',
+              relationTo: 'flashcards',
+              hasMany: true,
+            },
+          ],
+        },
+      ],
     },
   ],
 }

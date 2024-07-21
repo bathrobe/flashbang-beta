@@ -2,11 +2,11 @@
 
 import { answerCard } from '@/app/lib/flashcards/flashcardActions'
 import { Rating } from 'ts-fsrs'
-import { useFlashcardContext } from '@/app/contexts/FlashcardContext'
+import { useUserContext } from '@/app/contexts/UserContext'
 
 const AnswerButtons: any = ({ setCompletion, result, input, setResult, setInput }: any) => {
   const { dueCards, setDueCards, reviewedCards, setReviewedCards, currentCardIndex } =
-    useFlashcardContext()
+    useUserContext()
   const ratings: string[] = ['Again', 'Hard', 'Good', 'Easy']
   const buttonColors = ['bg-red-800', 'bg-yellow-800', 'bg-green-800', 'bg-blue-800']
 

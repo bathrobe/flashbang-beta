@@ -1,8 +1,8 @@
 'use client'
-import { useFlashcardContext } from '@/app/contexts/FlashcardContext'
+import { useUserContext } from '@/app/contexts/UserContext'
 
 export default function InboxNoties() {
-  const { dueCards } = useFlashcardContext()
+  const { dueCards } = useUserContext()
   const dueCount = dueCards.length
   return (
     <span>

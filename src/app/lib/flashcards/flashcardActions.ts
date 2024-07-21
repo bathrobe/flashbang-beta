@@ -1,5 +1,5 @@
 'use server'
-import authCheck from '../authCheck'
+import { getUser } from '../authHelpers'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 import { redirect } from 'next/navigation'
@@ -11,7 +11,7 @@ export async function answerCard(userFlashcard: any, input: any, rating: any) {
   'use server'
   try {
     const { fsrs } = userFlashcard
-    const user = await authCheck()
+    const user = await getUser()
     // @ts-ignore
     const schedulingResult = srs.repeat(fsrs.current, fsrs.current.due)[rating]
     schedulingResult.log['userAnswerText'] = input
@@ -43,7 +43,7 @@ export async function answerCard(userFlashcard: any, input: any, rating: any) {
 }
 export async function assignAtom(atomId: any) {
   const payload = await getPayloadHMR({ config: configPromise })
-  const user = await authCheck()
+  const user = await getUser()
 
   if (!user) throw new Error('User not authenticated')
 
@@ -53,6 +53,7 @@ export async function assignAtom(atomId: any) {
     userAtomEntry = await payload.create({
       collection: 'user-atoms',
       data: {
+        // @ts-ignore
         atom: atomId,
         user: user.id,
       },
