@@ -27,17 +27,10 @@ export default async function LessonPage({ params }: { params: any }) {
   const lesson = lessonDocs[0]
   const { flashcards, atom } = lesson
   return (
-    <div>
-      {lesson.course && (
-        <h2 className="text-xl font-semibold mb-2 text-center text-gray-600">
-          {/* @ts-ignore */}
-          {lesson.course?.title}
-        </h2>
-      )}
-      <h1 className="text-3xl font-bold mb-24 mt-8 text-center">
-        <span className="text-gray-500 text-2xl mr-2">Lesson {lesson.number}:</span>
-        {lesson.title}
-      </h1>
+    <div className="">
+      <a href={`${params.lessonSlug}/video`} className="block mb-4 text-blue-500 hover:underline">
+        Watch Video
+      </a>
       <LessonContainer lesson={lesson} atom={atom} flashcards={flashcards} />
     </div>
   )

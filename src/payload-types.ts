@@ -102,6 +102,7 @@ export interface Lesson {
   slug?: string | null;
   course?: (number | null) | Course;
   number?: number | null;
+  youTubeId?: string | null;
   exposition?:
     | (
         | {

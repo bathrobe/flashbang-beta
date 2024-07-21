@@ -37,6 +37,16 @@ export const Lessons: CollectionConfig = {
       type: 'tabs',
       tabs: [
         {
+          label: 'Video',
+          fields: [
+            {
+              name: 'youTubeId',
+              type: 'text',
+              label: 'YouTube Video ID',
+            },
+          ],
+        },
+        {
           label: 'Exposition',
           fields: [
             {
