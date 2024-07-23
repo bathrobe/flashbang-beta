@@ -1,5 +1,5 @@
 'use client'
-import { assignAtom } from '@/app/lib/flashcards/flashcardActions'
+import { assignLesson } from '@/app/lib/lessonActions'
 import { useRouter } from 'next/navigation'
 
 export const AtomAssignButton = ({

@@ -45,60 +45,20 @@ export const Users: CollectionConfig = {
       ],
     },
     {
-      name: 'userProfile',
-      type: 'json',
-    },
-    {
-      name: 'xp',
-      type: 'number',
-      defaultValue: 0,
-    },
-    {
-      name: 'level',
-      type: 'number',
-      defaultValue: 1,
-    },
-    {
-      name: 'userData',
-      type: 'group',
+      name: 'lessons',
+      type: 'array',
+      label: 'User Lessons',
       fields: [
         {
-          name: 'userLessons',
-          type: 'array',
-          fields: [
-            {
-              name: 'lesson',
-              type: 'relationship',
-              relationTo: 'lessons',
-            },
-            {
-              name: 'isCompleted',
-              type: 'checkbox',
-            },
-            {
-              name: 'data',
-              type: 'json',
-            },
-          ],
+          name: 'lesson',
+          type: 'relationship',
+          relationTo: 'lessons',
+          required: true,
         },
         {
-          name: 'userCourses',
-          type: 'array',
-          fields: [
-            {
-              name: 'course',
-              type: 'relationship',
-              relationTo: 'courses',
-            },
-            {
-              name: 'isCompleted',
-              type: 'checkbox',
-            },
-            {
-              name: 'data',
-              type: 'json',
-            },
-          ],
+          name: 'isCompleted',
+          type: 'checkbox',
+          defaultValue: false,
         },
       ],
     },

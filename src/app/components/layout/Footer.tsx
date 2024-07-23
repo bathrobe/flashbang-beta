@@ -11,7 +11,6 @@ const Footer = () => (
       >
         Subscribe
       </Link>
-      <span className="text-xs text-gray-500">© 2024 Flashbang School</span>
     </div>
   </footer>
 )

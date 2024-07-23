@@ -4,59 +4,35 @@ import { createContext, useContext, useState, useMemo } from 'react'
 
 type UserContextProviderProps = {
   children: React.ReactNode
-  initialUserClass: any
-  initialLevel: any
-  initialXP: any
   initialDueCards: any[]
+  initialUserLessons: any[]
 }
 
 type UserContextType = {
-  userClass: any
-  setUserClass: React.Dispatch<React.SetStateAction<any>>
-  currentLevel: number
-  setCurrentLevel: React.Dispatch<React.SetStateAction<number>>
-  currentXP: number
-  setCurrentXP: React.Dispatch<React.SetStateAction<number>>
   dueCards: any[]
   setDueCards: React.Dispatch<React.SetStateAction<any[]>>
-  reviewedCards: any[]
-  setReviewedCards: React.Dispatch<React.SetStateAction<any[]>>
-  currentCardIndex: number
-  setCurrentCardIndex: React.Dispatch<React.SetStateAction<number>>
+  userLessons: any[]
+  setUserLessons: React.Dispatch<React.SetStateAction<any[]>>
 }
 
 const UserContext = createContext<UserContextType | null>(null)
 
 export default function UserContextProvider({
   children,
-  initialUserClass,
-  initialLevel,
-  initialXP,
   initialDueCards,
+  initialUserLessons,
 }: UserContextProviderProps) {
-  const [userClass, setUserClass] = useState<any>(initialUserClass)
-  const [currentLevel, setCurrentLevel] = useState(initialLevel)
-  const [currentXP, setCurrentXP] = useState(initialXP)
   const [dueCards, setDueCards] = useState<any[]>(initialDueCards)
-  const [reviewedCards, setReviewedCards] = useState<any[]>([])
-  const [currentCardIndex, setCurrentCardIndex] = useState<number>(0)
+  const [userLessons, setUserLessons] = useState<any[]>(initialUserLessons)
 
   const value = useMemo(
     () => ({
-      userClass,
-      setUserClass,
-      currentLevel,
-      setCurrentLevel,
-      currentXP,
-      setCurrentXP,
       dueCards,
       setDueCards,
-      reviewedCards,
-      setReviewedCards,
-      currentCardIndex,
-      setCurrentCardIndex,
+      userLessons,
+      setUserLessons,
     }),
-    [userClass, currentLevel, currentXP, dueCards, reviewedCards, currentCardIndex],
+    [dueCards, userLessons],
   )
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>

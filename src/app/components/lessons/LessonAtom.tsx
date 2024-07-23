@@ -1,10 +1,17 @@
+'use client'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { completeLesson } from '@/app/lib/lessonActions'
+import { useUserContext } from '@/app/contexts/UserContext'
 
-const LessonAtomCard: React.FC<{ lesson: any; onAssign: () => void }> = ({ lesson, onAssign }) => {
+const LessonAtomCard: React.FC<{ lesson: any; onAssign: () => void; isAssigned: boolean }> = ({
+  lesson,
+  onAssign,
+  isAssigned,
+}) => {
   const [currentView, setCurrentView] = useState('summary')
-
   const views = ['summary', 'details', 'source']
+  const { userLessons } = useUserContext()
 
   const renderSourceInfo = () => (
     <div className="space-y-2 text-sm">
@@ -25,6 +32,8 @@ const LessonAtomCard: React.FC<{ lesson: any; onAssign: () => void }> = ({ lesso
       )}
     </div>
   )
+
+  const isAlreadyAssigned = userLessons.some((userLesson) => userLesson.lesson.id === lesson.id)
 
   return (
     <div
@@ -66,8 +75,9 @@ const LessonAtomCard: React.FC<{ lesson: any; onAssign: () => void }> = ({ lesso
         </div>
         <div className="mt-4 text-center">
           <button
+            disabled={isAssigned || isAlreadyAssigned}
             onClick={onAssign}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded disabled:bg-gray-400"
           >
             Assign
           </button>
@@ -80,7 +90,7 @@ const LessonAtomCard: React.FC<{ lesson: any; onAssign: () => void }> = ({ lesso
 const LessonAtom: React.FC<{ lesson: any }> = ({ lesson }) => {
   const [isAssigned, setIsAssigned] = useState(false)
   const handleAssign = () => {
-    // Implement assign functionality here
+    completeLesson(lesson)
     setIsAssigned(true)
   }
 
@@ -95,7 +105,7 @@ const LessonAtom: React.FC<{ lesson: any }> = ({ lesson }) => {
         Click 'Assign' to add it to your deck.
       </p>
       <div className="flex flex-col items-center justify-center">
-        <LessonAtomCard lesson={lesson} onAssign={handleAssign} />
+        <LessonAtomCard lesson={lesson} onAssign={handleAssign} isAssigned={isAssigned} />
         {isAssigned && (
           <button
             onClick={() => {

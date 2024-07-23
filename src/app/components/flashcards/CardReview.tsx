@@ -4,10 +4,21 @@ import { useCompletion } from 'ai/react'
 import { useState } from 'react'
 import AnswerButtons from '@/app/components/flashcards/AnswerButtons'
 
-export default function CardReview({ card }: { card: any }) {
+export default function CardReview({
+  reviewedCards,
+  setReviewedCards,
+  currentCardIndex,
+  card,
+  handleCardReviewed,
+}: {
+  reviewedCards: any[]
+  setReviewedCards: any
+  currentCardIndex: number
+  card: any
+  handleCardReviewed: any
+}) {
   const [result, setResult] = useState<any>(null)
   const [isGrading, setIsGrading] = useState(false)
-  const [whenSeeCardAgain, setWhenSeeCardAgain] = useState(null)
   const {
     completion,
     setCompletion,
@@ -40,7 +51,6 @@ export default function CardReview({ card }: { card: any }) {
       answer: card?.flashcard?.answer,
     },
   })
-
   return (
     <div className="flex flex-col items-center w-full">
       <div className="my-4 text-center">
@@ -64,6 +74,10 @@ export default function CardReview({ card }: { card: any }) {
         input={input}
         setInput={setInput}
         setResult={setResult}
+        reviewedCards={reviewedCards}
+        setReviewedCards={setReviewedCards}
+        handleCardReviewed={handleCardReviewed}
+        currentCardIndex={currentCardIndex}
       />
     </div>
   )

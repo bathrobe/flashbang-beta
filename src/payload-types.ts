@@ -13,10 +13,8 @@ export interface Config {
     courses: Course;
     sources: Source;
     lessons: Lesson;
-    atoms: Atom;
     flashcards: Flashcard;
-    'user-flashcards': UserFlashcard;
-    'user-atoms': UserAtom;
+    userFlashcards: UserFlashcard;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -34,51 +32,13 @@ export interface User {
   id: number;
   name?: string | null;
   role?: ('admin' | 'user') | null;
-  userProfile?:
+  lessons?:
     | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
+        lesson: number | Lesson;
+        isCompleted?: boolean | null;
+        id?: string | null;
+      }[]
     | null;
-  xp?: number | null;
-  level?: number | null;
-  userData?: {
-    userLessons?:
-      | {
-          lesson?: (number | null) | Lesson;
-          isCompleted?: boolean | null;
-          data?:
-            | {
-                [k: string]: unknown;
-              }
-            | unknown[]
-            | string
-            | number
-            | boolean
-            | null;
-          id?: string | null;
-        }[]
-      | null;
-    userCourses?:
-      | {
-          course?: (number | null) | Course;
-          isCompleted?: boolean | null;
-          data?:
-            | {
-                [k: string]: unknown;
-              }
-            | unknown[]
-            | string
-            | number
-            | boolean
-            | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -254,73 +214,14 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "atoms".
- */
-export interface Atom {
-  id: number;
-  shortSummary?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  shortSummary_html?: string | null;
-  mediumSummary?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  mediumSummary_html?: string | null;
-  longSummary?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  longSummary_html?: string | null;
-  source?: (number | null) | Source;
-  flashcards?: (number | Flashcard)[] | null;
-  number?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "user-flashcards".
+ * via the `definition` "userFlashcards".
  */
 export interface UserFlashcard {
   id: number;
-  flashcard?: (number | null) | Flashcard;
   user?: (number | null) | User;
-  fsrs?:
+  flashcard?: (number | null) | Flashcard;
+  lesson?: (number | null) | Lesson;
+  current?:
     | {
         [k: string]: unknown;
       }
@@ -329,18 +230,15 @@ export interface UserFlashcard {
     | number
     | boolean
     | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "user-atoms".
- */
-export interface UserAtom {
-  id: number;
-  user?: (number | null) | User;
-  level?: number | null;
-  xp?: number | null;
+  log?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }

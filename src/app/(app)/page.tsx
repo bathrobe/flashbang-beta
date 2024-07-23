@@ -16,7 +16,6 @@ export default async function Home() {
   })
   let { docs: courses } = coursesData
 
-  console.log(courses[0].lessons)
   return user ? (
     <div className="flex mt-16 items-center px-8 justify-center gap-4">
       {courses.map((course, idx) =>

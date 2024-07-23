@@ -4,9 +4,17 @@ import { answerCard } from '@/app/lib/flashcards/flashcardActions'
 import { Rating } from 'ts-fsrs'
 import { useUserContext } from '@/app/contexts/UserContext'
 
-const AnswerButtons: any = ({ setCompletion, result, input, setResult, setInput }: any) => {
-  const { dueCards, setDueCards, reviewedCards, setReviewedCards, currentCardIndex } =
-    useUserContext()
+const AnswerButtons: any = ({
+  reviewedCards,
+  setReviewedCards,
+  setCompletion,
+  result,
+  input,
+  setResult,
+  setInput,
+  currentCardIndex,
+}: any) => {
+  const { dueCards, setDueCards } = useUserContext()
   const ratings: string[] = ['Again', 'Hard', 'Good', 'Easy']
   const buttonColors = ['bg-red-800', 'bg-yellow-800', 'bg-green-800', 'bg-blue-800']
 
@@ -27,7 +35,7 @@ const AnswerButtons: any = ({ setCompletion, result, input, setResult, setInput 
             buttonColors[colorIndex].split('-')[1]
           }-500`}
           onClick={async () => {
-            const schedulingResult = await answerCard(
+            await answerCard(
               dueCards[currentCardIndex],
               input,
               Rating[rating as keyof typeof Rating],

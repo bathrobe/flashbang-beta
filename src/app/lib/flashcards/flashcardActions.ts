@@ -3,94 +3,33 @@ import { getUser } from '../authHelpers'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 import { redirect } from 'next/navigation'
-import { fsrs, generatorParameters, createEmptyCard } from 'ts-fsrs'
+import { fsrs, generatorParameters } from 'ts-fsrs'
 
 const srs = fsrs(generatorParameters({ enable_fuzz: true, maximum_interval: 365 }))
 
-export async function answerCard(userFlashcard: any, input: any, rating: any) {
-  'use server'
+export async function answerCard(card: any, input: string, rating: number) {
   try {
-    const { fsrs } = userFlashcard
     const user = await getUser()
-    // @ts-ignore
-    const schedulingResult = srs.repeat(fsrs.current, fsrs.current.due)[rating]
-    schedulingResult.log['userAnswerText'] = input
-    // define retrievability
-    // call func and store r var
-    // schedulingResult.retrievability = getRetrievability()
-    const payload = await getPayloadHMR({ config: configPromise })
-
     if (!user) {
       redirect('/auth/login')
     }
 
+    const payload = await getPayloadHMR({ config: configPromise })
+
+    const schedulingResult = srs.repeat(card.current, new Date()) as any
+
     await payload.update({
-      collection: 'user-flashcards',
-      id: userFlashcard.id,
+      collection: 'userFlashcards',
+      id: card.id,
       data: {
-        // @ts-ignore
-        fsrs: {
-          current: schedulingResult.card,
-          logs: [schedulingResult.log, ...fsrs.logs],
-        },
+        current: schedulingResult[rating].card,
+        log: [schedulingResult[rating].log, ...(card.log || [])],
       },
     })
+
     return schedulingResult
   } catch (error) {
     console.error('Error in answerCard:', error)
-    throw error // Re-throw to allow caller to handle or for global error handling
-  }
-}
-export async function assignAtom(atomId: any) {
-  const payload = await getPayloadHMR({ config: configPromise })
-  const user = await getUser()
-
-  if (!user) throw new Error('User not authenticated')
-
-  let userAtomEntry = null
-
-  try {
-    userAtomEntry = await payload.create({
-      collection: 'user-atoms',
-      data: {
-        // @ts-ignore
-        atom: atomId,
-        user: user.id,
-      },
-    })
-
-    const atom = await payload.findByID({
-      collection: 'atoms',
-      id: atomId,
-    })
-
-    const nestedFcards = atom.flashcards || []
-    const assignPromises = nestedFcards.map((card: any) => assignCard(card.id, user.id))
-    const newCards = await Promise.all(assignPromises)
-
-    console.log('newCards', newCards)
-    return newCards
-  } catch (error) {
-    if (userAtomEntry) {
-      await payload.delete({
-        collection: 'user-atoms',
-        id: userAtomEntry.id,
-      })
-    }
     throw error
   }
-}
-
-export async function assignCard(flashcardId: any, userId: any) {
-  const fsrsData = createEmptyCard()
-  const payload = await getPayloadHMR({ config: configPromise })
-
-  return await payload.create({
-    collection: 'user-flashcards',
-    data: {
-      flashcard: flashcardId,
-      user: userId,
-      fsrs: JSON.stringify({ current: fsrsData, logs: [] }),
-    },
-  })
 }
