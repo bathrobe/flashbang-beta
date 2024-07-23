@@ -7,6 +7,7 @@ import Link from 'next/link'
 
 export default async function Home() {
   const user = await getUser()
+  console.log(user)
   const payload = await getPayloadHMR({
     config: configPromise,
   })

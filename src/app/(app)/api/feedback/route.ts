@@ -9,12 +9,12 @@ export const dynamic = 'force-dynamic'
 export async function POST(req: Request) {
   // Get the prompt from the request body
   const request = await req.json()
-  const { prompt, question, answer } = request
+  const { prompt, question, answer, context } = request
   const res = await streamText({
     model: openai('gpt-4'),
     messages: [
       { role: 'system', content: feedbackSystemPrompt },
-      { role: 'user', content: feedbackUserPrompt(question, answer, prompt) },
+      { role: 'user', content: feedbackUserPrompt(question, answer, prompt, context) },
     ],
   })
 

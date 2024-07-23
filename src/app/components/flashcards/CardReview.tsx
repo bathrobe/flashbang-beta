@@ -17,6 +17,7 @@ export default function CardReview({
   card: any
   handleCardReviewed: any
 }) {
+  console.log(card.lesson.atom.mediumSummary_html, 'CARD')
   const [result, setResult] = useState<any>(null)
   const [isGrading, setIsGrading] = useState(false)
   const {
@@ -39,6 +40,7 @@ export default function CardReview({
           userAnswer: input,
           question: card?.flashcard?.question,
           answer: card?.flashcard?.answer,
+          context: card?.lesson?.atom?.mediumSummary_html,
         }),
       })
 
@@ -52,15 +54,15 @@ export default function CardReview({
     },
   })
   return (
-    <div className="flex flex-col items-center w-full">
-      <div className="my-4 text-center">
+    <div className="flex flex-col items-center w-[65ch] mx-auto">
+      <div className="my-4 text-center mx-auto">
         <h2 className="text-xl font-semibold mb-4">{card?.flashcard?.question}</h2>
       </div>
-      <form onSubmit={handleSubmit} className="w-full max-w-md">
+      <form onSubmit={handleSubmit} className="w-full text-center mx-auto">
         <input
-          className="w-full p-3 mb-8 border border-gray-300 rounded-lg shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 text-lg"
+          className=" p-4 mb-10 border border-gray-300 w-full rounded-lg shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 text-xl  mx-auto "
           value={input}
-          placeholder="Answer here..."
+          placeholder="Answer here and press enter..."
           onChange={handleInputChange}
         />
       </form>

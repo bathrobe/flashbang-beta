@@ -1,7 +1,12 @@
 export const feedbackSystemPrompt = `You are a grader of flashcards.
 You're concise, direct, and great at explaining the missing parts of an answer.`
 
-export const feedbackUserPrompt = (question: string, answer: string, prompt: string) => {
+export const feedbackUserPrompt = (
+  question: string,
+  answer: string,
+  prompt: string,
+  context: string,
+) => {
   return `You'll be given a flashcard question, the correct answer, and the user's answer.
     You will respond with a message to the user grading their answer.
     
@@ -14,8 +19,10 @@ export const feedbackUserPrompt = (question: string, answer: string, prompt: str
     Don't open with predictable phrases like "Good job," or "Close, but missing some details."
     Instead, focus on the missing parts of the answer, or tell them they've got it right.
 
+    At the end of your feedback, use the CONTEXT to give them a little more information about the lesson the question comes from. The context will be in HTML. This extra information should be one additional sentence.
     QUESTION: ${question}
     ANSWER: ${answer}
     USER ANSWER: ${prompt}
+    CONTEXT: ${context}
     YOUR FEEDBACK:`
 }
