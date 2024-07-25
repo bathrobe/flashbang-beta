@@ -6,8 +6,8 @@ import { useUserContext } from '@/app/contexts/UserContext'
 
 const LessonCard: React.FC<{ course: any; lesson: any }> = ({ course, lesson }) => {
   const { title, slug, atom, id } = lesson
-  const { userLessons } = useUserContext()
-  const userLesson = userLessons.find((userLesson: any) => userLesson.lesson.id === id)
+  const { user } = useUserContext()
+  const userLesson = user.lessons.find((userLesson: any) => userLesson.lesson.id === id)
 
   return (
     <Link href={`/lessons/${slug}`}>

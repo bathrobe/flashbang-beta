@@ -2,16 +2,17 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { completeLesson } from '@/app/lib/lessonActions'
+import { getDueCards } from '@/app/lib/flashcards/flashcardUtils'
 import { useUserContext } from '@/app/contexts/UserContext'
 
-const LessonAtomCard: React.FC<{ lesson: any; onAssign: () => void; isAssigned: boolean }> = ({
-  lesson,
-  onAssign,
-  isAssigned,
-}) => {
+const LessonAtomCard: React.FC<{
+  lesson: any
+  onAssign: () => void
+  isAssigned: boolean
+}> = ({ lesson, onAssign, isAssigned }) => {
   const [currentView, setCurrentView] = useState('summary')
   const views = ['summary', 'details', 'source']
-  const { userLessons } = useUserContext()
+  const { user } = useUserContext()
 
   const renderSourceInfo = () => (
     <div className="space-y-2 text-sm">
@@ -33,7 +34,9 @@ const LessonAtomCard: React.FC<{ lesson: any; onAssign: () => void; isAssigned: 
     </div>
   )
 
-  const isAlreadyAssigned = userLessons.some((userLesson) => userLesson.lesson.id === lesson.id)
+  const isAlreadyAssigned = user?.lessons?.some(
+    (userLesson: any) => userLesson.lesson.id === lesson.id,
+  )
 
   return (
     <div
@@ -89,9 +92,12 @@ const LessonAtomCard: React.FC<{ lesson: any; onAssign: () => void; isAssigned: 
 
 const LessonAtom: React.FC<{ lesson: any }> = ({ lesson }) => {
   const [isAssigned, setIsAssigned] = useState(false)
-  const handleAssign = () => {
+  const { setDueCards, user, setUser } = useUserContext()
+  const handleAssign = async () => {
     completeLesson(lesson)
     setIsAssigned(true)
+    setDueCards(await getDueCards(user))
+    router.refresh()
   }
 
   const router = useRouter()

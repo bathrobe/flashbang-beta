@@ -7,13 +7,13 @@ import { getDueCards } from '@/app/lib/flashcards/flashcardUtils'
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const user = await getUser()
-  const userLessons = user?.lessons || []
   const dueCards = await getDueCards(user)
 
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen">
-        <UserContextProvider initialUserLessons={userLessons} initialDueCards={dueCards}>
+        {/* @ts-ignore */}
+        <UserContextProvider initialUser={user} initialDueCards={dueCards}>
           <Header />
           <main className="flex-grow">{children}</main>
           <Footer />

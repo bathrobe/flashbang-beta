@@ -5,14 +5,14 @@ import { createContext, useContext, useState, useMemo } from 'react'
 type UserContextProviderProps = {
   children: React.ReactNode
   initialDueCards: any[]
-  initialUserLessons: any[]
+  initialUser: any[] | null
 }
 
 type UserContextType = {
   dueCards: any[]
   setDueCards: React.Dispatch<React.SetStateAction<any[]>>
-  userLessons: any[]
-  setUserLessons: React.Dispatch<React.SetStateAction<any[]>>
+  user: any
+  setUser: React.Dispatch<React.SetStateAction<any>>
 }
 
 const UserContext = createContext<UserContextType | null>(null)
@@ -20,19 +20,19 @@ const UserContext = createContext<UserContextType | null>(null)
 export default function UserContextProvider({
   children,
   initialDueCards,
-  initialUserLessons,
+  initialUser,
 }: UserContextProviderProps) {
   const [dueCards, setDueCards] = useState<any[]>(initialDueCards)
-  const [userLessons, setUserLessons] = useState<any[]>(initialUserLessons)
+  const [user, setUser] = useState<any>(initialUser)
 
   const value = useMemo(
     () => ({
       dueCards,
       setDueCards,
-      userLessons,
-      setUserLessons,
+      user,
+      setUser,
     }),
-    [dueCards, userLessons],
+    [dueCards, user],
   )
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>

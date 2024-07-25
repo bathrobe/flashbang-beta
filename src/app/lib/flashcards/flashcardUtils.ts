@@ -1,3 +1,4 @@
+'use server'
 import dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { getPayloadHMR } from '@payloadcms/next/utilities'

@@ -2,12 +2,10 @@ import { getUser } from '../lib/authHelpers'
 import LessonCard from '../components/lessons/LessonCard'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
-import CourseCard from '../components/CourseCard'
 import Link from 'next/link'
 
 export default async function Home() {
   const user = await getUser()
-  console.log(user)
   const payload = await getPayloadHMR({
     config: configPromise,
   })
