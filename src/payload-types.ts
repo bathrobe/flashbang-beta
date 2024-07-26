@@ -62,7 +62,24 @@ export interface Lesson {
   slug?: string | null;
   course?: (number | null) | Course;
   number?: number | null;
+  disabled?: boolean | null;
   youTubeId?: string | null;
+  exposition?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  exposition_html?: string | null;
   review?:
     | {
         reviewQuestion?: {

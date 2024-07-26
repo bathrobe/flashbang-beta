@@ -34,16 +34,29 @@ export const Lessons: CollectionConfig = {
       ],
     },
     {
+      name: 'disabled',
+      type: 'checkbox',
+    },
+    {
       type: 'tabs',
       tabs: [
         {
-          label: 'Video',
+          label: 'Video/Exposition',
           fields: [
             {
               name: 'youTubeId',
               type: 'text',
               label: 'YouTube Video ID',
             },
+            {
+              name: 'exposition',
+              type: 'richText',
+              editor: lexicalEditor({
+                features: ({ defaultFeatures }) => [...defaultFeatures, HTMLConverterFeature({})],
+              }),
+              label: 'Exposition',
+            },
+            lexicalHTML('exposition', { name: 'exposition_html' }),
           ],
         },
         {

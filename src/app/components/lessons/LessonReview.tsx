@@ -61,10 +61,10 @@ const ReviewBlock = ({
   return (
     <div className="border border-gray-700 p-4 my-8 rounded-md">
       <div
-        className="prose w-[65ch] mx-auto"
+        className="text-xl mt-4 mb-12 text-center prose max-w-3xl mx-auto"
         dangerouslySetInnerHTML={{ __html: review.reviewQuestion_html }}
       />
-      <div className="flex flex-col gap-4">
+      <div className=" max-w-3xl mb-4 mx-auto flex flex-col gap-4">
         {review.answers.map((answer: Answer, index: number) => (
           <AnswerChoice
             key={index}
@@ -78,7 +78,7 @@ const ReviewBlock = ({
         ))}
       </div>
       {selectedAnswer && (
-        <div className="my-4">
+        <div className="max-w-[65ch] mx-auto my-8 text-center prose ">
           <p>
             {selectedAnswer.answerMessage
               ? selectedAnswer.answerMessage

@@ -6,6 +6,7 @@ import Link from 'next/link'
 
 export default async function Home() {
   const user = await getUser()
+
   const payload = await getPayloadHMR({
     config: configPromise,
   })
@@ -16,9 +17,16 @@ export default async function Home() {
   let { docs: courses } = coursesData
 
   return user ? (
-    <div className="flex mt-16 items-center px-8 justify-center gap-4">
-      {courses.map((course, idx) =>
-        course.lessons?.map((lesson) => <LessonCard key={idx} course={course} lesson={lesson} />),
+    <div className="flex flex-col w-full max-w-3xl mx-auto mt-16 items-stretch px-8 justify-center gap-4">
+      {courses.flatMap((course, courseIdx) =>
+        course?.lessons?.map((lesson, lessonIdx) => (
+          <LessonCard
+            key={`${courseIdx}-${lessonIdx}`}
+            course={course}
+            user={user}
+            lesson={lesson}
+          />
+        )),
       )}
     </div>
   ) : (

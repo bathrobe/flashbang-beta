@@ -7,10 +7,11 @@ import { useUserContext } from '@/app/contexts/UserContext'
 
 const LessonAtomCard: React.FC<{
   lesson: any
-  onAssign: () => void
+  onAssign: () => Promise<void>
   isAssigned: boolean
 }> = ({ lesson, onAssign, isAssigned }) => {
   const [currentView, setCurrentView] = useState('summary')
+  const [isAssigning, setIsAssigning] = useState(false)
   const views = ['summary', 'details', 'source']
   const { user } = useUserContext()
 
@@ -37,6 +38,12 @@ const LessonAtomCard: React.FC<{
   const isAlreadyAssigned = user?.lessons?.some(
     (userLesson: any) => userLesson.lesson.id === lesson.id,
   )
+
+  const handleAssign = async () => {
+    setIsAssigning(true)
+    await onAssign()
+    setIsAssigning(false)
+  }
 
   return (
     <div
@@ -78,11 +85,11 @@ const LessonAtomCard: React.FC<{
         </div>
         <div className="mt-4 text-center">
           <button
-            disabled={isAssigned || isAlreadyAssigned}
-            onClick={onAssign}
+            disabled={isAssigned || isAlreadyAssigned || isAssigning}
+            onClick={handleAssign}
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded disabled:bg-gray-400"
           >
-            Assign
+            {isAssigning ? 'Assigning...' : 'Assign'}
           </button>
         </div>
       </div>
