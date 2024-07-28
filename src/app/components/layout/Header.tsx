@@ -23,8 +23,8 @@ export default async function Header() {
                 <span className="mr-2">Inbox</span>
                 <InboxNoties />
               </Link>
-              <Link className="ml-4" href="/graph">
-                Graph
+              <Link className="ml-4" href="/atoms">
+                Atoms
               </Link>
             </span>
             <span>{user.email}</span>

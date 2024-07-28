@@ -83,7 +83,7 @@ dayjs.extend(isSameOrBefore)
 export const calculateXP = (card: Card, rating: number): number => {
   const baseXP = 50
   const difficultyMultiplier = Math.max(1, card.difficulty || 1)
-  const ratingBonus = rating * 10 // Higher rating gives more XP
+  const ratingBonus = rating * 3 // Higher rating gives more XP
 
   // Calculate XP based on difficulty and rating
   const xp = baseXP * difficultyMultiplier + ratingBonus

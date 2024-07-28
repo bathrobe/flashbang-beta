@@ -5,7 +5,7 @@ import { completeLesson } from '@/app/lib/lessonActions'
 import { getDueCards } from '@/app/lib/flashcards/flashcardActions'
 import { useUserContext } from '@/app/contexts/UserContext'
 
-const LessonAtomCard: React.FC<{
+export const LessonAtomCard: React.FC<{
   lesson: any
   onAssign: () => Promise<void>
   isAssigned: boolean
@@ -104,7 +104,7 @@ const LessonAtom: React.FC<{ lesson: any }> = ({ lesson }) => {
     completeLesson(lesson)
     setIsAssigned(true)
     setDueCards(await getDueCards(user))
-    router.refresh()
+    // router.refresh()
   }
 
   const router = useRouter()

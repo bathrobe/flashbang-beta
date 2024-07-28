@@ -72,3 +72,8 @@ export async function updateLessonXP(lessonId: string, newXP: number) {
     throw error
   }
 }
+export const getLearningLevel = (xp: number): string => {
+  if (xp >= 600) return 'Application'
+  if (xp >= 300) return 'Comprehension'
+  return 'Recall'
+}
