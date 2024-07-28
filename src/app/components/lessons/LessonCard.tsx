@@ -4,13 +4,12 @@ import React from 'react'
 import Link from 'next/link'
 import { useUserContext } from '@/app/contexts/UserContext'
 
-const LessonCard: React.FC<{ course: any; lesson: any; user: any }> = ({
+const LessonCard: React.FC<{ course: any; lesson: any; userLesson: any }> = ({
   course,
+  userLesson,
   lesson,
-  user,
 }) => {
   const { title, slug, atom, id } = lesson
-  const userLesson = user.lessons.find((userLesson: any) => userLesson.lesson.id === id)
 
   return (
     <Link href={`/lessons/${slug}`}>

@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { completeLesson } from '@/app/lib/lessonActions'
-import { getDueCards } from '@/app/lib/flashcards/flashcardUtils'
+import { getDueCards } from '@/app/lib/flashcards/flashcardActions'
 import { useUserContext } from '@/app/contexts/UserContext'
 
 const LessonAtomCard: React.FC<{

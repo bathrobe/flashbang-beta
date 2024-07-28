@@ -35,13 +35,17 @@ const AnswerButtons: any = ({
             buttonColors[colorIndex].split('-')[1]
           }-500`}
           onClick={async () => {
-            await answerCard(
+            const updatedCard = await answerCard(
               dueCards[currentCardIndex],
               input,
               Rating[rating as keyof typeof Rating],
             )
-            setDueCards(dueCards.filter((card: any) => card.id !== dueCards[currentCardIndex].id))
-            setReviewedCards([...reviewedCards, dueCards[currentCardIndex]])
+
+            setReviewedCards([
+              ...reviewedCards,
+              { ...updatedCard, xp: updatedCard.xp, lastXP: dueCards[currentCardIndex].xp },
+            ])
+            setDueCards(dueCards.filter((card: any) => card.id !== updatedCard.id))
             setCompletion('')
             setInput('')
             setResult(null)

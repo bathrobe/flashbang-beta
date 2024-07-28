@@ -44,23 +44,5 @@ export const Users: CollectionConfig = {
         { label: 'User', value: 'user' },
       ],
     },
-    {
-      name: 'lessons',
-      type: 'array',
-      label: 'User Lessons',
-      fields: [
-        {
-          name: 'lesson',
-          type: 'relationship',
-          relationTo: 'lessons',
-          required: true,
-        },
-        {
-          name: 'isCompleted',
-          type: 'checkbox',
-          defaultValue: false,
-        },
-      ],
-    },
   ],
 }

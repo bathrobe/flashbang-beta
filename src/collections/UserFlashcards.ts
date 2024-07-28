@@ -29,29 +29,50 @@ export const UserFlashcards: CollectionConfig = {
   },
   fields: [
     {
-      name: 'user',
-      type: 'relationship',
-      relationTo: 'users',
+      type: 'row',
+      fields: [
+        {
+          name: 'user',
+          type: 'relationship',
+          relationTo: 'users',
+        },
+        {
+          name: 'xp',
+          type: 'number',
+          label: 'XP',
+          defaultValue: 0,
+        },
+      ],
     },
     {
-      name: 'flashcard',
-      type: 'relationship',
-      relationTo: 'flashcards',
+      type: 'row',
+      fields: [
+        {
+          name: 'lesson',
+          type: 'relationship',
+          relationTo: 'lessons',
+        },
+        {
+          name: 'flashcard',
+          type: 'relationship',
+          relationTo: 'flashcards',
+        },
+      ],
     },
     {
-      name: 'lesson',
-      type: 'relationship',
-      relationTo: 'lessons',
-    },
-    {
-      name: 'current',
-      type: 'json',
-      label: 'Current State',
-    },
-    {
-      name: 'log',
-      type: 'json',
-      label: 'Review Log',
+      type: 'row',
+      fields: [
+        {
+          name: 'current',
+          type: 'json',
+          label: 'Current State',
+        },
+        {
+          name: 'log',
+          type: 'json',
+          label: 'Review Log',
+        },
+      ],
     },
   ],
 }

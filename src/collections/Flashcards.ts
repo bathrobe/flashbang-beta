@@ -20,5 +20,15 @@ export const Flashcards: CollectionConfig = {
       name: 'answer', // required
       type: 'text', // required
     },
+    {
+      name: 'lesson',
+      type: 'relationship',
+      relationTo: 'lessons',
+    },
+    {
+      name: 'learningPhase',
+      type: 'relationship',
+      relationTo: 'learning-phases',
+    },
   ],
 }

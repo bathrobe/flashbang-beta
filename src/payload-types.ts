@@ -11,9 +11,11 @@ export interface Config {
     users: User;
     media: Media;
     courses: Course;
+    userLessons: UserLesson;
     sources: Source;
     lessons: Lesson;
     flashcards: Flashcard;
+    'learning-phases': LearningPhase;
     userFlashcards: UserFlashcard;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -32,13 +34,6 @@ export interface User {
   id: number;
   name?: string | null;
   role?: ('admin' | 'user') | null;
-  lessons?:
-    | {
-        lesson: number | Lesson;
-        isCompleted?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -51,6 +46,56 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export interface Course {
+  id: number;
+  title: string;
+  slug?: string | null;
+  description?: string | null;
+  cloudinaryUrl?: string | null;
+  sources?: (number | Source)[] | null;
+  lessons?: (number | Lesson)[] | null;
+  prereqs?: (number | Course)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sources".
+ */
+export interface Source {
+  id: number;
+  title: string;
+  slug?: string | null;
+  url?: string | null;
+  description?: string | null;
+  author?: string | null;
+  institution?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -169,37 +214,6 @@ export interface Lesson {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "courses".
- */
-export interface Course {
-  id: number;
-  title: string;
-  slug?: string | null;
-  description?: string | null;
-  cloudinaryUrl?: string | null;
-  sources?: (number | Source)[] | null;
-  lessons?: (number | Lesson)[] | null;
-  prereqs?: (number | Course)[] | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sources".
- */
-export interface Source {
-  id: number;
-  title: string;
-  slug?: string | null;
-  url?: string | null;
-  description?: string | null;
-  author?: string | null;
-  institution?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "flashcards".
  */
 export interface Flashcard {
@@ -207,27 +221,35 @@ export interface Flashcard {
   title?: string | null;
   question?: string | null;
   answer?: string | null;
+  lesson?: (number | null) | Lesson;
+  learningPhase?: (number | null) | LearningPhase;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "learning-phases".
  */
-export interface Media {
+export interface LearningPhase {
   id: number;
-  alt: string;
+  title?: string | null;
+  description?: string | null;
+  stage?: number | null;
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "userLessons".
+ */
+export interface UserLesson {
+  id: number;
+  user: number | User;
+  lesson: number | Lesson;
+  isCompleted?: boolean | null;
+  xp?: number | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -236,8 +258,9 @@ export interface Media {
 export interface UserFlashcard {
   id: number;
   user?: (number | null) | User;
-  flashcard?: (number | null) | Flashcard;
+  xp?: number | null;
   lesson?: (number | null) | Lesson;
+  flashcard?: (number | null) | Flashcard;
   current?:
     | {
         [k: string]: unknown;

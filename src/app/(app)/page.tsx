@@ -16,17 +16,30 @@ export default async function Home() {
   })
   let { docs: courses } = coursesData
 
+  const userLessons = await payload.find({
+    collection: 'userLessons',
+    where: {
+      user: {
+        equals: user?.id,
+      },
+    },
+  })
+
   return user ? (
     <div className="flex flex-col w-full max-w-3xl mx-auto mt-16 items-stretch px-8 justify-center gap-4">
       {courses.flatMap((course, courseIdx) =>
-        course?.lessons?.map((lesson, lessonIdx) => (
-          <LessonCard
-            key={`${courseIdx}-${lessonIdx}`}
-            course={course}
-            user={user}
-            lesson={lesson}
-          />
-        )),
+        course?.lessons?.map((lesson, lessonIdx) => {
+          // @ts-ignore
+          const userLesson = userLessons.docs.find((ul) => ul.lesson.id === lesson.id)
+          return (
+            <LessonCard
+              key={`${courseIdx}-${lessonIdx}`}
+              lesson={lesson}
+              course={course}
+              userLesson={userLesson}
+            />
+          )
+        }),
       )}
     </div>
   ) : (

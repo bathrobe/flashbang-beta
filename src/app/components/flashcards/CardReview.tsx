@@ -17,7 +17,6 @@ export default function CardReview({
   card: any
   handleCardReviewed: any
 }) {
-  console.log(card.lesson.atom.mediumSummary_html, 'CARD')
   const [result, setResult] = useState<any>(null)
   const [isGrading, setIsGrading] = useState(false)
   const {
