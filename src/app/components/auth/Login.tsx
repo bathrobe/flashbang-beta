@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, FormEvent, ChangeEvent } from 'react'
-import { loginUser } from 'src/app/lib/authActions'
+import { loginUser } from '@/app/lib/auth'
 import Link from 'next/link'
 
 const Login = () => {

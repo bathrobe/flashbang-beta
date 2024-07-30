@@ -1,6 +1,6 @@
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
-import { authCheck } from '@/app/lib/authHelpers'
+import { authCheck } from '@/app/lib/auth'
 import LessonContainer from '@/app/components/lessons/LessonContainer'
 
 export const dynamic = 'force-dynamic'

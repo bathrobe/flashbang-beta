@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, FormEvent, ChangeEvent } from 'react'
-import { forgotPassword } from 'src/app/lib/authActions'
+import { forgotPassword } from '@/app/lib/auth'
 
 export default function CreateAccount() {
   const [formData, setFormData] = useState({ email: '', password: '' })

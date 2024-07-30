@@ -24,10 +24,5 @@ export const UserLessons: CollectionConfig = {
       type: 'checkbox',
       defaultValue: false,
     },
-    {
-      name: 'xp',
-      type: 'number',
-      defaultValue: 0,
-    },
   ],
 }

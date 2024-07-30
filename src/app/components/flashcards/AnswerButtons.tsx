@@ -1,6 +1,6 @@
 'use client'
 
-import { answerCard } from '@/app/lib/flashcards/flashcardActions'
+import { answerCard } from '@/app/lib/flashcards'
 import { Rating } from 'ts-fsrs'
 import { useUserContext } from '@/app/contexts/UserContext'
 
@@ -41,10 +41,7 @@ const AnswerButtons: any = ({
               Rating[rating as keyof typeof Rating],
             )
 
-            setReviewedCards([
-              ...reviewedCards,
-              { ...updatedCard, xp: updatedCard.xp, lastXP: dueCards[currentCardIndex].xp },
-            ])
+            setReviewedCards([...reviewedCards, { ...updatedCard }])
             setDueCards(dueCards.filter((card: any) => card.id !== updatedCard.id))
             setCompletion('')
             setInput('')

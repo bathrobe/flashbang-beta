@@ -1,5 +1,5 @@
 'use server'
-import { getUser } from '../authHelpers'
+import { getUser } from './auth'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 import { redirect } from 'next/navigation'
@@ -58,17 +58,18 @@ export async function answerCard(card: any, input: string, rating: number) {
 
     const schedulingResult = srs.repeat(card.current, new Date()) as any
 
-    const xp = await getNewXP(card, rating)
+    const today = dayjs()
+    const dueDate = dayjs(schedulingResult[rating].card.due)
 
-    schedulingResult[rating].log.xp = calculateXP(card, rating)
-
+    if (dueDate.isSame(today, 'day')) {
+      schedulingResult[rating].card.due = today.add(1, 'day').toDate()
+    }
     const updatedCard = await payload.update({
       collection: 'userFlashcards',
       id: card.id,
       data: {
         current: schedulingResult[rating].card,
         log: [schedulingResult[rating].log, ...(card.log || [])],
-        xp: Number(xp),
       },
     })
     return updatedCard
@@ -76,39 +77,4 @@ export async function answerCard(card: any, input: string, rating: number) {
     console.error('Error in answerCard:', error)
     throw error
   }
-}
-
-dayjs.extend(isSameOrBefore)
-
-export const calculateXP = (card: Card, rating: number): number => {
-  const baseXP = 50
-  const difficultyMultiplier = Math.max(1, card.difficulty || 1)
-  const ratingBonus = rating * 3 // Higher rating gives more XP
-
-  // Calculate XP based on difficulty and rating
-  const xp = baseXP * difficultyMultiplier + ratingBonus
-
-  // Apply a level curve to simulate JRPG-style progression
-  const levelCurve = Math.log(xp) * 20
-
-  return Math.round(levelCurve)
-}
-
-export const getLastXP = (card: any) => {
-  if (!card.log || card.log.length === 0) return 0
-
-  const logDates = card.log.map((logItem: any) => dayjs(logItem.review))
-  const lastReviewDate = dayjs.max(logDates)
-
-  const lastLog = card.log.find((logItem: any) => dayjs(logItem.review).isSame(lastReviewDate))
-
-  return lastLog?.xp || 0
-}
-
-export const getNewXP = async (card: any, rating: number) => {
-  const lastXP = await getLastXP(card)
-  console.log('lastXp', lastXP)
-  const newXP = await calculateXP(card, rating)
-  console.log('newXP', newXP)
-  return newXP - (lastXP || 0)
 }

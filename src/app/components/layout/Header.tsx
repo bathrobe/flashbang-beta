@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getUser } from '@/app/lib/authHelpers'
+import { getUser } from '@/app/lib/auth'
 import Logout from 'src/app/components/auth/Logout'
 import InboxNoties from './InboxNoties'
 

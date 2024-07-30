@@ -3,8 +3,6 @@ import React, { useState } from 'react'
 import { useUserContext } from '@/app/contexts/UserContext'
 
 const AtomPageCard: React.FC<{ lesson: any }> = ({ lesson }) => {
-  console.log(lesson)
-  const { xp } = lesson
   const { lesson: lessonData } = lesson
   const [currentView, setCurrentView] = useState('summary')
   const views = ['summary', 'details', 'source', 'flashcards']
@@ -40,9 +38,6 @@ const AtomPageCard: React.FC<{ lesson: any }> = ({ lesson }) => {
           <div key={flashcard.id} className="border p-4 rounded">
             <p className="font-bold">{flashcard.flashcard.front}</p>
             <p className="mt-2">{flashcard.flashcard.back}</p>
-            <p className="mt-2 text-sm text-gray-600">
-              Stability: {flashcard.current.stability.toFixed(2)}
-            </p>
           </div>
         ))}
       </div>
@@ -53,7 +48,6 @@ const AtomPageCard: React.FC<{ lesson: any }> = ({ lesson }) => {
     <div className="bg-white border-2 border-gray-300 rounded-lg shadow-md overflow-hidden w-full max-w-2xl mx-auto">
       <div className="p-4">
         <h2 className="text-xl font-medium text-center text-gray-600 mb-3">{lessonData.title}</h2>
-        <div className="text-center text-2xl font-bold text-blue-600 mb-3">XP: {lesson.xp}</div>
         <div className="flex flex-row items-center justify-center mb-3 space-x-2">
           {views.map((view) => (
             <button

@@ -15,7 +15,6 @@ export interface Config {
     sources: Source;
     lessons: Lesson;
     flashcards: Flashcard;
-    'learning-phases': LearningPhase;
     userFlashcards: UserFlashcard;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -222,19 +221,6 @@ export interface Flashcard {
   question?: string | null;
   answer?: string | null;
   lesson?: (number | null) | Lesson;
-  learningPhase?: (number | null) | LearningPhase;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "learning-phases".
- */
-export interface LearningPhase {
-  id: number;
-  title?: string | null;
-  description?: string | null;
-  stage?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -247,7 +233,6 @@ export interface UserLesson {
   user: number | User;
   lesson: number | Lesson;
   isCompleted?: boolean | null;
-  xp?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -258,7 +243,6 @@ export interface UserLesson {
 export interface UserFlashcard {
   id: number;
   user?: (number | null) | User;
-  xp?: number | null;
   lesson?: (number | null) | Lesson;
   flashcard?: (number | null) | Flashcard;
   current?:

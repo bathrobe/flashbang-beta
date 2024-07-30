@@ -1,4 +1,4 @@
-import { getUser } from '../lib/authHelpers'
+import { getUser } from '../lib/auth'
 import LessonCard from '../components/lessons/LessonCard'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'

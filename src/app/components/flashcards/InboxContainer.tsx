@@ -1,15 +1,13 @@
 'use client'
 import { useState } from 'react'
+import dayjs from 'dayjs'
 import { useUserContext } from '@/app/contexts/UserContext'
 import CardReview from '@/app/components/flashcards/CardReview'
-import { getLastXP, calculateXP, getNewXP } from '@/app/lib/flashcards/flashcardActions'
-import { updateLessonXP } from '@/app/lib/lessonActions'
 
 export default function InboxContainer() {
   const { dueCards, setDueCards } = useUserContext()
   const [currentCardIndex, setCurrentCardIndex] = useState(0)
   const [reviewedCards, setReviewedCards] = useState<any[]>([])
-  const { userLessons } = useUserContext()
 
   const handleCardReviewed = (reviewedCard: any) => {
     setReviewedCards([...reviewedCards, reviewedCard])
@@ -22,60 +20,30 @@ export default function InboxContainer() {
   }
 
   if (dueCards.length === 0 && reviewedCards.length > 0) {
-    const uniqueLessonIds = [
-      ...new Set(reviewedCards.map((userFlashcard) => userFlashcard.flashcard.lesson.id)),
-    ]
-    const lessonXPArray = uniqueLessonIds.map((lessonId) => {
-      const lessonCards = reviewedCards.filter((card) => card.flashcard.lesson.id === lessonId)
-      const lessonXP = lessonCards.reduce((acc, card) => acc + card.xp, 0)
-      const userLesson = userLessons.find((userLesson) => userLesson.lesson.id === lessonId)
-      const newXp = userLesson?.xp + lessonXP
-      updateLessonXP(lessonId, newXp)
-      return {
-        id: lessonCards[0].flashcard.lesson.id,
-        title: lessonCards[0].flashcard.lesson.title,
-        deltaXp: lessonXP,
-        oldXp: userLesson?.xp || 0,
-        newXp: newXp,
-      }
-    })
-    // send lesson's total xp to the server action to update the userLesson
-    // const lessonXPArray = await Promise.all(uniqueLessonIds.map(async (lessonId) => {
-    //   const lessonCards = reviewedCards.filter(
-    //     (card) => card.flashcard.lesson.id === lessonId
-    //   )
-    //   const lessonXP = lessonCards.reduce((acc, card) => acc + card.xp, 0)
-
-    //   // Fetch current lesson XP from UserLessons
-    //   const userLesson = await getUserLesson(user.id, lessonId)
-    //   const oldXP = userLesson?.xp || 0
-    //   const newXP = oldXP + lessonXP
-
-    //   // Update lesson XP
-    //   await updateLessonXP(lessonId, newXP)
-
-    //   return {
-    //     lesson: lessonCards[0].flashcard.lesson.title,
-    //     oldXp: oldXP,
-    //     xp: lessonXP,
-    //     newXP: newXP,
-    //   }
-    // }))
-
     return (
       <div className="text-center py-8">
         <h2 className="text-2xl font-bold mb-4">Congratulations!</h2>
-        <p>You've completed all your due cards for today:</p>
-        <ul>
-          {lessonXPArray.map((lesson) => (
-            <li key={lesson.title}>
-              <span>{lesson.title}</span>
-              <div>XP Gained: {lesson.deltaXp}</div>
-              <div>Old XP: {lesson.oldXp}</div>
-              <div>New XP: {lesson.newXp}</div>
-            </li>
+        <p>You've completed all your due cards for today</p>
+        <div className="mt-8 flex flex-col">
+          {reviewedCards.map((card) => (
+            <div
+              key={card.id}
+              className="bg-white shadow-md rounded-lg p-6 mb-4 hover:shadow-lg transition-shadow duration-300 w-96 mx-auto"
+            >
+              <h3 className="text-lg font-semibold mb-2">{card.flashcard.title}</h3>
+              <p className="text-sm text-gray-600 mb-1">Lesson: {card.lesson.title}</p>
+              <p className="text-sm text-gray-600 mb-1">
+                Next due: {dayjs(card.current.due).format('MMMM D, YYYY')}
+              </p>
+              <p className="text-sm text-gray-600">
+                Last review:{' '}
+                {card.log[0]?.rating
+                  ? ['Again', 'Hard', 'Good', 'Easy'][card.log[0].rating - 1]
+                  : 'N/A'}
+              </p>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     )
   }

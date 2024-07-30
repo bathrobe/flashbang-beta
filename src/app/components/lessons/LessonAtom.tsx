@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { completeLesson } from '@/app/lib/lessonActions'
-import { getDueCards } from '@/app/lib/flashcards/flashcardActions'
+import { completeLesson } from '@/app/lib/lessons'
+import { getDueCards } from '@/app/lib/flashcards'
 import { useUserContext } from '@/app/contexts/UserContext'
 
 export const LessonAtomCard: React.FC<{

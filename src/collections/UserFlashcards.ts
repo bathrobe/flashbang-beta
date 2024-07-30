@@ -36,12 +36,6 @@ export const UserFlashcards: CollectionConfig = {
           type: 'relationship',
           relationTo: 'users',
         },
-        {
-          name: 'xp',
-          type: 'number',
-          label: 'XP',
-          defaultValue: 0,
-        },
       ],
     },
     {

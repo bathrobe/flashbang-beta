@@ -1,4 +1,4 @@
-import { getLastXP, calculateXP, getNewXP } from '@/app/lib/flashcards/flashcardActions'
+import { getLastXP, calculateXP, getNewXP } from '@/app/lib/flashcards'
 
 export default function CompletedReview({ reviewedCards }: { reviewedCards: any[] }) {
   return (

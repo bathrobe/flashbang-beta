@@ -1,5 +1,5 @@
 'use server'
-import { getUser } from '@/app/lib/authHelpers'
+import { getUser } from '@/app/lib/auth'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 import { createEmptyCard } from 'ts-fsrs'
@@ -17,7 +17,6 @@ export async function completeLesson(lesson: any) {
         user: user.id,
         lesson: lesson.id,
         isCompleted: true,
-        xp: 0,
       },
     })
 
@@ -30,7 +29,6 @@ export async function completeLesson(lesson: any) {
           lesson: lesson.id,
           current: JSON.stringify(createEmptyCard()),
           log: [],
-          xp: 0,
         },
       }),
     )
@@ -40,40 +38,4 @@ export async function completeLesson(lesson: any) {
     console.error('Error assigning lesson:', error)
     throw error
   }
-}
-export async function updateLessonXP(lessonId: string, newXP: number) {
-  const payload = await getPayloadHMR({ config: configPromise })
-  const user = await getUser()
-  if (!user) throw new Error('User not authenticated')
-  if (!lessonId) throw new Error('Lesson not found')
-  try {
-    const updatedUserLesson = await payload.update({
-      collection: 'userLessons',
-      where: {
-        user: {
-          equals: user.id,
-        },
-        lesson: {
-          equals: lessonId,
-        },
-      },
-      data: {
-        xp: newXP,
-      },
-    })
-
-    if (!updatedUserLesson) {
-      throw new Error('Failed to update user lesson XP')
-    }
-
-    return updatedUserLesson
-  } catch (error) {
-    console.error('Error updating lesson XP:', error)
-    throw error
-  }
-}
-export const getLearningLevel = (xp: number): string => {
-  if (xp >= 600) return 'Application'
-  if (xp >= 300) return 'Comprehension'
-  return 'Recall'
 }

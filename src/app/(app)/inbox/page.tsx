@@ -1,4 +1,4 @@
-import { authCheck } from '@/app/lib/authHelpers'
+import { authCheck } from '@/app/lib/auth'
 import InboxContainer from '@/app/components/flashcards/InboxContainer'
 
 export default async function InboxPage() {
