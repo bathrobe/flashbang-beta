@@ -15,7 +15,7 @@ import { Lessons } from './collections/Lessons'
 import { Flashcards } from './collections/Flashcards'
 import { UserFlashcards } from './collections/UserFlashcards'
 import { UserLessons } from './collections/UserLessons'
-
+import { LearningPhases } from './collections/LearningPhases'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -23,7 +23,17 @@ export default buildConfig({
   admin: {
     user: Users.slug,
   },
-  collections: [Users, Media, Courses, UserLessons, Sources, Lessons, Flashcards, UserFlashcards],
+  collections: [
+    Users,
+    Media,
+    Courses,
+    UserLessons,
+    Sources,
+    Lessons,
+    Flashcards,
+    UserFlashcards,
+    LearningPhases,
+  ],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,

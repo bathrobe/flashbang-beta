@@ -21,6 +21,7 @@ export default async function LessonPage({ params }: { params: any }) {
         equals: lessonSlug,
       },
     },
+    depth: 2,
   })
 
   const { docs: lessonDocs } = lessonData

@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { getUser } from '@/app/lib/auth'
 import Logout from 'src/app/components/auth/Logout'
-import InboxNoties from './InboxNoties'
 
 export default async function Header() {
   const user = await getUser()
@@ -18,16 +17,10 @@ export default async function Header() {
       <nav className="">
         {user ? (
           <div className="flex items-center space-x-2 text-sm">
-            <span className="border-r border-gray-900 pr-4 mr-2">
-              <Link href="/inbox">
-                <span className="mr-2">Inbox</span>
-                <InboxNoties />
-              </Link>
-              <Link className="ml-4" href="/atoms">
-                Atoms
-              </Link>
-            </span>
-            <span>{user.email}</span>
+            <Link href="/atoms" className="border-r border-gray-900 pr-4">
+              Atoms
+            </Link>
+            <span className="pl-2">{user.email}</span>
             <Logout />
           </div>
         ) : (

@@ -13,7 +13,7 @@ export const LessonAtomCard: React.FC<{
   const [currentView, setCurrentView] = useState('summary')
   const [isAssigning, setIsAssigning] = useState(false)
   const views = ['summary', 'details', 'source']
-  const { user } = useUserContext()
+  const { userLessons } = useUserContext()
 
   const renderSourceInfo = () => (
     <div className="space-y-2 text-sm">
@@ -35,7 +35,7 @@ export const LessonAtomCard: React.FC<{
     </div>
   )
 
-  const isAlreadyAssigned = user?.lessons?.some(
+  const isAlreadyAssigned = userLessons.some(
     (userLesson: any) => userLesson.lesson.id === lesson.id,
   )
 

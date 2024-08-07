@@ -16,16 +16,27 @@ export default async function AtomsPage() {
         equals: user.id,
       },
     },
-    depth: 1,
+    depth: 2,
   })
 
   const { docs: lessons } = userLessons
 
-  console.log(lessons)
+  const userFlashcards = await payload.find({
+    collection: 'userFlashcards',
+    where: {
+      user: {
+        equals: user.id,
+      },
+    },
+    depth: 1,
+  })
+
+  const { docs: flashcards } = userFlashcards
+
   return (
     <div>
       {lessons.map((lesson) => (
-        <AtomPageCard lesson={lesson} />
+        <AtomPageCard userLesson={lesson} userFlashcards={flashcards} />
       ))}
     </div>
   )

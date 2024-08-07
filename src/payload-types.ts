@@ -16,6 +16,7 @@ export interface Config {
     lessons: Lesson;
     flashcards: Flashcard;
     userFlashcards: UserFlashcard;
+    learningPhases: LearningPhase;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -72,6 +73,7 @@ export interface Media {
 export interface Course {
   id: number;
   title: string;
+  isHidden?: boolean | null;
   slug?: string | null;
   description?: string | null;
   cloudinaryUrl?: string | null;
@@ -221,6 +223,20 @@ export interface Flashcard {
   question?: string | null;
   answer?: string | null;
   lesson?: (number | null) | Lesson;
+  learningPhase?: (number | null) | LearningPhase;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "learningPhases".
+ */
+export interface LearningPhase {
+  id: number;
+  name: string;
+  description?: string | null;
+  stabilityThreshold: number;
+  stage: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -232,6 +248,7 @@ export interface UserLesson {
   id: number;
   user: number | User;
   lesson: number | Lesson;
+  currentPhase?: (number | null) | LearningPhase;
   isCompleted?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -243,7 +260,7 @@ export interface UserLesson {
 export interface UserFlashcard {
   id: number;
   user?: (number | null) | User;
-  lesson?: (number | null) | Lesson;
+  userLesson?: (number | null) | UserLesson;
   flashcard?: (number | null) | Flashcard;
   current?:
     | {

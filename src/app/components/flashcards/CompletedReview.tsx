@@ -1,29 +1,35 @@
-import dayjs from 'dayjs'
-export default function CompletedReview({ reviewedCards }: { reviewedCards: any[] }) {
+'use client'
+import Link from 'next/link'
+import LessonProgressCard from './LessonProgressCard'
+
+const CompletedReview: React.FC<{ reviewedCards: any[] }> = ({ reviewedCards }) => {
+  const uniqueLessons = Array.from(new Set(reviewedCards.map((card) => card.userLesson.lesson.id)))
+    .map(
+      (lessonId) =>
+        reviewedCards.find((card) => card.userLesson.lesson.id === lessonId)?.userLesson,
+    )
+    .filter(Boolean)
+
   return (
-    <div className="text-center py-8">
-      <h2 className="text-2xl font-bold mb-4">Congratulations!</h2>
-      <p>You've completed all your due cards for today</p>
-      <div className="mt-8 flex flex-col">
-        {reviewedCards.map((card) => (
-          <div
-            key={card.id}
-            className="bg-white shadow-md rounded-lg p-6 mb-4 hover:shadow-lg transition-shadow duration-300 w-96 mx-auto"
-          >
-            <h3 className="text-lg font-semibold mb-2">{card.flashcard.title}</h3>
-            <p className="text-sm text-gray-600 mb-1">Lesson: {card.lesson.title}</p>
-            <p className="text-sm text-gray-600 mb-1">
-              Next due: {dayjs(card.current.due).format('MMMM D, YYYY')}
-            </p>
-            <p className="text-sm text-gray-600">
-              Last review:{' '}
-              {card.log[0]?.rating
-                ? ['Again', 'Hard', 'Good', 'Easy'][card.log[0].rating - 1]
-                : 'N/A'}
-            </p>
-          </div>
-        ))}
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6">Review Completed</h1>
+      {uniqueLessons.map((userLesson) => (
+        <LessonProgressCard
+          key={userLesson.lesson.id}
+          userLesson={userLesson}
+          reviewedCards={reviewedCards}
+        />
+      ))}
+      <div className="text-center mt-8">
+        <Link
+          href="/"
+          className="inline-block bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-colors duration-300"
+        >
+          Back to Main Page
+        </Link>
       </div>
     </div>
   )
 }
+
+export default CompletedReview

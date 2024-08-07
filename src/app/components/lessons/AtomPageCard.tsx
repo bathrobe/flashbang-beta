@@ -1,79 +1,54 @@
 'use client'
-import React, { useState } from 'react'
-import { useUserContext } from '@/app/contexts/UserContext'
+import React from 'react'
+import { calculateRetrievability } from '@/app/lib/flashcardHelpers'
+import dayjs from 'dayjs'
+import { calculateAverageStability } from '@/app/lib/flashcardHelpers'
+const AtomPageCard: React.FC<{ userLesson: any; userFlashcards: any }> = ({
+  userLesson,
+  userFlashcards,
+}) => {
+  const { lesson: lessonData } = userLesson
 
-const AtomPageCard: React.FC<{ lesson: any }> = ({ lesson }) => {
-  const { lesson: lessonData } = lesson
-  const [currentView, setCurrentView] = useState('summary')
-  const views = ['summary', 'details', 'source', 'flashcards']
-  const { user } = useUserContext()
-
+  const averageStability = calculateAverageStability(userFlashcards)
   const renderSourceInfo = () => (
-    <div className="space-y-2 text-sm">
-      <p className="font-semibold">{lessonData.atom.source?.title}</p>
-      <p>
-        {lessonData.atom.source?.author}, {lessonData.atom.source?.institution}
-      </p>
-      {lessonData.atom.specificSection && <p>{lessonData.atom.specificSection}</p>}
-      {lessonData.atom.source?.url && (
-        <a
-          href={lessonData.atom.source.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 hover:underline"
-        >
-          View Source
-        </a>
-      )}
+    <div className="text-sm">
+      <div className="text-gray-700">
+        {lessonData.atom.source?.url ? (
+          <a
+            href={lessonData.atom.source.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-blue-500 hover:underline"
+          >
+            {lessonData.atom.source?.title}
+          </a>
+        ) : (
+          <span className="font-semibold">{lessonData.atom.source?.title}</span>
+        )}
+        {lessonData.atom.source?.author && `, ${lessonData.atom.source.author}`}
+        {lessonData.atom.source?.institution && `, ${lessonData.atom.source.institution}`}
+        {lessonData.atom.specificSection && (
+          <div className="text-gray-600">{lessonData.atom.specificSection}</div>
+        )}
+      </div>
     </div>
   )
 
-  const renderFlashcards = () => {
-    const userFlashcards = user?.flashcards?.filter(
-      (flashcard: any) => flashcard.lesson.id === lesson.id,
-    )
-    return (
-      <div className="space-y-4">
-        {userFlashcards?.map((flashcard: any) => (
-          <div key={flashcard.id} className="border p-4 rounded">
-            <p className="font-bold">{flashcard.flashcard.front}</p>
-            <p className="mt-2">{flashcard.flashcard.back}</p>
-          </div>
-        ))}
-      </div>
-    )
-  }
-
   return (
-    <div className="bg-white border-2 border-gray-300 rounded-lg shadow-md overflow-hidden w-full max-w-2xl mx-auto">
-      <div className="p-4">
-        <h2 className="text-xl font-medium text-center text-gray-600 mb-3">{lessonData.title}</h2>
-        <div className="flex flex-row items-center justify-center mb-3 space-x-2">
-          {views.map((view) => (
-            <button
-              key={view}
-              onClick={() => setCurrentView(view)}
-              className={`px-3 py-1 rounded-full text-sm ${
-                currentView === view ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'
-              }`}
-            >
-              {view.charAt(0).toUpperCase() + view.slice(1)}
-            </button>
-          ))}
+    <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden w-full max-w-2xl mx-auto">
+      <div className="p-6 relative">
+        <div className="absolute top-0 right-0 p-2 bg-blue-100 rounded-bl-lg">
+          <p className="text-sm font-semibold text-blue-800">
+            Avg Stability: {averageStability.toFixed(2)}
+          </p>
         </div>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-2">{lessonData.title}</h2>
         <div
-          className="prose prose-sm px-4 mx-auto overflow-y-auto"
-          style={{ maxHeight: '20rem', width: '100%' }}
-        >
-          {currentView === 'summary' && (
-            <div dangerouslySetInnerHTML={{ __html: lessonData.atom?.shortSummary_html || '' }} />
-          )}
-          {currentView === 'details' && (
-            <div dangerouslySetInnerHTML={{ __html: lessonData.atom?.mediumSummary_html || '' }} />
-          )}
-          {currentView === 'source' && renderSourceInfo()}
-          {currentView === 'flashcards' && renderFlashcards()}
-        </div>
+          className="text-gray-600 my-4"
+          dangerouslySetInnerHTML={{ __html: lessonData.atom?.shortSummary_html || '' }}
+        />
+
+        <div className="prose prose-sm">{renderSourceInfo()}</div>
       </div>
     </div>
   )

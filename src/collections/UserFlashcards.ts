@@ -42,9 +42,9 @@ export const UserFlashcards: CollectionConfig = {
       type: 'row',
       fields: [
         {
-          name: 'lesson',
+          name: 'userLesson',
           type: 'relationship',
-          relationTo: 'lessons',
+          relationTo: 'userLessons',
         },
         {
           name: 'flashcard',

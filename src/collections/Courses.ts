@@ -12,6 +12,10 @@ export const Courses: CollectionConfig = {
       required: true,
     },
     {
+      name: 'isHidden',
+      type: 'checkbox',
+    },
+    {
       name: 'slug',
       type: 'text',
     },
