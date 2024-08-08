@@ -1,19 +1,21 @@
 'use client'
 
+interface Card {
+  lesson: {
+    id: string
+    title: string
+    learningPhase: {
+      stabilityThreshold: number
+      name: string
+    }
+  }
+  current: {
+    stability: number
+  }
+}
+
 interface LessonProgressProps {
-  cardsWithStability: Array<{
-    lesson: {
-      id: string
-      title: string
-      learningPhase: {
-        stabilityThreshold: number
-        name: string
-      }
-    }
-    current: {
-      stability: number
-    }
-  }>
+  cardsWithStability: Card[]
 }
 
 const LessonProgress: React.FC<LessonProgressProps> = ({ cardsWithStability }) => {

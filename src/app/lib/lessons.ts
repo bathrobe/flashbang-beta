@@ -41,7 +41,38 @@ export async function updateLearningPhase(userLesson: any) {
       },
     })
 
-    console.log('updated learning phase')
+    // Fetch the lesson to get the flashcards
+    const lesson = await payload.findByID({
+      collection: 'lessons',
+      id: userLesson.lesson.id,
+    })
+
+    if (!lesson) throw new Error('Lesson not found')
+
+    // Filter flashcards for the new learning phase
+    // @ts-ignore
+    const newPhaseFlashcards = lesson.flashcards.filter(
+      (flashcard: any) =>
+        flashcard.learningPhase && flashcard.learningPhase.id === nextPhase.docs[0].id,
+    )
+
+    // Create UserFlashcards for the new phase flashcards
+    const userFlashcardPromises = newPhaseFlashcards.map((flashcard: any) =>
+      payload.create({
+        collection: 'userFlashcards',
+        data: {
+          user: user.id,
+          flashcard: flashcard.id,
+          userLesson: userLesson.id,
+          current: JSON.stringify(createEmptyCard()),
+          log: [],
+        },
+      }),
+    )
+
+    await Promise.all(userFlashcardPromises)
+
+    console.log('updated learning phase and created new UserFlashcards')
     return updatedUserLesson
   } catch (error) {
     console.error('Error updating learning phase:', error)

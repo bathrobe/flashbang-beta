@@ -18,29 +18,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col w-full max-w-3xl mx-auto mt-16 items-stretch px-8 justify-center gap-4">
-      <TodayLearning>
-        {courses
-          .filter((course) => !course.isHidden)
-          .flatMap((course, courseIdx) =>
-            // @ts-ignore
-            course?.lessons
-              // @ts-ignore
-              // ?.filter((lesson) => !userLessons.some((ul) => ul.lesson.id === lesson.id))
-              // @ts-ignore
-              .map((lesson, lessonIdx) => {
-                // @ts-ignore
-                const userLesson = userLessons.find((ul) => ul.lesson.id === lesson.id)
-                return (
-                  <LessonCard
-                    key={`${courseIdx}-${lessonIdx}`}
-                    lesson={lesson}
-                    course={course}
-                    userLesson={userLesson}
-                  />
-                )
-              }),
-          )}
-      </TodayLearning>
+      <TodayLearning courses={courses} userLessons={userLessons} />
     </div>
   )
 }
