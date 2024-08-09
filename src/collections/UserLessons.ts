@@ -19,11 +19,7 @@ export const UserLessons: CollectionConfig = {
       relationTo: 'lessons',
       required: true,
     },
-    {
-      name: 'currentPhase',
-      type: 'relationship',
-      relationTo: 'learningPhases',
-    },
+
     {
       name: 'isCompleted',
       type: 'checkbox',

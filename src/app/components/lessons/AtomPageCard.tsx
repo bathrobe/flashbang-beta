@@ -7,6 +7,7 @@ const AtomPageCard: React.FC<{ userLesson: any; userFlashcards: any }> = ({
   userLesson,
   userFlashcards,
 }) => {
+  console.log(userFlashcards)
   const { lesson: lessonData } = userLesson
 
   const averageStability = calculateAverageStability(userFlashcards)
@@ -48,7 +49,19 @@ const AtomPageCard: React.FC<{ userLesson: any; userFlashcards: any }> = ({
           dangerouslySetInnerHTML={{ __html: lessonData.atom?.shortSummary_html || '' }}
         />
 
-        <div className="prose prose-sm">{renderSourceInfo()}</div>
+        <div className="prose prose-sm">
+          {renderSourceInfo()}
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold mb-2">Flashcards:</h3>
+            <ul className="list-disc pl-5">
+              {userFlashcards.map((flashcard: any, index: number) => (
+                <li key={index} className="text-gray-700">
+                  {flashcard.flashcard.title}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   )

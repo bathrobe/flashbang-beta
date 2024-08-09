@@ -25,10 +25,5 @@ export const Flashcards: CollectionConfig = {
       type: 'relationship',
       relationTo: 'lessons',
     },
-    {
-      name: 'learningPhase',
-      type: 'relationship',
-      relationTo: 'learningPhases',
-    },
   ],
 }

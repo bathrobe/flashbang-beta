@@ -25,7 +25,6 @@ const LessonProgress: React.FC<LessonProgressProps> = ({ cardsWithStability }) =
     if (!lessonMap.has(card.lesson.id)) {
       lessonMap.set(card.lesson.id, {
         title: card.lesson.title,
-        learningPhase: card.lesson.learningPhase || { stabilityThreshold: 1, name: 'Unknown' },
         totalStability: 0,
         cardCount: 0,
       })
@@ -45,8 +44,6 @@ const LessonProgress: React.FC<LessonProgressProps> = ({ cardsWithStability }) =
       <h3 className="text-2xl font-bold mb-6 text-center text-gray-800">Lessons Progress</h3>
       <div className="space-y-4">
         {lessons.map((lesson, index) => {
-          const progressPercentage =
-            (lesson.averageStability / (lesson.learningPhase?.stabilityThreshold || 1)) * 100
           return (
             <div
               key={index}
@@ -62,19 +59,15 @@ const LessonProgress: React.FC<LessonProgressProps> = ({ cardsWithStability }) =
                 <div className="text-sm font-medium text-gray-600">
                   Average Stability: {lesson.averageStability.toFixed(2)}
                 </div>
-                <div className="text-sm font-medium text-gray-600">
-                  Phase: {lesson.learningPhase?.name || 'Unknown'}
-                </div>
               </div>
               <div className="mt-2 bg-gray-200 rounded-full h-2 overflow-hidden">
                 <div
                   className="h-full rounded-full bg-blue-400"
-                  style={{ width: `${Math.min(progressPercentage, 100)}%` }}
+                  style={{ width: `${Math.min(lesson.averageStability * 10, 100)}%` }}
                 ></div>
               </div>
               <div className="text-xs text-gray-500 mt-1">
-                Progress: {progressPercentage.toFixed(1)}% (Threshold:{' '}
-                {lesson.learningPhase?.stabilityThreshold || 'N/A'})
+                Progress: {(lesson.averageStability * 10).toFixed(1)}%
               </div>
             </div>
           )

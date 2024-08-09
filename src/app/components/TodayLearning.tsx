@@ -17,7 +17,7 @@ interface UserLesson {
   }
 }
 
-const TodayLearning: React.FC<{ courses: Course[]; userLessons: UserLesson[] }> = ({
+const TodayLearning: React.FC<{ courses: any[]; userLessons: any[] }> = ({
   courses,
   userLessons,
 }) => {
@@ -35,7 +35,7 @@ const TodayLearning: React.FC<{ courses: Course[]; userLessons: UserLesson[] }> 
         {courses
           .filter((course) => !course.isHidden)
           .flatMap((course, courseIdx) =>
-            course.lessons.map((lesson, lessonIdx) => {
+            course.lessons.map((lesson: any, lessonIdx: any) => {
               const userLesson = userLessons.find((ul) => ul.lesson.id === lesson.id)
               return (
                 <LessonCard
